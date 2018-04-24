@@ -1,0 +1,93 @@
+<div data-container="tableTableOperates1">
+    <component is="bv-modal" :key="tags.modalId" v-bind="config">
+        <div slot="body">
+<pre>
+operates: [
+    {
+        text: '增加',
+        icon: 'icon-add',
+        show: 'none',
+        preset: 'insert',
+        url: 'modules/score/editScoreCardOption.html'
+    },
+    {
+        text: '修改',
+        icon: 'icon-edit',
+        show: function(selected) {
+            return selected && selected.length === 1 && selected[0].scoState === 1;
+        },
+        preset: 'update',
+        url: 'modules/score/editScoreCardOption.html'
+    },
+    {
+        text: '删除',
+        icon: 'icon-delete',
+        show: 'oneOrMore',
+        preset: 'delete'
+    },
+    {
+        text: '启用',
+        icon: 'icon-start',
+        show: function(selected) {
+            return selected && selected.length === 1 && selected[0].scoState === 0;
+        },
+        click: function(event, tableId, entityName, selected) {
+            util.confirm({
+                title: '请确认',
+                content: '确定启用吗？',
+                buttonText: '确定',
+                url: '/score/startScoreCardOption',
+                data: util.selected(tableId),
+                refresh: true,
+                vm: this
+            });
+        }
+    },
+    {
+        text: '禁用',
+        icon: 'icon-stop',
+        show: function(selected) {
+            return selected && selected.length === 1 && selected[0].scoState === 1;
+        },
+        click: function(event, tableId, entityName, selected) {
+            util.confirm({
+                title: '请确认',
+                content: '确定禁用吗？',
+                buttonText: '确定',
+                url: '/score/stopScoreCardOption',
+                data: util.selected(tableId),
+                refresh: true,
+                vm: tableId
+            });
+        }
+    },
+    {
+        text: '返回',
+        icon: 'icon-return',
+        show: 'return',
+        click: function(event, tableId, entityName, selected) {
+            util.cache(param);
+            util.redirect('modules/score/listScoreDefinition.html', 'body');
+        }
+    }
+]
+</pre>
+        </div>
+    </component>
+</div>
+<script type="text/javascript">
+    require(['util', 'Const'], function (util, Const) {
+        var vm = util.bind({
+            container: 'tableTableOperates1',
+            data: {
+                tags: {
+                    modalId: 'tableTableOperates1Modal'
+                },
+                config: {
+                    size: 'lg',
+                    title: '按钮定义示例'
+                }
+            }
+        });
+    });
+</script>

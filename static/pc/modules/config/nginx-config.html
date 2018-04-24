@@ -1,0 +1,32 @@
+<div class="bs-docs-container">
+    <div class="bs-docs-section">
+        <h4>nginx配置</h4>
+        <p></p>
+        <dl class="dl-horizontal">
+            <dt>gzip</dt>
+            <dd>
+                <p>压缩配置</p>
+                <ul>
+                    <li>gzip：是否开启压缩，设置为on为开启</li>
+                    <li>gzip_comp_level：压缩级别</li>
+                    <li>gzip_types：需要开启亚索的文件类型，多个类型用空格分隔</li>
+                    <li>gzip_disable：什么情况下禁用压缩，一般设置ie6以下禁用，即"MSIE [1-6]\."</li>
+                </ul>
+            </dd>
+            <dt>upstream</dt>
+            <dd>
+                <p>服务地址配置</p>
+                <ul>
+                    <li>server：服务地址及端口</li>
+                </ul>
+            </dd>
+            <dt>server</dt>
+            <dd>
+                <p>服务配置</p>
+                <ul>
+                    <li>location：路径，支持地址及后缀匹配</li>
+                </ul>
+            </dd>
+        </dl>
+    </div>
+</div>

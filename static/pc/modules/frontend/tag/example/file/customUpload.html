@@ -1,0 +1,54 @@
+<div data-container="customUpload">
+	<component is="bv-form" v-bind="config"></component>
+</div>
+<script type="text/javascript">
+    require(['jquery', 'util', 'Const'], function ($, util, Const) {
+        var vm = util.bind({
+            container: 'customUpload',
+            data: {
+                config: {
+                    columns: [
+                        {
+                            name: 'demo1',
+                            head: '列1'
+                        }, {
+                            name: 'upload',
+                            edit: {
+                                type: 'upload'
+                            },
+                            config: {
+                                initParam: function (entity) {
+									if (entity && entity.demo1) {
+									    return {
+									        demo1: entity.demo1
+										};
+									}
+                                }
+                            }
+                        }, {
+                            name: 'upload2',
+                            edit: {
+                                type: 'upload'
+                            },
+                            config: {
+                                preview: true
+                            }
+                        }
+                    ],
+					operates: [
+						{
+                            text: '查看图片',
+                            clazz: 'btn-primary',
+                            icon: 'icon-view',
+                            click: function (event, editType, entity, extraParams) {
+                                util.modal({
+									url: 'modules/frontend/tag/example/file/imageList.html'
+								});
+                            }
+						}
+					]
+				}
+            }
+        });
+    });
+</script>

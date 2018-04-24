@@ -1,0 +1,27 @@
+<div data-container="formInitUrl">
+	<component is="bv-form" v-bind="config"></component>
+</div>
+<script type="text/javascript">
+    require(['jquery', 'util', 'Const'], function ($, util, Const) {
+        var vm = util.bind({
+            container: 'formInitUrl',
+            data: {
+                config: {
+                    title: '初始化显示内容',
+					defaultTag: 'static',
+					initData: true,
+					initUrl: '/api/example/formInitUrl',
+                    columns: [
+                        {
+                            name: 'demo1',
+                            head: '值1'
+                        }, {
+                        	name: 'demo2',
+							head: '值2'
+						}
+                    ]
+                }
+            }
+        });
+    });
+</script>

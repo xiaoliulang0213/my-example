@@ -1,0 +1,91 @@
+<div data-container="tableTableColumns1">
+    <component is="bv-modal" :key="tags.modalId" v-bind="config">
+        <div slot="body">
+<pre>
+columns: [
+    {
+        name: 'scoCode',
+        head: '子项编码',
+        filter: true
+    },
+    {
+        name: 'scoName',
+        head: '子项名称',
+        filter: true
+    },
+    {
+        name: 'scoState',
+        head: '状态',
+        filter: 'radio',
+        config: {
+            format: 'dict',
+            preset: 'dicts',
+            choose: '#scoState'
+        }
+    },
+    {
+        name: 'createDate',
+        head: '创建时间',
+        filter: {
+            operate: 'between',
+            type: 'date'
+        }
+    },
+    {
+        name: 'createUser',
+        head: '创建人'
+    },
+    {
+        name: 'operate',
+        head: '操作',
+        align: 'center',
+        type: 'operate',
+        operates: [
+            {
+                text: '维护分值',
+                click: function(event, tableId, entityName, selected) {
+                    util.cache({
+                        scoCode: selected[0].scoCode,
+                        scoName: selected[0].scoName,
+                        scoid: selected[0].scoid,
+                        sdCode: param.sdCode,
+                        sdName: param.sdName
+                    });
+                    util.redirect('modules/score/listScoreCardValue.html', 'body');
+                }
+            },
+            {
+                text: '取值变更历史',
+                click: function(event, tableId, entityName, selected) {
+                    util.modal({
+                        url: 'modules/score/listValueChangeHistory.html',
+                        data: {
+                            sdCode: param.sdCode,
+                            scoCode: selected[0].scoCode
+                        }
+                    });
+                }
+            }
+        ]
+    }
+]
+</pre>
+        </div>
+    </component>
+</div>
+<script type="text/javascript">
+    require(['util', 'Const'], function (util, Const) {
+        var vm = util.bind({
+            container: 'tableTableColumns1',
+            data: {
+                tags: {
+                    modalId: 'tableTableColumns1Modal'
+                },
+                config: {
+                    size: 'lg',
+                    title: '列定义示例'
+                }
+            }
+        });
+    });
+</script>

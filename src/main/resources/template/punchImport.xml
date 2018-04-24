@@ -1,0 +1,57 @@
+﻿<?xml version="1.0" encoding="UTF-8"?>
+<workbook>
+    <worksheet idx="2">
+    	<section startRow="0" endRow="1"></section>
+    	<section startRow="2" endRow="2">
+			<mapping row="2" col="2">punchMap.punchPeriod</mapping>
+		</section>
+		<section startRow="3" endRow="3">
+			<mapping row="3" col="28">punchMap.punchDay29</mapping>
+			<mapping row="3" col="29">punchMap.punchDay30</mapping>
+			<mapping row="3" col="30">punchMap.punchDay31</mapping>
+		</section>
+        <loop startRow="4" endRow="5" items="punchExcelList" var="punchExcel" varType="com.bestvike.tools.entity.PunchExcel">
+            <section startRow="4" endRow="5">
+            	<mapping row="4" col="2">punchExcel.punchId</mapping>
+            	<mapping row="4" col="10">punchExcel.punchName</mapping>
+                <mapping row="4" col="20">punchExcel.punchCorp</mapping>
+                <mapping row="5" col="0">punchExcel.punchTime1</mapping>
+            	<mapping row="5" col="1">punchExcel.punchTime2</mapping>
+                <mapping row="5" col="2">punchExcel.punchTime3</mapping>
+                <mapping row="5" col="3">punchExcel.punchTime4</mapping>
+                <mapping row="5" col="4">punchExcel.punchTime5</mapping>
+                <mapping row="5" col="5">punchExcel.punchTime6</mapping>
+                <mapping row="5" col="6">punchExcel.punchTime7</mapping>
+                <mapping row="5" col="7">punchExcel.punchTime8</mapping>
+                <mapping row="5" col="8">punchExcel.punchTime9</mapping>
+                <mapping row="5" col="9">punchExcel.punchTime10</mapping>
+                <mapping row="5" col="10">punchExcel.punchTime11</mapping>
+                <mapping row="5" col="11">punchExcel.punchTime12</mapping>
+                <mapping row="5" col="12">punchExcel.punchTime13</mapping>
+                <mapping row="5" col="13">punchExcel.punchTime14</mapping>
+                <mapping row="5" col="14">punchExcel.punchTime15</mapping>
+                <mapping row="5" col="15">punchExcel.punchTime16</mapping>
+                <mapping row="5" col="16">punchExcel.punchTime17</mapping>
+                <mapping row="5" col="17">punchExcel.punchTime18</mapping>
+                <mapping row="5" col="18">punchExcel.punchTime19</mapping>
+                <mapping row="5" col="19">punchExcel.punchTime20</mapping>
+                <mapping row="5" col="20">punchExcel.punchTime21</mapping>
+                <mapping row="5" col="21">punchExcel.punchTime22</mapping>
+                <mapping row="5" col="22">punchExcel.punchTime23</mapping>
+                <mapping row="5" col="23">punchExcel.punchTime24</mapping>
+                <mapping row="5" col="24">punchExcel.punchTime25</mapping>
+                <mapping row="5" col="25">punchExcel.punchTime26</mapping>
+                <mapping row="5" col="26">punchExcel.punchTime27</mapping>
+                <mapping row="5" col="27">punchExcel.punchTime28</mapping>
+                <mapping row="5" col="28">punchExcel.punchTime29</mapping>
+                <mapping row="5" col="29">punchExcel.punchTime30</mapping>
+                <mapping row="5" col="30">punchExcel.punchTime31</mapping>
+            </section>
+            <loopcontinuecondition>
+                <rowcheck offset="4">
+                    <cellcheck offset="0"></cellcheck>
+                </rowcheck>
+            </loopcontinuecondition>
+        </loop>
+    </worksheet>
+</workbook>

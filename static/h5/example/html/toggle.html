@@ -1,0 +1,40 @@
+<component is="bv-layout" data-container="example-toggle">
+    <component is="bv-form" :key="tags.formKey" v-bind="formConfig"></component>
+</component>
+<script type="text/javascript">
+    require(['jquery', 'util', 'Const', 'bvForm'], function($, util, Const) {
+        util.title('example-toggle');
+        var vm = util.bind({
+            container: 'example-toggle',
+            data: {
+                tags: {
+                    formKey: 'toggleForm'
+                },
+                formConfig: {
+                    columns: [
+                        {
+                            name: 'toggle1',
+                            head: '默认格式',
+                            edit: {
+                                type: 'toggle'
+                            }
+                        }, {
+                            name: 'toggle2',
+                            head: '自定义值',
+                            edit: {
+                                type: 'toggle'
+                            },
+                            config: {
+                                defaultValue: 'ON',
+                                choose: ['ON', 'OFF'],
+                                onChange: function (entity, value) {
+                                    util.alert('值变为' + value);
+                                }
+                            }
+                        }
+                    ]
+                }
+            }
+        });
+    });
+</script>

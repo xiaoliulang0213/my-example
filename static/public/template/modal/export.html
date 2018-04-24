@@ -1,0 +1,20 @@
+<div data-container="commonExport">
+	<component is="bv-export" :key="tags.exportId" v-bind="config"></component>
+</div>
+<script type="text/javascript">
+require(['jquery', 'util', 'Const'], function ($, util, Const) {
+	var vm = util.bind({
+		container: 'commonExport',
+		data: {
+            tags: {
+                exportId: 'commonExportTag'
+            },
+            config: {
+                url: Const.global.modal.data.url,
+                template: Const.global.modal.data.template,
+                data: Const.global.modal.data
+            }
+        }
+	});
+});
+</script>

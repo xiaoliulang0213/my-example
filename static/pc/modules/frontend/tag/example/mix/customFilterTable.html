@@ -1,0 +1,47 @@
+<div data-container="customFilterTable">
+	<component is="bv-table" key="customFilterTableKey" v-bind="config"></component>
+</div>
+<script type="text/javascript">
+require(['jquery', 'util', 'Const'], function ($, util, Const) {
+    util.bind({
+        container: 'customFilterTable',
+        data: {
+            config: {
+                entityName: 'sysCity',
+                keys: 'cityCode',
+                orders: 'cityCode',
+                columns: [
+					{
+						name: 'cityCode',
+						head: '城市代码',
+						filter: '='
+					}, {
+				    	name: 'cityName',
+						head: '城市名称',
+						filter: 'like'
+					}
+				],
+				extraFilters: [
+					{
+					    name: 'xxx',
+						head: 'yyy',
+						filter: {
+					        type: 'select',
+					        operate: '=',
+							position: 'BEFORE:cityCode'
+						},
+						config: {
+					        preset: 'json',
+					        choose: [
+								{'A': '第一项'}, {'B': '第二项'}
+							]
+						}
+					}
+				]
+            }
+        },
+		mounted: function () {
+        }
+    });
+});
+</script>

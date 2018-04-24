@@ -1,0 +1,30 @@
+<div data-container="tagTextfieldSpecialExample">
+    <div>
+        <component is="bv-form" v-bind="formConfig"></component>
+    </div>
+</div>
+<script type="text/javascript">
+require(['jquery', 'util', 'Const'], function($, util, Const) {
+    var tagType = util.nvl(util.gup('tag'), 'static');
+    var vm = util.bind({
+        container: 'tagTextfieldSpecialExample',
+        data: {
+            formConfig: {
+                title: '文本域特殊属性示例',
+                columns: [
+                    {
+                        name: 'type',
+                        head: 'type-文本与类型(input type=file)',
+                        edit: {
+                            type: tagType
+                        },
+                        config: {
+                            type: 'file'
+                        }
+                    }
+                ]
+            }
+        }
+    });
+});
+</script>

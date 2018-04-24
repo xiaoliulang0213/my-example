@@ -1,0 +1,35 @@
+<div data-container="dynamicCheckbox">
+	<component is="bv-table" key="dynamicCheckboxKey" v-bind="config"></component>
+</div>
+<script type="text/javascript">
+require(['jquery', 'util', 'Const'], function ($, util, Const) {
+    util.bind({
+        container: 'dynamicCheckbox',
+        data: {
+            config: {
+                select: {
+                    type: 'checkbox',
+					show: function (row) {
+						return row && row.cityType === 'province';
+                    }
+				},
+                entityName: 'sysCity',
+                keys: 'cityCode',
+                columns: [
+					{
+					    name: 'cityCode',
+						head: '城市代码'
+					}, {
+                    	name: 'cityName',
+						head: '城市名称'
+					}, {
+                        name: 'cityType',
+                        head: '城市类别'
+                    }
+				],
+                orders: 'cityCode'
+            }
+        }
+    });
+});
+</script>

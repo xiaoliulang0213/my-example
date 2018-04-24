@@ -1,0 +1,70 @@
+<div data-container="loader">
+    <component is="example-api" class="bv-fill" :key="tags.apiKey" try-it="false" :functions="functions"></component>
+</div>
+<script type="text/javascript">
+    require(['jquery', 'util'], function($, util) {
+        var functions = [];
+        util.bind({
+            container: 'loader',
+            data: {
+                tags: {
+                    apiKey: 'loaderApi'
+                },
+                functions: [
+                    {
+                        name: 'script',
+                        parentName: '',
+                        describe: '加载js文件',
+                        params: [
+                            {
+                                name: 'url',
+                                type: 'string/Array',
+                                describe: '需要加载的文件，支持数组'
+                            }, {
+                                name: 'async',
+                                type: 'boolean',
+                                optional: true,
+                                defaultValue: false,
+                                describe: '是否异步加载'
+                            }, {
+                                name: 'callback',
+                                type: 'Function',
+                                optional: true,
+                                describe: '回调函数，加载完成后调用'
+                            }
+                        ],
+                        example: util.heredoc(function () {
+                            /*!
+loader.script('xxx.js', function() {});
+loader.script(['a.js', 'b.js'], function() {});
+loader.script(['a.js', 'b.js'], true, function() {});
+                            */
+                        })
+                    }, {
+                        name: 'style',
+                        parentName: '',
+                        describe: '加载css文件',
+                        params: [
+                            {
+                                name: 'url',
+                                type: 'string/Array',
+                                describe: '需要加载的文件，支持数组'
+                            }, {
+                                name: 'async',
+                                type: 'boolean',
+                                optional: true,
+                                defaultValue: false,
+                                describe: '是否异步加载'
+                            }, {
+                                name: 'callback',
+                                type: 'Function',
+                                optional: true,
+                                describe: '回调函数，加载完成后调用'
+                            }
+                        ]
+                    }
+                ]
+            }
+        });
+    });
+</script>

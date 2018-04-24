@@ -1,0 +1,123 @@
+<div class="bs-docs-container" data-container="tagSelectDoc">
+    <div class="bs-docs-section">
+        <h4>概要说明</h4>
+        <p>select-下拉选择、radio-单选按钮、checkbox-复选框、auto-自动完成、toggle-开关</p>
+        <dl class="dl-horizontal">
+            <dt>标签资源</dt>
+            <dd>位于js/common/ms-select.js</dd>
+        </dl>
+        <h4>公共属性定义</h4>
+        <p>
+            <a href="javascript:;" data-modal="modules/frontend/tag/example/common/selectCommon.html?tag=select">select-下拉选择公共属性示例</a>
+            <a href="javascript:;" data-modal="modules/frontend/tag/example/common/selectCommon.html?tag=radio">radio-单选按钮公共属性示例</a>
+            <a href="javascript:;" data-modal="modules/frontend/tag/example/common/selectCommon.html?tag=checkbox">checkbox-复选框公共属性示例</a>
+            <a href="javascript:;" data-modal="modules/frontend/tag/example/common/selectCommon.html?tag=auto">auto-自动完成公共属性示例</a>
+            <a href="javascript:;" data-modal="modules/frontend/tag/example/common/toggleCommon.html">toggle-开关示例</a>
+        </p>
+        <dl class="dl-horizontal">
+            <dt>entity</dt>
+            <dd v-html="pub.entity"></dd>
+            <dt>id</dt>
+            <dd v-html="pub.id"></dd>
+            <dt>name</dt>
+            <dd v-html="pub.name"></dd>
+            <dt>clazz</dt>
+            <dd v-html="pub.clazz"></dd>
+            <dt>attr</dt>
+            <dd v-html="pub.attr"></dd>
+            <dt>defaultValue</dt>
+            <dd v-html="pub.defaultValue"></dd>
+            <dt>value</dt>
+            <dd v-html="pub.value"></dd>
+            <dt>validate</dt>
+            <dd v-html="pub.validate"></dd>
+
+            <dt>load</dt>
+            <dd v-html="pub.load"></dd>
+            <dt>preset</dt>
+            <dd v-html="pub.preset"></dd>
+            <dt>code</dt>
+            <dd v-html="pub.code"></dd>
+            <dt>desc</dt>
+            <dd v-html="pub.desc"></dd>
+            <dt>choose</dt>
+            <dd v-html="pub.choose"></dd>
+            <dt>url</dt>
+            <dd><p>查询地址，可以不配置，默认为'/common/select/query'，需定义属性entityName、code、desc（可选）</p><p>仅在choose不配置时url才生效，即choose优先级高于url</p></dd>
+            <dt>method</dt>
+            <dd>查询方式，默认为post，可以设置get，但get时不支持设置查询条件及排序</dd>
+            <dt>entityName</dt>
+            <dd v-html="pub.entityName"></dd>
+            <dt>initParam</dt>
+            <dd v-html="pub.initParam"></dd>
+            <dt>initParamList</dt>
+            <dd v-html="pub.initParamList"></dd>
+            <dt>orders</dt>
+            <dd v-html="pub.orders"></dd>
+            <dt>trans</dt>
+            <dd v-html="pub.trans"></dd>
+            <dt>extras</dt>
+            <dd v-html="pub.extras"></dd>
+            <dt>excludes</dt>
+            <dd v-html="pub.excludes"></dd>
+            <dt>show</dt>
+            <dd v-html="pub.show"></dd>
+            <dt>onChange</dt>
+            <dd>回调函数，值变化时触发</dd>
+        </dl>
+        <h4>select特殊属性定义</h4>
+        <dl class="dl-horizontal">
+            <dt>initOption</dt>
+            <dd>默认选项，默认为“请选择”</dd>
+            <dt>multiple</dt>
+            <dd>是否允许多选，默认为false（该属性未验证，不要用）</dd>
+            <dt>label</dt>
+            <dd>分组标签</dd>
+        </dl>
+        <h4>radio、checkbox特殊属性定义</h4>
+        <p>
+            <a href="javascript:;" data-modal="modules/frontend/tag/example/common/radioCheckboxSpecial.html?tag=radio">radio-单选按钮特殊属性示例</a>
+            <a href="javascript:;" data-modal="modules/frontend/tag/example/common/radioCheckboxSpecial.html?tag=checkbox">checkbox-复选框特殊属性示例</a>
+        </p>
+        <dl class="dl-horizontal">
+            <dt>cols</dt>
+            <dd v-html="pub.cols"></dd>
+        </dl>
+        <h4>checkbox特殊属性定义</h4>
+        <p>
+            <a href="javascript:;" data-modal="modules/frontend/tag/example/common/checkboxSpecial.html?tag=checkbox">checkbox-复选框特殊属性示例</a>
+        </p>
+        <dl class="dl-horizontal">
+            <dt>seprator</dt>
+            <dd>多个值之间的分隔符，默认为逗号(,)</dd>
+            <dt>sticky</dt>
+            <dd>固定选中，不允许取消选中的属性，格式为数值或属性名（#name）</dd>
+        </dl>
+        <h4>auto特殊属性定义</h4>
+        <p>
+            <a href="javascript:;" data-modal="modules/frontend/tag/example/common/autoSpecial.html?tag=auto">auto-自动完成特殊属性示例</a>
+        </p>
+        <dl class="dl-horizontal">
+            <dt>initUrl</dt>
+            <dd><p>查询地址，可以不配置，默认为'/common/auto/init'，需定义属性entityName、code、desc（可选）</p><p>仅在$data不配置时url才生效，即$data优先级高于initUrl</p></dd>
+            <dt>distinct</dt>
+            <dd>是否增加去重</dd>
+            <dt>extraColumns</dt>
+            <dd>额外查询的字段名，逗号分隔</dd>
+            <dt>max</dt>
+            <dd>每次最多显示数量</dd>
+            <dt>onItemInit</dt>
+            <dd>初始化时调用</dd>
+        </dl>
+    </div>
+</div>
+<script type="text/javascript">
+require(['jquery', 'util', 'Const'], function($, util, Const) {
+    var vm = util.bind({
+        container: 'tagSelectDoc',
+        data: {
+            pub: __doc
+        }
+    });
+});
+</script>

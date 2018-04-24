@@ -1,0 +1,45 @@
+<div data-container="content-3">
+    <component is="bv-form" v-bind="config"></component>
+</div>
+<script type="text/javascript">
+    require(['jquery', 'util', 'Const'], function ($, util, Const) {
+        var vm = util.bind({
+            container: 'content-3',
+            data: {
+                config: {
+                    layoutCols: 2,
+                    layoutCols: 2,
+                    columns: [
+                        {
+                            name: 'remark',
+                            head: 'remark'
+                        }
+                    ],
+                    operates: [
+                        {
+                            text: 'prev',
+                            clazz: 'btn-default wizard-prev',
+                            validate: false,
+                            click: function () {
+                                var param = util.cache();
+                                if (param.wizardVm) {
+                                    util.call({
+                                        vm: param.wizardVm,
+                                        direction: 'prev'
+                                    });
+                                }
+                                util.replace($(vm.$el).closest('.bv-wizard-content'),'modules/frontend/tag/example/wizard/content-2.html');
+                            }
+                        }, {
+                            text: 'submit',
+                            clazz: 'btn-primary wizard-next',
+                            click: function () {
+                                //
+                            }
+                        }
+                    ]
+                }
+            }
+        });
+    });
+</script>

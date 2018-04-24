@@ -1,0 +1,13 @@
+[
+  {
+    "menuId": "01",
+    "menuName": "系统环境"
+  },
+
+  {
+    "menuId": "0101",
+    "menuName": "相关框架",
+    "menuAddress": "modules/config/application-yml.html",
+    "parentMenu": "01"
+  }
+]

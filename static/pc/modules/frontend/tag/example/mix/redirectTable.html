@@ -1,0 +1,112 @@
+<div data-container="redirectTable">
+	<component is="bv-table" v-bind="config"></component>
+</div>
+<script type="text/javascript">
+require(['jquery', 'util', 'Const'], function ($, util, Const) {
+    var parentCode = util.gup('cityCode');
+    var initParamList = [];
+    if (util.isEmpty(parentCode)) {
+        initParamList.push({
+            name: 'parentCode',
+            operate: 'is'
+		});
+	} else {
+        initParamList.push({
+            name: 'parentCode',
+            operate: '=',
+			value: parentCode
+        });
+	}
+	var vm = util.bind({
+		container: 'redirectTable',
+		data: {
+			config: {
+			    select: 'checkbox',
+                entityName: 'sysCity',
+                keys: 'cityCode',
+                orders: 'cityCode',
+				initParamList: initParamList,
+                columns: [
+                    {
+                        name: 'cityCode',
+                        head: '城市代码'
+                    },
+                    {
+                        name: 'cityName',
+                        head: '城市名称',
+                        href: {
+                            preset: 'redirect',
+                            url: 'modules/frontend/tag/example/mix/redirectTable.html',
+                            data: function (event, name, entityName, selected) {
+                                if (selected && selected.length === 1) {
+                                    return {
+                                        cityCode: selected[0].cityCode,
+                                        backUrl: util.encode(util.url('body'))
+                                    };
+                                }
+                            }
+                        }
+                    },
+                    {
+                        name: 'parentCode',
+                        head: '上级城市'
+                    },
+                    {
+                        head: '操作',
+                        type: 'operate',
+                        operates: [
+                            {
+                                text: '查看下级',
+                                icon: 'icon-detail',
+                                preset: 'redirect',
+                                url: 'modules/frontend/tag/example/mix/redirectTable.html',
+                                data: function (event, name, entityName, selected) {
+                                    if (selected && selected.length === 1) {
+                                        return {
+                                            cityCode: selected[0].cityCode,
+                                            backUrl: util.encode(util.url('body'))
+                                        };
+                                    }
+                                }
+                            }, {
+                                text: '查看下级-自定义',
+                                icon: 'icon-detail',
+                                click: function (event, name, entityName, selected) {
+                                    if (selected && selected.length === 1) {
+                                        util.redirect(util.mix('modules/frontend/tag/example/mix/redirectTable.html', {
+                                            cityCode: selected[0].cityCode,
+                                            backUrl: util.encode(util.url('body'))
+                                        }), 'body');
+                                    }
+                                }
+                            }
+                        ]
+                    }
+                ],
+				operates: [
+					{
+                        text: '查看下级',
+                        icon: 'icon-detail',
+                        show: 'one',
+                        preset: 'redirect',
+                        url: 'modules/frontend/tag/example/mix/redirectTable.html',
+                        data: function (event, name, entityName, selected) {
+                            if (selected && selected.length === 1) {
+                                return {
+                                    cityCode: selected[0].cityCode,
+                                    backUrl: util.encode(util.url('body'))
+                                };
+                            }
+                        }
+					}, {
+			            text: '返回',
+                        icon: 'icon-return',
+                        show: 'return',
+                        url: util.isEmpty(parentCode) ? '' : util.decode(util.gup('backUrl'))
+                    }
+				]
+			}
+		}
+	});
+});
+</script>

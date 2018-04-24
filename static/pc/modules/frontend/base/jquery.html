@@ -1,0 +1,146 @@
+<div class="bs-docs-container">
+    <div class="bs-docs-section">
+        <h4>jquery</h4>
+        <p>jQuery 是一个 JavaScript 库。jQuery 极大地简化了 JavaScript 编程。jQuery 很容易学习。</p>
+        <dl class="dl-horizontal">
+            <dt>选择器</dt>
+            <dd>
+                <p>选择器允许对元素组或单个元素进行操作。</p>
+                <ul>
+                    <li>
+                        <p>元素选择器：使用 CSS 选择器来选取 HTML 元素。</p>
+                        <ul>
+                            <li>$('p') 选取 &lt;p&gt; 元素。</li>
+                            <li>$('p.intro') 选取所有 class='intro' 的 &lt;p&gt; 元素。</li>
+                            <li>$('p#demo') 选取所有 id='demo' 的 &lt;p&gt; 元素。</li>
+                        </ul>
+                    </li>
+                    <li>
+                        <p>属性选择器：使用 XPath 表达式来选择带有给定属性的元素。</p>
+                        <ul>
+                            <li>$('[name="xxx"]')选取所有name值等于'xxx'的元素</li>
+                            <li>$('[name!="xxx"]')选取所有name值不等于'xxx'的元素</li>
+                            <li>$('[name$=".jpg"]') 选取所有name值以 ".jpg" 结尾的元素。</li>
+                        </ul>
+                    </li>
+                    <li>
+                        <p>CSS 选择器：CSS 选择器可用于改变 HTML 元素的 CSS 属性。</p>
+                        <p>$("p").css("background-color","red");把所有 p 元素的背景颜色更改为红色</p>
+                    </li>
+                </ul>
+            </dd>
+            <dt>事件</dt>
+            <dd>
+                <p>绑定事件：$(selector).off('click').on('click')，常用事件有：</p>
+                <ul>
+                    <li>click：点击事件</li>
+                    <li>dblclick：双击事件</li>
+                    <li>change：值变动</li>
+                    <li>blur：失去焦点</li>
+                    <li>focus：获得焦点</li>
+                    <li>keydown：键按下</li>
+                    <li>keypress：按下键</li>
+                    <li>keyup：键弹起</li>
+                    <li>mouseenter：鼠标移进来</li>
+                    <li>mouseleave、mouseout：鼠标移出来，与 mouseout 事件不同，只有在鼠标指针离开被选元素时，才会触发 mouseleave 事件。如果鼠标指针离开任何子元素，同样会触发 mouseout 事件。</li>
+                    <li>resize：窗口大小改变</li>
+                    <li>scroll：滚动条滚动</li>
+                    <li>submit：表单提交</li>
+                </ul>
+                <p>触发事件：$(selector).click()</p>
+                <p>文档就绪事件：.ready()</p>
+            </dd>
+            <dt>效果</dt>
+            <dd>
+                <p>常用效果</p>
+                <ul>
+                    <li>hide：隐藏元素，支持参数，注意跟css visibility的区别</li>
+                    <li>show：显示元素</li>
+                    <li>toggle：切换显示、隐藏状态</li>
+                    <li>fadeIn、fadeOut：淡入淡出</li>
+                </ul>
+            </dd>
+            <dt>HTML</dt>
+            <dd>
+                <p>获得或设置内容</p>
+                <ul>
+                    <li>text() - 设置或返回所选元素的文本内容</li>
+                    <li>html() - 设置或返回所选元素的内容（包括 HTML 标记）</li>
+                    <li>val() - 设置或返回表单字段的值</li>
+                </ul>
+                <p>获取或设置属性</p>
+                <ul>
+                    <li>attr() - 用于获取属性值</li>
+                </ul>
+                <p>添加元素</p>
+                <ul>
+                    <li>append() - 在被选元素的结尾插入内容</li>
+                    <li>prepend() - 在被选元素的开头插入内容</li>
+                    <li>after() - 在被选元素之后插入内容</li>
+                    <li>before() - 在被选元素之前插入内容</li>
+                    <li>appendTo() - 在被选元素的结尾（仍然在内部）插入指定内容。注意跟append的区别。</li>
+                </ul>
+                <p>删除元素</p>
+                <ul>
+                    <li>remove() - 删除被选元素（及其子元素）</li>
+                    <li>empty() - 从被选元素中删除子元素</li>
+                </ul>
+                <p>获取并设置 CSS 类</p>
+                <ul>
+                    <li>addClass() - 向被选元素添加一个或多个类，多个类之间空格分开</li>
+                    <li>removeClass() - 从被选元素删除一个或多个类</li>
+                    <li>toggleClass() - 对被选元素进行添加/删除类的切换操作</li>
+                    <li>css() - 设置或返回样式属性</li>
+                </ul>
+                <p>尺寸</p>
+                <ul>
+                    <li>width() - 设置或返回元素的宽度（不包括内边距、边框或外边距）</li>
+                    <li>height() - 设置或返回元素的高度（不包括内边距、边框或外边距）</li>
+                    <li>innerWidth() - 返回元素的宽度（包括内边距）</li>
+                    <li>innerHeight() - 返回元素的高度（包括内边距）</li>
+                    <li>outerWidth() - 返回元素的宽度（包括内边距和边框）</li>
+                    <li>outerHeight() - 返回元素的高度（包括内边距和边框）</li>
+                    <li>outerWidth(true) - 返回元素的宽度（包括内边距、边框和外边距）</li>
+                    <li>outerHeight(true)  - 返回元素的高度（包括内边距、边框和外边距）</li>
+                </ul>
+            </dd>
+            <dt>遍历</dt>
+            <dd>
+                <p>祖先</p>
+                <ul>
+                    <li>parent() - 获得当前匹配元素集合中每个元素的父元素，由选择器筛选（可选）</li>
+                    <li>parents() - 获得当前匹配元素集合中每个元素的祖先元素，由选择器筛选（可选）</li>
+                    <li>closest() - 从元素本身开始，逐级向上级元素匹配，并返回最先匹配的祖先元素</li>
+                </ul>
+                <p>后代</p>
+                <ul>
+                    <li>children() - 返回被选元素的所有直接子元素，该方法只会向下一级对 DOM 树进行遍历</li>
+                    <li>find() - 获得当前匹配元素集合中每个元素的后代，由选择器进行筛选</li>
+                </ul>
+                <p>同胞</p>
+                <ul>
+                    <li>next() - 获得匹配元素集合中每个元素紧邻的同辈元素</li>
+                    <li>prev() - 获得匹配元素集合中每个元素紧邻的前一个同辈元素，由选择器筛选（可选）</li>
+                </ul>
+                <p>过滤</p>
+                <ul>
+                    <li>first() - 将匹配元素集合缩减为集合中的第一个元素</li>
+                    <li>last() - 将匹配元素集合缩减为集合中的最后一个元素</li>
+                    <li>eq() - 将匹配元素集合缩减为位于指定索引的新元素</li>
+                    <li>filter() - 将匹配元素集合缩减为匹配选择器或匹配函数返回值的新元素</li>
+                    <li>each() - 对 jQuery 对象进行迭代，为每个匹配元素执行函数</li>
+                </ul>
+            </dd>
+            <dt>AJAX</dt>
+            <dd>
+                <p>AJAX = 异步 JavaScript 和 XML（Asynchronous JavaScript and XML）</p>
+                <ul>
+                    <li>参数：url、同步异步...</li>
+                    <li>success() - 成功</li>
+                    <li>error() - 失败</li>
+                    <li>complete() - 结束</li>
+                </ul>
+            </dd>
+        </dl>
+    </div>
+</div>

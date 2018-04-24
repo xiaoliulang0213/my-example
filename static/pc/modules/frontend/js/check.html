@@ -1,0 +1,315 @@
+<div data-container="checkExample">
+    <div>
+        <div class="alert alert-info">attr属性定义大部分都支持两种方式：1、required: true 2、required: {code: true, desc: 'xxx不能为空'}</div>
+        <component is="bv-form" v-bind="requiredFormConfig"></component>
+        <component is="bv-form" v-bind="sizeFormConfig"></component>
+        <component is="bv-form" v-bind="dateFormConfig"></component>
+        <component is="bv-form" v-bind="otherFormConfig"></component>
+        <component is="bv-form" v-bind="fixFormConfig"></component>
+    </div>
+</div>
+<script type="text/javascript">
+// 注意本函数需要放到require上面
+function customCheck(field, rules, i, options) {
+    if (field.val() != 'HELLO') {
+        return '出错了，请输入HELLO';
+    }
+}
+require(['jquery', 'util', 'Const'], function($, util, Const) {
+    var vm = util.bind({
+        container: 'checkExample',
+        data: {
+            requiredFormConfig: {
+                title: '数据校验-必填',
+                columns: [
+                    {
+                        name: 'required1',
+                        head: '必填项校验1',
+                        edit: {
+                            type: 'textfield'
+                        },
+                        config: {
+                            attr: {
+                                placeholder: '通过attr属性设置（默认提示，不推荐）',
+                                'data-validation-engine': 'validate[required]'
+                            }
+                        }
+                    },
+                    {
+                        name: 'required2',
+                        head: '必填项校验2',
+                        edit: {
+                            type: 'textfield'
+                        },
+                        config: {
+                            attr: {
+                                placeholder: '通过attr属性设置（自定义提示，不推荐）',
+                                'data-validation-engine': 'validate[required]',
+                                'data-errormessage-value-missing': '自定义信息'
+                            }
+                        }
+                    },
+                    {
+                        name: 'required3',
+                        head: '必填项校验3',
+                        edit: {
+                            type: 'textfield'
+                        },
+                        config: {
+                            attr: {
+                                placeholder: '通过validate属性设置（默认提示，推荐）'
+                            },
+                            validate: {
+                                required: true
+                            }
+                        }
+                    },
+                    {
+                        name: 'required4',
+                        head: '必填项校验4',
+                        edit: {
+                            type: 'textfield'
+                        },
+                        config: {
+                            attr: {
+                                placeholder: '通过validate属性设置（自定义提示，推荐）'
+                            },
+                            validate: {
+                                required: '自定义信息'
+                            }
+                        }
+                    }
+                ]
+            },
+            sizeFormConfig: {
+                title: '数据校验-大小（一般应限定为数值类型）及长度',
+                columns: [
+                    {
+                        name: 'size1',
+                        head: '最小值校验',
+                        edit: {
+                            type: 'textfield'
+                        },
+                        config: {
+                            validate: {
+                                custom: 'number',
+                                min: 100
+                            }
+                        }
+                    },
+                    {
+                        name: 'size2',
+                        head: '最大最小校验',
+                        edit: {
+                            type: 'textfield'
+                        },
+                        config: {
+                            validate: {
+                                custom: {
+                                    code: 'number',
+                                    desc: '限制为数字'
+                                },
+                                min: {
+                                    code: 100,
+                                    desc: '限制为100以上'
+                                },
+                                max: {
+                                    code: 200,
+                                    desc: '限制为200以下'
+                                }
+                            }
+                        }
+                    },
+                    {
+                        name: 'size3',
+                        head: '最小长度',
+                        edit: {
+                            type: 'textfield'
+                        },
+                        config: {
+                            validate: {
+                                minSize: 4
+                            }
+                        }
+                    },
+                    {
+                        name: 'size4',
+                        head: '最短及最长（最好用maxlength限制）校验',
+                        edit: {
+                            type: 'textfield'
+                        },
+                        config: {
+                            validate: {
+                                minSize: {
+                                    code: 4,
+                                    desc: '限制为4位以上'
+                                },
+                                maxSize: {
+                                    code: 6,
+                                    desc: '限制为6位以下'
+                                }
+                            }
+                        }
+                    }
+                ]
+            },
+            dateFormConfig: {
+                title: '数据校验-日期',
+                columns: [
+                    {
+                        name: 'date1',
+                        head: '默认提示',
+                        edit: {
+                            type: 'textfield'
+                        },
+                        config: {
+                            validate: {
+                                custom: 'date'
+                            }
+                        }
+                    },
+                    {
+                        name: 'date2',
+                        head: '自定义提示',
+                        edit: {
+                            type: 'textfield'
+                        },
+                        config: {
+                            validate: {
+                                custom: {
+                                    code: 'date',
+                                    desc: '格式错了'
+                                }
+                            }
+                        }
+                    },
+                    {
+                        name: 'date3',
+                        head: '需晚于今天-默认提示',
+                        edit: {
+                            type: 'textfield'
+                        },
+                        config: {
+                            validate: {
+                                custom: 'date',
+                                future: 'NOW'
+                            }
+                        }
+                    },
+                    {
+                        name: 'date4',
+                        head: '需晚于今天-自定义提示',
+                        edit: {
+                            type: 'textfield'
+                        },
+                        config: {
+                            validate: {
+                                custom: 'date',
+                                future: {
+                                    code: 'NOW',
+                                    desc: '日期应晚于今天'
+                                }
+                            }
+                        }
+                    },
+                    {
+                        name: 'date5',
+                        head: '限制日期范围',
+                        edit: {
+                            type: 'textfield'
+                        },
+                        config: {
+                            validate: {
+                                custom: 'date',
+                                past: '2016-12-01',
+                                future: '2016-08-10'
+                            }
+                        }
+                    }
+                ]
+            },
+            otherFormConfig: {
+                title: '数据校验-其他',
+                columns: [
+                    {
+                        name: 'email1',
+                        head: '邮箱格式校验-默认提示',
+                        edit: {
+                            type: 'textfield'
+                        },
+                        config: {
+                            validate: {
+                                custom: 'email'
+                            }
+                        }
+                    }, {
+                        name: 'email2',
+                        head: '邮箱格式校验-自定义提示',
+                        edit: {
+                            type: 'textfield'
+                        },
+                        config: {
+                            validate: {
+                                custom: {
+                                    code: 'email',
+                                    desc: '格式错了'
+                                }
+                            }
+                        }
+                    }, {
+                        name: 'custom1',
+                        head: '自定义校验',
+                        config: {
+                            validate: {
+                                call: 'customCheck'
+                            }
+                        }
+                    }
+                ]
+            },
+            fixFormConfig: {
+                title: '数据校验-限制输入',
+                columns: [
+                    {
+                        name: 'fix1',
+                        head: '限制只能输入数字',
+                        edit: {
+                            type: 'textfield'
+                        },
+                        config: {
+                            fix: 'integer'
+                        }
+                    }, {
+                        name: 'fix2',
+                        head: '限制只能输入数字、小数点、负号',
+                        edit: {
+                            type: 'textfield'
+                        },
+                        config: {
+                            fix: 'number'
+                        }
+                    }, {
+                        name: 'fix3',
+                        head: '限制大于0的数',
+                        edit: {
+                            type: 'textfield'
+                        },
+                        config: {
+                            fix: '+number'
+                        }
+                    }, {
+                        name: 'fix4',
+                        head: '限制金额格式',
+                        edit: {
+                            type: 'textfield'
+                        },
+                        config: {
+                            fix: 'amount'
+                        }
+                    }
+                ]
+            }
+        }
+    });
+});
+</script>

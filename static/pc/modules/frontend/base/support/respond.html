@@ -1,0 +1,114 @@
+<div class="bs-docs-container">
+    <div class="bs-docs-section">
+        <h4>响应式布局</h4>
+        <p>Bootstrap 提供了一套响应式、移动设备优先的流式栅格系统，随着屏幕或视口（viewport）尺寸的增加，系统会自动分为最多12列。</p>
+        <dl class="dl-horizontal">
+            <dt>页面布局</dt>
+            <dd>
+                <p>表单维护页面应采用流式布局，单列定义class="col-md-12"，两列定义class="col-md-6"</p>
+                <p>每列的label定义class="col-sm-3 control-label"，维护或显示项定义class="col-sm-9"</p>
+                <p>注意label for的使用，非输入框显示应使用p class="form-control-static"标签</p>
+                <p>如果需要更灵活的流式布局，定义时应考虑屏幕大小，如定义class="col-sm-6 col-md-4 col-lg-3"，表示小屏幕两列（12/6）、中屏幕3列（12/4）、大屏幕4列（12/3）</p>
+            </dd>
+        </dl>
+        <h4>实例</h4>
+        <form class="form-horizontal">
+            <div class="col-md-12">
+                <div class="form-group">
+                    <label for="single1" class="col-sm-3 control-label">单列：</label>
+                    <div class="col-sm-9">
+                        <input type="text" id="single1" class="form-control" />
+                    </div>
+                </div>
+            </div>
+            <div class="col-md-6">
+                <div class="form-group">
+                    <label for="two1" class="col-sm-3 control-label">两列之一：</label>
+                    <div class="col-sm-9">
+                        <input type="text" id="two1" class="form-control" />
+                    </div>
+                </div>
+            </div>
+            <div class="col-md-6">
+                <div class="form-group">
+                    <label class="col-sm-3 control-label">两列之二：</label>
+                    <div class="col-sm-9">
+                        <p class="form-control-static">纯显示用数据</p>
+                    </div>
+                </div>
+            </div>
+            <div class="col-md-4">
+                <div class="form-group">
+                    <label for="three1" class="col-sm-3 control-label">三列之一：</label>
+                    <div class="col-sm-9">
+                        <input type="text" id="three1" class="form-control" />
+                    </div>
+                </div>
+            </div>
+            <div class="col-md-4">
+                <div class="form-group">
+                    <label for="three2" class="col-sm-3 control-label">三列之二：</label>
+                    <div class="col-sm-9">
+                        <input type="text" id="three2" class="form-control" />
+                    </div>
+                </div>
+            </div>
+            <div class="col-md-4">
+                <div class="form-group">
+                    <label for="three3" class="col-sm-3 control-label">三列之三：</label>
+                    <div class="col-sm-9">
+                        <input type="text" id="three3" class="form-control" />
+                    </div>
+                </div>
+            </div>
+            <div class="col-sm-6 col-md-4 col-lg-3">
+                <div class="form-group">
+                    <label for="layout1" class="col-sm-3 control-label">灵活布局1：</label>
+                    <div class="col-sm-9">
+                        <input type="text" id="layout1" class="form-control" />
+                    </div>
+                </div>
+            </div>
+            <div class="col-sm-6 col-md-4 col-lg-3">
+                <div class="form-group">
+                    <label for="layout2" class="col-sm-3 control-label">灵活布局2：</label>
+                    <div class="col-sm-9">
+                        <input type="text" id="layout2" class="form-control" />
+                    </div>
+                </div>
+            </div>
+            <div class="col-sm-6 col-md-4 col-lg-3">
+                <div class="form-group">
+                    <label for="layout3" class="col-sm-3 control-label">灵活布局3：</label>
+                    <div class="col-sm-9">
+                        <input type="text" id="layout3" class="form-control" />
+                    </div>
+                </div>
+            </div>
+            <div class="col-sm-6 col-md-4 col-lg-3">
+                <div class="form-group">
+                    <label for="layout4" class="col-sm-3 control-label">灵活布局4：</label>
+                    <div class="col-sm-9">
+                        <input type="text" id="layout4" class="form-control" />
+                    </div>
+                </div>
+            </div>
+            <div class="col-sm-6 col-md-4 col-lg-3">
+                <div class="form-group">
+                    <label for="layout5" class="col-sm-3 control-label">灵活布局5：</label>
+                    <div class="col-sm-9">
+                        <input type="text" id="layout5" class="form-control" />
+                    </div>
+                </div>
+            </div>
+            <div class="col-sm-6 col-md-4 col-lg-3">
+                <div class="form-group">
+                    <label for="layout6" class="col-sm-3 control-label">灵活布局6：</label>
+                    <div class="col-sm-9">
+                        <input type="text" id="layout6" class="form-control" />
+                    </div>
+                </div>
+            </div>
+        </form>
+    </div>
+</div>

@@ -1,0 +1,52 @@
+<div data-container="hrefRefreshTable">
+	<component is="bv-table" key="hrefRefreshTableKey" v-bind="config"></component>
+	<div>
+		统计信息：省<a href="javascript:;" @click="refreshTable('province')">x</a>个，市<a href="javascript:;" @click="refreshTable('city')">x</a>个，区<a href="javascript:;" @click="refreshTable('district')">x</a>个
+	</div>
+</div>
+<script type="text/javascript">
+require(['jquery', 'util', 'Const'], function ($, util, Const) {
+	var vm = util.bind({
+		container: 'hrefRefreshTable',
+		data: {
+			config: {
+                entityName: 'sysCity',
+                keys: 'cityCode',
+				// initParam: {},
+                columns: [
+                    {
+                        name: 'cityCode',
+                        head: '城市代码'
+                    },
+                    {
+                        name: 'cityName',
+                        head: '城市名称'
+                    },
+                    {
+                        name: 'parentCode',
+                        head: '上级城市'
+                    }
+                ],
+                orders: 'cityCode'
+			}
+		},
+		methods: {
+		    refreshTable: function (level) {
+		        // util.call不存在的话用util.refresh
+				var initParam = {};
+				if (level === 'province') {
+                    initParam.cityType = 'province';
+				} else if (level === 'city') {
+                    initParam.cityType = 'city';
+				} else if (level === 'district') {
+				    initParam.cityType = 'area';
+				}
+				util.call({
+					vm: util.vm(this, 'hrefRefreshTableKey'),
+					initParam: initParam
+				});
+            }
+		}
+	});
+});
+</script>

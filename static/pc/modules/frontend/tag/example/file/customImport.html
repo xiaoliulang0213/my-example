@@ -1,0 +1,16 @@
+<div data-container="customImport">
+	<component is="bv-import" v-bind="config"></component>
+</div>
+<script type="text/javascript">
+    require(['jquery', 'util', 'Const'], function ($, util, Const) {
+        var vm = util.bind({
+            container: 'customImport',
+            data: {
+                config: {
+                    url: '/api/example/import',
+                    template: 'sysCityImportTemplate.xlsx'
+                }
+            }
+        });
+    });
+</script>

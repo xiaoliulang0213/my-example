@@ -1,0 +1,302 @@
+<div>
+    <div class="bv-static" :class="innerClass">
+        <p v-bind="innerAttr"><span v-text="innerValue"></span></p>
+    </div>
+    <div class="bv-textfield" :class="innerClass">
+        <input :type="innerType" v-bind="innerAttr" :autocomplete="autocomplete" v-model="innerEntity[name]" v-on:paste="checkPaste($event)" v-on:input="checkInput($event)" v-on:blur="blur && blur($event, innerEntity[name], innerEntity)" />
+    </div>
+    <div>
+        <div class="bv-select" :class="innerClass">
+            <select v-bind="innerAttr" v-model="innerEntity[name]" required>
+                <option v-bind="{value: null}" v-if="initOption" v-text="initOption" disabled="true"></option>
+                <optgroup v-for="optgroup in innerGroups" v-bind="{label: optgroup.label}">
+                    <option v-for="option in optgroup.innerOptions" v-bind="{value: option[innerCode]}" v-text="option[innerDesc]"></option>
+                </optgroup>
+                <option v-for="option in innerOptions" v-bind="{value: option[innerCode]}" v-text="option[innerDesc]" v-if="option.hide === undefined || option.hide !== true"></option>
+            </select>
+        </div>
+    </div>
+    <div class="list-block bv-radio" :class="innerClass">
+        <ul>
+            <li v-for="option in innerOptions">
+                <label class="label-radio item-content">
+                    <input type="radio" :value="option[innerCode]" v-bind="innerAttr" name="name" id="name + '-' + option[innerCode]" v-model="innerEntity[name]" />
+                    <div class="item-inner">
+                        <div class="item-title" v-text="option[innerDesc]"></div>
+                    </div>
+                </label>
+            </li>
+        </ul>
+    </div>
+    <div class="list-block bv-checkbox" :class="innerClass">
+        <ul>
+            <li v-for="option in innerOptions">
+                <label class="label-checkbox item-content">
+                    <input type="checkbox" :value="option[innerCode]" :disabled="option[innerCode] === innerSticky" v-bind="innerAttr" name="name" id="name + '-' + option[innerCode]" v-model="innerValues" />
+                    <div class="item-media">
+                        <i class="icon icon-form-checkbox"></i>
+                    </div>
+                    <div class="item-inner">
+                        <div class="item-title" v-text="option[innerDesc]"></div>
+                    </div>
+                </label>
+            </li>
+        </ul>
+    </div>
+    <label class="label-switch bv-switch" :class="innerClass">
+        <input type="checkbox" v-model="innerBindValue" />
+        <div class="checkbox"></div>
+    </label>
+    <div class="bv-picker" :class="innerClass">
+        <input type="text" v-bind="innerAttr" readonly="readonly" />
+    </div>
+    <div class="bv-date" :class="innerClass">
+        <input type="text" readonly="readonly" v-bind="innerAttr" v-model="innerEntity[name]" />
+    </div>
+    <div class="bv-form" :class="[defaultClass && 'list-block', innerClass]">
+        <component :is="container">
+            <h2 v-text="innerTitle" v-if="innerTitle"></h2>
+            <ul>
+                <li class="item-tag" :class="['item-' + el.type, el.clazz]" v-for="el in innerColumns" v-show="isColumnVisible(el)" v-if="isColumnCreate(el)">
+                    <div class="content-block-title" v-text="el.head" v-if="el.head && (el.layout || layout) === 'default'"></div>
+                    <div class="item-content" :class="{'item-link': el.type === 'bv-select' || el.type === 'bv-picker'}">
+                        <div class="item-media" v-if="el.type === 'bv-toggle'"><i class="icon icon-form-toggle"></i></div>
+                        <div class="item-inner">
+                            <div class="item-title label" v-text="el.head" v-if="el.head && (el.layout || layout) === 'inline'"></div>
+                            <div class="row" v-if="el.operate && (!el.operate.type || el.operate.type !== 'hint') && (!el.operate.position || el.operate.position === 'inline')">
+                                <div class="col-auto item-input">
+                                    <component :is="el.type" :key="el.name" :name="el.name" from="form" :entity="innerEntity" :head="el.config.head" :operate="el.operate" v-bind="el.config"></component>
+                                </div>
+                                <div class="col-auto item-input-operate" :class="el.operate.clazz" v-if="el.operate && (!el.operate.position || el.operate.position === 'inline')">
+                                    <a href="javascript:;" class="button button-round active" :id="el.operate.id" @click="el.operate.click($event, innerEntity)">{{el.operate.text}}&nbsp;</a>
+                                </div>
+                            </div>
+                            <div class="item-input" v-else>
+                                <component :is="el.type" :key="el.name" :name="el.name"  from="form" :entity="innerEntity" :head="el.config.head" :operate="el.operate" v-bind="el.config"></component>
+                            </div>
+                            <div class="item-input-operate" :class="[{'item-input-hint': el.operate.type && el.operate.type === 'hint'}, el.operate.clazz]" v-if="el.operate && el.operate.type === 'hint' && (!el.operate.position || el.operate.position === 'inline')">
+                                <a href="javascript:;" class="hint" :id="el.operate.id" @click="el.operate.click($event, innerEntity)">{{el.operate.text}}&nbsp;</a>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="item-after form-item-hint" v-text="el.hint" v-if="el.hint"></div>
+                    <div class="item-after" v-if="el.operate && el.operate.position === 'bottom'">
+                        <label>
+                            <a href="javascript:;" v-text="el.operate.text" @click="el.operate.click($event)"></a>
+                        </label>
+                    </div>
+                    <div class="item-after item-agree" v-if="el.agree">
+                                <span>
+                                    <input type="checkbox" v-model="innerEntity[el.agree.name]" />
+                                    <span class="hand" @click="innerEntity[el.agree.name] = !innerEntity[el.agree.name]">
+                                        阅读并同意
+                                        <a href="javascript:;" v-text="el.agree.text" @click.stop="el.agree.click($event)"></a>
+                                        <span v-if="el.agree.otherAgreement">，</span>
+                                        <a href="javascript:;" v-if="el.agree.otherAgreement" v-text="el.agree.otherAgreement.text" @click.stop="el.agree.otherAgreement.click($event)"></a>
+
+                                    </span>
+                                </span>
+                    </div>
+                </li>
+            </ul>
+            <div class="content-block" :class="operatesClass" v-if="innerOperates.length != 0">
+                <p v-for="el in innerOperates">
+                    <a href="javascript:;" class="button button-big button-round" :class="{'active': el.layout === 'primary'}" :id="el.id" @click="click($event, el)" v-show="isButtonVisible(el)">{{el.text}}</a>
+                </p>
+            </div>
+        </component>
+    </div>
+    <div class="view view-main bv-layout">
+        <div class="page" data-page="home">
+            <div class="navbar" v-if="nav">
+                <div class="navbar-inner">
+                    <div class="left">
+                        <a id="navBack" href="#" class="link icon-only">
+                            <i class="icon icon-back"></i>
+                        </a>
+                    </div>
+                    <div id="navTitle" class="center" v-text="title"></div>
+                    <div class="right">
+                        <a href="#" class="link icon-only">
+                            <i class="icon icon-bars"></i>
+                        </a>
+                    </div>
+                </div>
+            </div>
+            <div class="toolbar">
+                <div class="toolbar-inner">
+                    <slot name="toolbar"></slot>
+                </div>
+            </div>
+            <div class="page-content">
+                <slot name="content"></slot>
+            </div>
+        </div>
+    </div>
+    <div class="popup popup-services bv-popup">
+        <div class="content-block">
+            <div>
+                <span class="bv-left" v-text="title" v-if="title"></span>
+                <span class="bv-right" v-if="close"><a href="#" class="close-popup" v-text="close"></a></span>
+            </div>
+            <div><slot></slot></div>
+        </div>
+    </div>
+    <div class="list-block accordion-list bv-accordion" :class="[{'last-opened': innerOpenIndex === (items.length - 1)}, innerClass]">
+        <ul>
+            <li class="accordion-item" @opened="innerOpenIndex = index" @close="innerOpenIndex = -1" v-for="(el, index) in items" v-if="el.create === undefined || el.create !== false">
+                <div class="item-content accordion-item-toggle">
+                    <div class="item-inner">
+                        <div class="item-title label" v-text="el.title"></div>
+                    </div>
+                </div>
+                <div class="accordion-item-content">
+                    <div class="content-block">
+                        <p v-text="el.content" v-if="el.content"></p>
+                        <component :is="'bv-' + el.type" :entity="entity" v-bind="el.config" v-if="el.type"></component>
+                    </div>
+                </div>
+            </li>
+        </ul>
+    </div>
+    <div class="swiper-container bv-swiper">
+        <div class="swiper-wrapper">
+            <div v-for="el in items" class="swiper-slide">
+                <img :src="el.image" />
+            </div>
+        </div>
+        <div class="swiper-pagination"></div>
+    </div>
+    <div class="bv-tabs" :class="['bv-tabs-' + layout, layout === 'head' ? '' : 'content-block', {'bv-tabs-fixed': fixed}]">
+        <div class="buttons-row" v-if="layout === 'head'">
+            <a v-for="(el, index) in tabs" href="javascript:;" class="tab-link" :class="index === innerCurrentIndex && 'active'" :id="el.target" @click="innerCurrentIndex = index"><span v-text="el.text" ></span></a>
+        </div>
+        <div class="buttons-row" v-if="layout === 'nav'">
+            <a v-for="(el, index) in tabs" href="javascript:;" class="tab-link button" :class="index === innerCurrentIndex && 'active'" v-text="el.text" @click="innerCurrentIndex = index"></a>
+        </div>
+        <div class="tabs" v-if="layout !== 'head'">
+            <slot v-if="type === 'inline'"></slot>
+            <div class="tab active" v-if="type === 'load'"></div>
+            <div>
+                <div class="toolbar tabbar" v-if="layout === 'tab'">
+                    <div class="toolbar-inner">
+                        <a v-for="(el, index) in tabs" href="javascript:;" class="tab-link" :class="index === innerCurrentIndex && 'active'" @click="innerCurrentIndex = index">
+                            <i class="icon" :class="'icon-' + el.icon" v-if="el.icon"></i>
+                            <p v-text="el.text"></p>
+                        </a>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+    <div class="bv-tabs-container tabs-swipeable-wrap">
+        <div class="tabs">
+            <slot></slot>
+        </div>
+    </div>
+    <div class="bv-tabs-content page-content tab infinite-scroll">
+        <slot></slot>
+    </div>
+    <article class="content-block bv-article">
+        <h1 v-text="title" v-if="title"></h1>
+        <div v-html="content" v-if="content"></div>
+        <section v-for="section in sections">
+            <h2 v-text="section.title" v-if="section.title"></h2>
+            <div v-html="section.content" v-if="section.content"></div>
+            <section v-for="sub in section.sections">
+                <h3 v-text="sub.title" v-if="sub.title"></h3>
+                <div v-html="sub.content" v-if="sub.content"></div>
+            </section>
+        </section>
+    </article>
+    <div class="bv-list" :class="{'pull-to-refresh-content': refresh, 'infinite-scroll': infinite}">
+        <div class="content-block-title" v-if="innerTitle" v-text="innerTitle"></div>
+        <div class="list-block" :class="{'media-list': type === 'media'}">
+            <div class="pull-to-refresh-layer" v-if="refresh">
+                <div class="preloader"></div>
+                <div class="pull-to-refresh-arrow"></div>
+            </div>
+            <ul>
+                <li :class="{'item-content': !el.href}" v-for="(el, index) in innerItems">
+                    <a href="javascript:;" class="item-link item-content" v-bind="{'data-redirect': el.href}" v-if="el.href">
+                        <div class="item-media" v-if="el.icon">
+                            <i class="icon" :class="'icon-' + el.icon"></i>
+                        </div>
+                        <div class="item-inner">
+                            <div class="item-title" v-text="el.title"></div>
+                            <div class="item-after"><span v-text="el.content"></span><span class="badge" v-if="el.badge" v-text="el.badge"></span></div>
+                        </div>
+                    </a>
+                    <div class="item-media" v-if="el.icon && !el.href">
+                        <i class="icon" :class="'icon-' + el.icon"></i>
+                    </div>
+                    <div class="item-head" v-html="el.head" v-if="el.head && !el.href"></div>
+                    <div class="item-media" v-if="el.image && !el.href">
+                        <img :src="el.image"></img>
+                    </div>
+                    <div class="item-inner" v-if="!el.href" @click="el.click($event, el)">
+                        <div class="item-title" v-html="el.title"></div>
+                        <div class="item-after"><div class="innerImage"><img :src="el.innerImage" v-if="el.innerImage && !el.href"></div><span class="content" v-text="el.content"></span><span :class="el.badge" v-if="el.badge" v-text="el.badgeContent"></span></div>
+                        <div class="item-text" v-if="el.extra" v-html="el.extra"></div>
+                        <div class="item-btns" v-if="el.operates">
+                            <div class="row">
+                                <div v-for="op in el.operates" class="col-auto" v-if="checkButton(op, el)">
+                                    <a href="javascript:;" class="button" :class="{'button-fill': op.layout === 'primary'}" @click.stop="op.click($event, el, index)">{{op.text}}</a>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </li>
+            </ul>
+            <div class="infinite-scroll-preloader" v-show="innerShowLoading" v-if="infinite">
+                <div class="preloader"></div>
+            </div>
+            <div class="list-block-label" v-text="footer"></div>
+        </div>
+        <div class="list-block-empty" v-text="emptyPrompt"></div>
+    </div>
+    <div class="content-block bv-upload" :class="[innerClass, 'type-' + type]">
+        <div v-for="row in innerRows" class="row">
+            <div class="file-container" :key="el.name || 'file' + index" :class="innerContainerClass" v-for="(el, index) in innerFiles" v-if="index >= innerRowNum * (row - 1) && index < innerRowNum * row" @click="doCapture(index)">
+                <div class="default-image" :class="el.url && 'hide-bg'"></div>
+                <div class="file-preview">
+                    <input type="file" accept="image/*" v-bind="[{'data-index': index}, innerAttr]" v-if="!el.disabled && (type === 'default'|| type === 'camera')" />
+                    <img :src="el.url" :class="{lazy: el.lazy !== false && el.url}" v-if="el.url" />
+                </div>
+                <div class="upload-progress-overlay" v-if="el.progress >= 0 && el.progress < 100"></div>
+                <div class="upload-progress" v-text="el.progress + '%'" v-if="el.progress >= 0 && el.progress < 100"></div>
+                <div class="item-after" v-text="el.head" v-if="el.head"></div>
+                <div class="file-delete chip-delete" @click="innerDeleteFile($event, index, el)" v-if="el.url && autoIncrease"></div>
+            </div>
+        </div>
+    </div>
+
+    <div class="framework-modal-template modal {{cssClass}} {{#unless buttons}}modal-no-buttons{{/unless}}">
+        <div class="modal-inner">
+            {{#if title}}
+            <div class="modal-title">{{title}}</div>
+            {{/if}}
+            {{#if text}}
+            <div class="modal-text">{{text}}</div>
+            {{/if}}
+            {{#if afterText}}
+            {{afterText}}
+            {{/if}}
+        </div>
+        {{#if buttons}}
+        <div class="modal-buttons {{#if verticalButtons}}modal-buttons-vertical{{/if}}">
+            {{#each buttons}}
+            <span class="modal-button {{#if cssClass}}modal-button-{{cssClass}}{{/if}}">{{text}}</span>
+            {{/each}}
+        </div>
+        {{/if}}
+    </div>
+    <div class="popup popup-about agree-popup">
+        <div class="content-block">
+            <p id="title"><span>协议标题</span><a href="#" class="close-popup">关闭</a></p>
+            <div id="content">
+                <iframe width="100%" height="100%" frameborder="0"></iframe>
+            </div>
+        </div>
+    </div>
+</div>

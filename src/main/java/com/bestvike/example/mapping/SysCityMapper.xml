@@ -1,0 +1,39 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.bestvike.example.dao.SysCityDao">
+    <select id="initCity" parameterType="Map" resultType="SysCity">
+        <![CDATA[
+            select * from sys_city
+        ]]>
+        <where>
+            <if test="cityCode != null">
+                <![CDATA[
+                city_code = #{cityCode}
+            ]]>
+            </if>
+            <include refid="com.bestvike.commons.dao.AbstractDao.query"/>
+        </where>
+    </select>
+    <select id="selectCity" parameterType="Map" resultType="SysCity">
+        <![CDATA[
+            select * from sys_city
+        ]]>
+        <where>
+            <![CDATA[
+                parent_code is null
+            ]]>
+            <if test="cityCode != null">
+                <![CDATA[
+                and city_code = #{cityCode}
+            ]]>
+            </if>
+            <if test="q != null">
+                <![CDATA[
+                and city_name like #{q}
+            ]]>
+            </if>
+            <include refid="com.bestvike.commons.dao.AbstractDao.query"/>
+        </where>
+        <include refid="com.bestvike.commons.dao.AbstractDao.order"/>
+    </select>
+</mapper>

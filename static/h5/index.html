@@ -1,0 +1,83 @@
+<!DOCTYPE html>
+<!--[if lte IE 8]>
+<html class="ie8">
+<![endif]-->
+<!--[if IE 9]>
+<html class="ie9">
+<![endif]-->
+<!--[if (gte IE 10) | (!IE)]><!-->
+<html>
+<!--<![endif]-->
+<head>
+    <meta http-equiv="content-type" content="text/html;charset=utf-8" />
+    <meta http-equiv="X-UA-Compatible" content="IE=Edge" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <meta http-equiv="Cache-Control" content="no-cache" />
+    <link rel="shortcut icon" href="modules/themes/customFavicon.ico" type="image/x-icon" />
+    <title>EXAMPLE-H5</title>
+</head>
+<!--[if lte IE 8]>
+<body class="bv-theme">
+<div class="alert alert-warning bv-compact">
+    <p>提示: 您在使用低版本的IE浏览器，使用不兼容的浏览器可能导致浏览异常。</p>
+    <p>解决方法：</p>
+    <p>升级至IE9或更高版本；</p>
+    <p>安装Chrome(谷歌浏览器）或Firefox（火狐）浏览器来使用本系统。</p>
+</div>
+</body>
+<![endif]-->
+<!--[if (gte IE 9) | (!IE)]><!-->
+<body class="bv-theme" style="display:none">
+<div data-container="root" :class="!showNav && 'bv-hideNav'">
+<div class="bv-nav">
+    <div class="bv-logo">
+    </div>
+    <div class="bv-menu">
+        <component is="bv-tree" v-bind="menuConfig" @on-init="menuEvent.onInit" @on-expand="menuEvent.onExpand" @on-click="menuEvent.onClick"></component>
+    </div>
+</div>
+<div class="bv-header">
+    <div class="bv-toolbar">
+        <div class="left">
+            <i id="toggleNav" class="iconfont icon-menu bv-left" data-placement="right" v-bind="{'data-title': navTitle}"
+               @click="showNav = !showNav"></i>
+            <div class="bv-left">
+                <component is="bv-position" head="您当前位置：" :titles="position.titles"></component>
+            </div>
+        </div>
+        <div class="right">
+            <div class="operate">
+                <a href="javascript:;" class="btn btn-link left" @click="removeAllTabs"><i class="iconfont icon-cancel"></i>关闭全部标签页</a>
+            </div>
+        </div>
+    </div>
+</div>
+<div class="bv-body">
+    <component is="bv-tabs" v-bind="mainTabsConfig" @on-init="mainTabsEvent.onInit"></component>
+    <div class="loading"></div>
+</div>
+<div class="bv-source">
+    <a href="javascript:;" class="btn btn-link" @click="viewSource"><i class="iconfont icon-html"></i></a>
+</div>
+</div>
+<div id="modal" class="modal"></div>
+<div id="confirm" class="modal"></div>
+<div id="alert" class="modal"></div>
+<div id="login" class="modal"></div>
+<div class="loading"></div>
+<iframe id="download" style="display:none"></iframe>
+
+<script type="text/javascript" src="config.js"></script>
+<script type="text/javascript">
+    if (window.loader) {
+        loader.style(['/js/bootstrap/css/bootstrap.min.css', '/themes/iconfont/iconfont.css',
+            '/themes/default/core.css', '/themes/default/main.css', 'custom/themes/custom.css'], true, function () {
+            loader.script(['/js/require/require.min.js', '/common/config.js', '/common/main.js'], function () {
+                loader.script(['custom/js/init.js', 'custom/js/app.js']);
+            });
+        });
+    }
+</script>
+</body>
+<!--<![endif]-->
+</html>

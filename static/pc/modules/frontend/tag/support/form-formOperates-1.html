@@ -1,0 +1,78 @@
+<div data-container="formFormOperates1">
+    <component is="bv-modal" :keys="tags.modalId" v-bind="config">
+        <div slot="body">
+<pre>
+$formOperates: [
+    {
+        text: '增加下级菜单',
+        icon: 'icon-add',
+        position: 'header',
+        validate: false,
+        click: function(editType, formEntity) {
+            vm.formConfig.formEditType = 'insert';
+
+            vm.formConfig.formEntity = {
+                menuId: '',
+                menuName: '',
+                menuLink: '',
+                disOrder: '',
+                parentMenuId: vm.currentNode.entity ? vm.currentNode.entity.menuId : '00'
+            };
+        }
+    },
+    {
+        text: '增加平级菜单',
+        icon: 'icon-add',
+        position: 'header',
+        validate: false,
+        click: function(editType, formEntity) {
+            vm.formConfig.formEditType = 'insert';
+
+            vm.formConfig.formEntity = {
+                menuId: '',
+                menuName: '',
+                menuLink: '',
+                disOrder: '',
+                parentMenuId: vm.currentNode.level > 0 ? vm.currentNode.parentNode.entity.menuId : '00'
+            };
+        }
+    },
+    {
+        text: '删除菜单',
+        clazz: 'btn-warning',
+        icon: 'icon-delete',
+        show: 'update',
+        position: 'footer',
+        click: function(editType, formEntity) {
+            util.confirm({
+                type: 'delete',
+                from: 'form',
+                vm: vm.$tags.formId,
+                refresh: function(formId) {
+                    util.refresh(vm.$tags.treeId);
+                    vm.currentNode = undefined;
+                }
+            });
+        }
+    }
+]
+</pre>
+        </div>
+    </component>
+</div>
+<script type="text/javascript">
+require(['jquery', 'util', 'Const'], function ($, util, Const) {
+    var vm = util.bind({
+        container: 'formFormOperates1',
+        data: {
+            tags: {
+                modalId: 'formFormOperates1Modal'
+            },
+            config: {
+                size: 'lg',
+                title: '按钮定义'
+            }
+        }
+    });
+});
+</script>

@@ -1,0 +1,81 @@
+<div data-container="tagTableTypeExample">
+	<component is="bv-table" :key="tags.tableId" v-bind="config"></component>
+	<component is="bv-table" :key="tags.subTableId" v-bind="configSub"></component>
+</div>
+<script type="text/javascript">
+require(['jquery', 'util'], function($, util) {
+    var vm = util.bind({
+        container: 'tagTableTypeExample',
+        data: {
+			tags: {
+				tableId: 'tagTableTypeExampleTable',
+				subTableId: 'tagTableTypeExampleSubTable'
+			},
+			config: {
+			    dblclick: 'triggerSub',
+				entityName: 'sysCity',
+				keys: 'cityCode',
+				columns: [
+					{
+						name: 'cityCode',
+						head: '城市代码'
+					},
+					{
+						name: 'cityName',
+						head: '城市名称',
+						href: {
+                            preset: 'sub',
+							config: {
+								id: 'tagTableTypeExampleSubTable',
+								initParamList: [{
+									name: 'parentCode',
+									operate: '=',
+									from: 'cityCode'
+								}]
+							}
+						}
+					},
+					{
+						name: 'operate',
+						head: '操作',
+						type: 'operate',
+						align: 'center',
+						operates: [
+							{
+								text: '下级',
+                                preset: 'sub',
+								config: {
+									id: 'tagTableTypeExampleSubTable',
+									initParamList: [{
+										name: 'parentCode',
+										operate: '=',
+										from: 'cityCode'
+									}]
+								}
+							}
+						]
+					}
+				],
+				orders: 'cityCode'
+			},
+			configSub: {
+				/// layout: 'body',
+				type: 'sub',
+				entityName: 'sysCity',
+				keys: 'cityCode',
+				columns: [
+					{
+						name: 'cityCode',
+						head: '城市代码'
+					},
+					{
+						name: 'cityName',
+						head: '城市名称'
+					}
+				],
+				orders: 'cityCode'
+			}
+		}
+    });
+});
+</script>

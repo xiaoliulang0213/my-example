@@ -1,0 +1,20 @@
+﻿<?xml version="1.0" encoding="UTF-8"?>
+<workbook>
+    <worksheet idx="0">
+        <section startRow="0" endRow="0">
+        </section>
+        <loop startRow="1" endRow="1" items="sysCityList" var="sysCity" varType="com.bestvike.example.data.SysCity">
+            <section startRow="7" endRow="7">
+                <mapping row="7" col="1">sysCity.cityCode</mapping>
+                <mapping row="7" col="2">sysCity.cityName</mapping>
+                <mapping row="7" col="3">sysCity.remark</mapping>
+            </section>
+            <loopbreakcondition>
+                <rowcheck offset="0">
+                    <cellcheck offset="0"></cellcheck>
+                    <cellcheck offset="1"></cellcheck>
+                </rowcheck>
+            </loopbreakcondition>
+        </loop>
+    </worksheet>
+</workbook>

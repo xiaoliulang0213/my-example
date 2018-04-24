@@ -1,0 +1,260 @@
+[
+  {
+    "menuId": "02",
+    "menuName": "开发相关"
+  },
+  {
+    "menuId": "0211",
+    "menuName": "开发规范",
+    "menuAddress": "modules/standard/code.html",
+    "parentMenu": "02",
+    "icon": "user"
+  },
+  {
+    "menuId": "0212",
+    "menuName": "iconfont",
+    "menuAddress": "modules/standard/iconfont.html",
+    "parentMenu": "02",
+    "icon": "refresh"
+  },
+
+  {
+    "menuId": "11",
+    "menuName": "前端"
+  },
+  {
+    "menuId": "1101",
+    "menuName": "基础资料",
+    "menuAddress": "modules/frontend/base/frontend.html",
+    "parentMenu": "11"
+  },
+  {
+    "menuId": "1111",
+    "menuName": "css",
+    "menuAddress": "modules/frontend/base/css.html",
+    "parentMenu": "11"
+  },
+  {
+    "menuId": "1121",
+    "menuName": "jquery",
+    "menuAddress": "modules/frontend/base/jquery.html",
+    "parentMenu": "11"
+  },
+  {
+    "menuId": "1131",
+    "menuName": "bootstrap",
+    "menuAddress": "modules/frontend/base/bootstrap.html",
+    "parentMenu": "11"
+  },
+  {
+    "menuId": "1141",
+    "menuName": "vue",
+    "menuAddress": "modules/frontend/base/vue.html",
+    "parentMenu": "11"
+  },
+
+  {
+    "menuId": "1151",
+    "menuName": "util.js",
+    "menuAddress": "modules/frontend/js/util.html",
+    "parentMenu": "11"
+  },
+
+  {
+    "menuId": "1161",
+    "menuName": "数据校验",
+    "menuAddress": "modules/frontend/js/check.html",
+    "parentMenu": "11"
+  },
+
+  {
+    "menuId": "21",
+    "menuName": "自定义标签"
+  },
+  {
+    "menuId": "2101",
+    "menuName": "static、hidden、textfield、textarea",
+    "menuAddress": "modules/frontend/tag/static.html",
+    "parentMenu": "21"
+  },
+  {
+    "menuId": "2111",
+    "menuName": "date-日期选择",
+    "menuAddress": "modules/frontend/tag/date.html",
+    "parentMenu": "21"
+  },
+  {
+    "menuId": "2121",
+    "menuName": "select、radio、checkbox、auto、toggle",
+    "menuAddress": "modules/frontend/tag/select.html",
+    "parentMenu": "21"
+  },
+  {
+    "menuId": "2151",
+    "menuName": "table-表格",
+    "menuAddress": "modules/frontend/tag/table.html",
+    "parentMenu": "21"
+  },
+  {
+    "menuId": "2161",
+    "menuName": "form-表单",
+    "menuAddress": "modules/frontend/tag/form.html",
+    "parentMenu": "21"
+  },
+  {
+    "menuId": "31",
+    "menuName": "table示例"
+  },
+  {
+    "menuId": "3101",
+    "menuName": "刷新table",
+    "menuAddress": "modules/frontend/tag/example/mix/hrefRefreshTable.html",
+    "parentMenu": "31"
+  },
+  {
+    "menuId": "3102",
+    "menuName": "动态table",
+    "menuAddress": "modules/frontend/tag/example/mix/dynamicTable.html",
+    "parentMenu": "31"
+  },
+  {
+    "menuId": "3103",
+    "menuName": "动态显示复选框",
+    "menuAddress": "modules/frontend/tag/example/mix/dynamicCheckbox.html",
+    "parentMenu": "31"
+  },
+  {
+    "menuId": "3104",
+    "menuName": "自定义查询条件",
+    "menuAddress": "modules/frontend/tag/example/mix/customFilterTable.html",
+    "parentMenu": "31"
+  },
+  {
+    "menuId": "3105",
+    "menuName": "普通table",
+    "menuAddress": "modules/frontend/tag/example/table/simpleTable.html",
+    "parentMenu": "31"
+  },
+  {
+    "menuId": "3106",
+    "menuName": "可编辑table",
+    "menuAddress": "modules/frontend/tag/example/table/editTable.html",
+    "parentMenu": "31"
+  },
+  {
+    "menuId": "3107",
+    "menuName": "多行表头",
+    "menuAddress": "modules/frontend/tag/example/table/multipleHead.html",
+    "parentMenu": "31"
+  },
+  {
+    "menuId": "3108",
+    "menuName": "页面跳转",
+    "menuAddress": "modules/frontend/tag/example/mix/redirectTable.html",
+    "parentMenu": "31"
+  },
+  {
+    "menuId": "3109",
+    "menuName": "查询条件级联",
+    "menuAddress": "modules/frontend/tag/example/mix/cascadeFilter.html",
+    "parentMenu": "31"
+  },
+  {
+    "menuId": "3110",
+    "menuName": "OR的查询条件",
+    "menuAddress": "modules/frontend/tag/example/mix/queryOr.html",
+    "parentMenu": "31"
+  },
+  {
+    "menuId": "3111",
+    "menuName": "导入导出",
+    "menuAddress": "modules/frontend/tag/example/file/importAndExport.html",
+    "parentMenu": "31"
+  },
+  {
+    "menuId": "32",
+    "menuName": "form示例"
+  },
+  {
+    "menuId": "3201",
+    "menuName": "普通form",
+    "menuAddress": "modules/frontend/tag/example/form/simpleForm.html",
+    "parentMenu": "32"
+  },
+  {
+    "menuId": "3202",
+    "menuName": "复杂表单",
+    "menuAddress": "modules/frontend/tag/example/mix/treeForm.html",
+    "parentMenu": "32"
+  },
+  {
+    "menuId": "3203",
+    "menuName": "测试表单",
+    "menuAddress": "modules/frontend/tag/example/form/demoForm.html",
+    "parentMenu": "32"
+  },
+  {
+    "menuId": "3204",
+    "menuName": "初始化值",
+    "menuAddress": "modules/frontend/tag/example/form/formInitUrl.html",
+    "parentMenu": "32"
+  },
+  {
+    "menuId": "33",
+    "menuName": "tree示例"
+  },
+  {
+    "menuId": "3301",
+    "menuName": "树的下拉选择",
+    "menuAddress": "modules/frontend/tag/example/mix/treeSelect.html",
+    "parentMenu": "33"
+  },
+  {
+    "menuId": "36",
+    "menuName": "图档相关"
+  },
+  {
+    "menuId": "3601",
+    "menuName": "自定义上传",
+    "menuAddress": "modules/frontend/tag/example/file/customUpload.html",
+    "parentMenu": "36"
+  },
+  {
+    "menuId": "3602",
+    "menuName": "不自动上传",
+    "menuAddress": "modules/frontend/tag/example/file/validateUpload.html",
+    "parentMenu": "36"
+  },
+  {
+    "menuId": "37",
+    "menuName": "楼盘视图"
+  },
+  {
+    "menuId": "3701",
+    "menuName": "标准楼盘视图",
+    "menuAddress": "modules/frontend/tag/example/view/buildingView.html",
+    "parentMenu": "37"
+  },
+  {
+    "menuId": "39",
+    "menuName": "其他"
+  },
+  {
+    "menuId": "3901",
+    "menuName": "复合页面",
+    "menuAddress": "modules/frontend/tag/example/mix/formTabTable.html",
+    "parentMenu": "39"
+  },
+  {
+    "menuId": "3911",
+    "menuName": "分步操作",
+    "menuAddress": "modules/frontend/tag/example/wizard/simpleWizard.html",
+    "parentMenu": "39"
+  },
+  {
+    "menuId": "3912",
+    "menuName": "分步操作-跳转",
+    "menuAddress": "modules/frontend/tag/example/wizard/redirectWizard.html",
+    "parentMenu": "39"
+  }
+]

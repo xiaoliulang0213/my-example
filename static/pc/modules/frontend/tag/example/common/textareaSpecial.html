@@ -1,0 +1,32 @@
+<div data-container="tagTextareaSpecialExample">
+    <div>
+        <component is="bv-form" v-bind="formConfig"></component>
+    </div>
+</div>
+<script type="text/javascript">
+require(['jquery', 'util', 'Const'], function($, util, Const) {
+    var tagType = util.nvl(util.gup('tag'), 'static');
+    var vm = util.bind({
+        container: 'tagTextareaSpecialExample',
+        data: {
+            formConfig: {
+                title: '文本域特殊属性示例',
+                columns: [
+                    {
+                        name: 'rows',
+                        head: 'rows-显示行数(textarea)',
+                        edit: {
+                            type: tagType
+                        },
+                        config: {
+                            attr: {
+                                rows: 5
+                            }
+                        }
+                    }
+                ]
+            }
+        }
+    });
+});
+</script>

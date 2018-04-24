@@ -1,0 +1,79 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<configuration scan="true" scanPeriod="30 seconds">
+    <property name="LOG_PATH" value="./log"/>
+    <property name="LOG_FILE" value="example"/>
+
+    <contextName>${LOG_FILE}</contextName>
+
+    <appender name="FILE" class="ch.qos.logback.core.rolling.RollingFileAppender">
+        <rollingPolicy class="ch.qos.logback.core.rolling.TimeBasedRollingPolicy">
+            <FileNamePattern>${LOG_PATH}/%d{yyyy-MM-dd}/${LOG_FILE}.%d{yyyy-MM-dd}.log</FileNamePattern>
+        </rollingPolicy>
+        <encoder>
+            <pattern>%d{HH:mm:ss.SSS} %contextName [%thread] %-5level %logger{36} - %msg%n</pattern>
+        </encoder>
+    </appender>
+
+<!--     <appender name="DB" class="ch.qos.logback.classic.db.DBAppender">
+        <connectionSource class="ch.qos.logback.core.db.DriverManagerConnectionSource">
+            <driverClass>oracle.jdbc.OracleDriver</driverClass>
+            <url>jdbc:oracle:thin:@10.164.194.168:1521/haiercash</url>
+            <user>appserver</user>
+            <password>123456</password>
+        </connectionSource>
+    </appender> -->
+
+      <appender name="VISIT_LOG" class="ch.qos.logback.core.rolling.RollingFileAppender">
+        <rollingPolicy class="ch.qos.logback.core.rolling.TimeBasedRollingPolicy">
+          <FileNamePattern>${LOG_PATH}/%d{yyyy-MM-dd}/${LOG_FILE}.%d{yyyy-MM-dd}.visit.log</FileNamePattern>
+        </rollingPolicy>
+        <encoder>
+          <pattern>%d{HH:mm:ss.SSS} %contextName [%thread] - %msg%n</pattern>
+        </encoder>
+      </appender>
+    <!-- 使用连接池的配置，缺少jar包 -->
+<!--    <appender name="VISIT_LOG_DB" class="ch.qos.logback.classic.db.DBAppender">
+        <connectionSource class="ch.qos.logback.core.db.DataSourceConnectionSource">
+            <dataSource class="com.mchange.v2.c3p0.ComboPooledDataSource">
+                <driverClass>oracle.jdbc.OracleDriver</driverClass>
+                <sqlDialect class="ch.qos.logback.core.db.dialect.OracleDialect"/>
+                <url>jdbc:oracle:thin:@10.164.194.168:1521/haiercash</url>
+                <user>appserver</user>
+                <password>123456</password>
+            </dataSource>
+        </connectionSource>
+    </appender>-->
+    <!-- 不使用连接池的配置 -->
+<!--    <appender name="VISIT_LOG_DB" class="ch.qos.logback.classic.db.DBAppender">
+        <connectionSource class="ch.qos.logback.core.db.DriverManagerConnectionSource">
+            <driverClass>oracle.jdbc.OracleDriver</driverClass>
+            <url>jdbc:oracle:thin:@10.164.194.168:1521/haiercash</url>
+            <user>appserver</user>
+            <password>123456</password>
+        </connectionSource>
+    </appender>-->
+
+    <appender name="ASYNC" class="ch.qos.logback.classic.AsyncAppender">
+        <appender-ref ref="FILE"/>
+        <queueSize>512</queueSize>
+        <discardingThreshold>0</discardingThreshold>
+    </appender>
+
+    <appender name="VISIT_ASYNC" class="ch.qos.logback.classic.AsyncAppender">
+        <appender-ref ref="VISIT_LOG"/>
+        <queueSize>512</queueSize>
+        <discardingThreshold>0</discardingThreshold>
+    </appender>
+
+    <appender name="STDOUT" class="ch.qos.logback.core.ConsoleAppender">
+        <encoder>
+            <pattern>%d{HH:mm:ss.SSS} %-5level %logger{36} - %msg%n</pattern>
+        </encoder>
+    </appender>
+
+    <root level="WARN">
+        <appender-ref ref="ASYNC"/>
+        <appender-ref ref="STDOUT"/>
+    </root>
+</configuration>

@@ -1,0 +1,69 @@
+<div data-container="tagStaticInTableExample">
+    <div>
+        <component is="bv-table" v-bind="config"></component>
+    </div>
+</div>
+<script type="text/javascript">
+require(['jquery', 'util', 'Const'], function($, util, Const) {
+    var tagType = util.nvl(util.gup('tag'), 'static');
+    var vm = util.bind({
+        container: 'tagStaticInTableExample',
+        data: {
+            config: {
+                entityName: 'sysHoliday',
+                columns: [
+                    {
+                        name: 'configDate',
+                        head: '日期',
+                        config: {
+                            format: 'dict',
+                            entityName: 'sysHoliday',
+                            initParam: {
+                                configDate: '2017-01-01'
+                            },
+                            code: 'configDate',
+                            desc: 'holidayType'
+                            /*choose: function () {
+                                return [
+                                    {
+                                        code: '2017-01-01',
+                                        desc: '2017年元旦'
+                                    }, {
+                                        code: 'b',
+                                        desc: 'bb'
+                                    }
+                                ];
+                            }*/
+                        }
+                    }, {
+                        name: 'holidayType',
+                        head: '假期类型',
+                        config: {
+                            format: 'dict',
+                            preset: 'json',
+                            choose: '#holidayType'
+                        }
+                    }, {
+                        name: 'holidayName',
+                        head: '假期名称',
+                        config: {
+                            show: function (entity, value) {
+                                if (!value) {
+                                    return '';
+                                }
+                                return '[' + value + ']';
+                            }
+                        }
+                    }, {
+                        name: 'remark',
+                        head: '固定内容',
+                        config: {
+                            text: '****'
+                        }
+                    }
+                ]
+            }
+        }
+    });
+});
+</script>

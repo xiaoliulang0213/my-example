@@ -1,0 +1,111 @@
+<div data-container="treeSelect">
+	<component is="bv-table" key="treeSelectTable" v-bind="config"></component>
+</div>
+<script type="text/javascript">
+require(['jquery', 'util', 'Const'], function ($, util, Const) {
+	var vm = util.bind({
+		container: 'treeSelect',
+		data: {
+			config: {
+                filterLayout: 'filterMore',
+                entityName: 'sysCity',
+                keys: 'cityCode',
+				// customParam: true,
+                initParam: {
+                    cityCode: 'abc'
+                },
+                columns: [
+                    {
+                        name: 'cityCode',
+                        head: '城市代码'
+                    },
+                    {
+                        name: 'cityName',
+                        head: '城市名称',
+						filter: {
+                            operate: 'in',
+							type: 'tree'
+						},
+						config: {
+                            check: true,
+							type: 'select',
+                            entityName: 'sysCity',
+                            orders: 'cityCode',
+                            pack: function(entity) {
+                                return {
+                                    id: entity.cityCode,
+                                    pId: entity.parentCode,
+                                    name: entity.cityName,
+                                    open: true,//!entity.parentMenuId || entity.parentMenuId === '00',
+                                    entity: entity
+                                };
+                            },
+							show: function (item) {
+                                if (!item.parentCode) {
+                                    return null;
+								}
+								return item.cityName;
+                            }
+						}
+                    },
+                    {
+                        name: 'parentCode',
+                        head: '上级城市',
+                        filter: {
+                            operate: 'in',
+                            type: 'select'
+                        },
+                        config: {
+                            /*preset: 'json',
+                            choose: [
+								{
+								    A: '第一项',
+									B: '第二项',
+									C: '第三项'
+								}
+							],*/
+                            entityName: 'sysCity',
+							code: 'cityCode',
+							desc: 'cityName',
+							initParam: {
+								cityType: 'province'
+							},
+                            multiple: true
+                        }
+                    },
+                    {
+                        name: 'remark',
+                        head: '备注',
+                        filter: {
+                            operate: '=',
+                            type: 'tree'
+                        },
+                        config: {
+                            check: 'radio',
+                            type: 'select',
+                            entityName: 'sysCity',
+                            orders: 'cityCode',
+                            pack: function(entity) {
+                                return {
+                                    id: entity.cityCode,
+                                    pId: entity.parentCode,
+                                    name: entity.cityName,
+                                    open: true,//!entity.parentMenuId || entity.parentMenuId === '00',
+                                    entity: entity
+                                };
+                            },
+                            show: function (item) {
+                                if (!item.parentCode) {
+                                    return null;
+                                }
+                                return item.cityName;
+                            }
+                        }
+                    }
+                ],
+                orders: 'cityCode'
+			}
+		}
+	});
+});
+</script>

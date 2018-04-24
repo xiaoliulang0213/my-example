@@ -1,0 +1,101 @@
+<div data-container="editTable">
+	<component is="bv-table" v-bind="config"></component>
+</div>
+<script type="text/javascript">
+require(['jquery', 'util'], function($, util) {
+    var vm = util.bind({
+        container: 'editTable',
+        data: {
+			config: {
+                select: 'checkbox',
+                editable: true,
+                defaultTag: 'static',
+				entityName: 'sysCity',
+				keys: 'cityCode',
+                orders: 'cityCode',
+				columns: [
+					{
+						name: 'cityCode',
+						head: '城市代码',
+						filter: '=',
+						href: function () {
+							alert('clicked')
+                        }
+					}, {
+						name: 'cityName',
+						head: '城市名称',
+                        filter: {
+						    type: 'date',
+							operate: 'between'
+						},
+						edit: {
+						    type: 'textfield'
+						},
+						config: {
+						    validate: {
+                                required: true
+							}
+						}
+					}, {
+                        name: 'parentCode',
+                        head: '上级城市',
+						filter: '='
+                    }, {
+				    	name: 'cityType',
+						head: '城市类型',
+						edit: {
+				    	    // type: 'select'
+							type: function (row, column) {
+								if (row.cityType === 'province') {
+								    return 'static';
+								}
+								return 'select';
+                            }
+						},
+                        filter: {
+                            type: 'select'
+                        },
+						config: {
+				    	    multiple: true,
+                            format: 'dict',
+				    	    preset: 'json',
+				    	    choose: '#cityType',
+							validate: {
+                                required: true
+							}
+						}
+					}, {
+				    	name: 'remark',
+						head: '备注'
+					}
+				],
+				operates: [
+					{
+					    text: '新增',
+						icon: 'icon-add',
+						show: 'none',
+						preset: 'insert'
+					}, {
+                        text: '保存',
+                        icon: 'icon-save',
+                        // show: 'oneOrMore',
+                        click: function (event, name, entityName, selected) {
+							console.log(selected);
+							util.get({
+								url: '/api/example/demo1',
+								vm: this,
+								refresh: true
+							});
+                        }
+					}, {
+                    	text: '删除',
+						icon: 'icon-delete',
+						show: 'oneOrMore',
+						preset: 'delete'
+					}
+				]
+			}
+		}
+    });
+});
+</script>

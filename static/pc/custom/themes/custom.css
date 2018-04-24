@@ -1,0 +1,106 @@
+.bv-theme .bv-body .loading {
+    top: 51px;
+}
+.bv-theme .bv-nav {
+    width: 200px;
+}
+.bv-theme .bv-header, .bv-theme .bv-body {
+    left: 200px;
+}
+.bv-theme .bv-hideNav .bv-header, .bv-theme .bv-hideNav .bv-body {
+    left: 0;
+}
+
+.bv-source {
+    position: fixed;
+    bottom: 5px;
+    right: 5px;
+    z-index: 999999;
+}
+
+.bs-example:after {
+    content: "实例：" !important;
+}
+.bs-docs-section p a {
+    padding: 0 10px;
+}
+.bs-docs-section > p, .bs-docs-section > ul,
+.bs-docs-section > ol, .bs-callout > p,
+.bs-callout > ol, .bs-callout > ul {
+    font-size: 16px;
+    line-height: 1.75;
+    margin-bottom: 1em;
+}
+
+.bs-callout *:last-child {
+    margin-bottom: 0;
+}
+
+.bs-docs-container {
+    padding: 10px;
+    font-size: 14px;
+}
+.bs-docs-container dd p {
+    margin: 0;
+}
+.bs-docs-container h4 {
+    font-weight: bold;
+}
+
+.bs-docs-container .hc-table {
+    font-size: 12px;
+}
+.bv-docs-example-fixed {
+    position: fixed;
+    right:0;
+    top: 110px;
+    width: 625px !important;
+    background: #FFF;
+    border: 1px solid #ddd;
+}
+
+/* 图标 */
+.bs-icons {
+    margin: 0 -10px 20px;
+    overflow: hidden;
+}
+.bs-icons-list {
+    padding-left: 0;
+    list-style: none;
+}
+.bs-icons li {
+    float: left;
+    width: 25%;
+    height: 115px;
+    padding: 10px;
+    font-size: 10px;
+    line-height: 1.4;
+    text-align: center;
+    background-color: #f9f9f9;
+    border: 1px solid #fff;
+}
+.bs-icons .icon {
+    margin-top: 5px;
+    margin-bottom: 10px;
+    font-size: 24px;
+}
+.bs-icons .icon-class {
+    display: block;
+    text-align: center;
+    word-wrap: break-word; /* Help out IE10+ with class names */
+}
+.bs-icons li:hover {
+    color: #fff;
+    background-color: #563d7c;
+}
+
+@media (min-width: 768px) {
+    .bs-icons {
+        margin-right: 0;
+        margin-left: 0;
+    }
+    .bs-icons li {
+        width: 12.5%;
+        font-size: 12px;
+    }
+}

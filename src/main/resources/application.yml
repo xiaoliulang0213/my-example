@@ -1,0 +1,77 @@
+app:
+  instance:
+    id: example
+    code: 99
+    profile: dev
+  rest:
+    # profile: dev
+    # profiles:
+    # profiles:
+  # redis:
+  #   prefix: _${app.instance.id}
+  error:
+    # 错误码前缀，格式为：prefix + module + code
+    prefix: EXAMPLE
+  file:
+    uploadPath: f:\file\upload
+    templatePath: classpath:template
+server:
+  port: 23456
+logging:
+  level:
+    root: WARN
+    org.springframework.security: ERROR
+    com.bestvike: DEBUG
+  # 默认日志文件名
+  # file: log
+  # 默认日志路径
+  # path: ./log
+  # logback.xml路径，默认为classpath:logback.xml
+  # config: ./logback.xml
+security:
+  sessions: ALWAYS
+spring:
+  application:
+    name: ${app.instance.id}-${app.instance.profile}
+#  session:
+#    store-type: none
+#  redis:
+    # cluster:
+    #   nodes: 127.0.0.1:20001,127.0.0.1:20002,127.0.0.1:20003
+#    host: 127.0.0.1
+#    port: 6379
+  jackson:
+    date-format: yyyy-MM-dd HH:mm:ss
+  resources:
+    cache-period: 3600000
+  # jackson.serialization.indent_output: true
+  # resources.chain.strategy.content.enabled: true
+  # resources.chain.strategy.content.paths: /**
+# spring.resources.static-locations: /static/,classpath:/META-INF/resources/,classpath:/resources/,classpath:/static/,classpath:/public/
+datasources:
+  example:
+    datasource:
+      url: jdbc:oracle:thin:@127.0.0.1:1521/orcl # jdbc:mariadb://127.0.0.1:3306/bvdemo
+      username: bvdemo
+      password: bvdemo
+      driverClassName: oracle.jdbc.OracleDriver # org.mariadb.jdbc.Driver
+      # 初始化大小，最小，最大
+      initialSize: 5
+      minIdle: 5
+      maxActive: 20
+      # 配置获取连接等待超时的时间
+      maxWait: 60000
+      # 配置间隔多久才进行一次检测，检测需要关闭的空闲连接，单位是毫秒
+      timeBetweenEvictionRunsMillis: 60000
+      # 配置一个连接在池中最小生存的时间，单位是毫秒
+      minEvictableIdleTimeMillis: 300000
+      validationQuery: select 1 from dual
+      testWhileIdle: true
+      testOnBorrow: false
+      testOnReturn: false
+    mybatis:
+      dialect: org.apache.ibatis.dialect.OracleDialect # org.apache.ibatis.dialect.MariadbDialect
+      basePackage: com.bestvike.commons.dao,com.bestvike.tools.dao,com.bestvike.example.dao
+      aliasesPackage: com.bestvike.commons.data,com.bestvike.tools.data,com.bestvike.example.data
+      mapperLocations: classpath*:com/bestvike/commons/mapping/*.xml,classpath*:com/bestvike/tools/mapping/*.xml,classpath*:com/bestvike/example/mapping/*.xml
+      underscoreToCamelCase: true

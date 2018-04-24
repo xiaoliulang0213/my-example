@@ -1,0 +1,223 @@
+<div class="bs-docs-container" data-container="tagTableDoc">
+    <div class="bs-docs-section">
+        <h4>概要说明</h4>
+        <p>bootstrap风格的table</p>
+        <dl class="dl-horizontal">
+            <dt>标签资源</dt>
+            <dd>位于tags/bv-table.js</dd>
+        </dl>
+        <h4>属性定义</h4>
+        <dl class="dl-horizontal">
+            <dt>title</dt>
+            <dd>非必填，显示标题，默认为'信息列表'。试一下：<component is="bv-textfield" v-bind="{entity: config, name: 'title'}"></component></dd>
+            <dt>collapse</dt>
+            <dd>非必填，是否允许折叠</dd>
+            <dt>layout</dt>
+            <dd>非必填，表格显示位置，默认自动判断，支持body-主页面，modal-弹窗</dd>
+            <dt>fixed</dt>
+            <dd>非必填，布尔型，是否固定表头，默认为true，注意：弹窗下表头固定不可用。</dd>
+            <dt>clazz</dt>
+            <dd>非必填，字符型，容器class，默认为空</dd>
+            <dt>limit</dt>
+            <dd>非必填，数值型，每页显示条数，默认为10。注意页码获取规则：本参数设置->之前用户自定义的页码（存放于localStorage）->默认值10</dd>
+            <dd><a href="javascript:;" data-modal="modules/frontend/tag/example/table/tableLimit.html">点击查看示例</a></dd>
+            <dt>type</dt>
+            <dd>非必填，表格类型，默认为default，其他选项有sub-子表（默认不显示），choose-列表选择</dd>
+            <dd>
+                <a href="javascript:;" data-modal="modules/frontend/tag/example/table/tableType.html">点击查看示例</a>
+                <div class="col-md-3">
+                    <component is="bv-textfield" ref="tableChooseResult" v-bind="{entity: entity, name: 'tableChooseResult', chooseUrl: 'modules/frontend/tag/example/table/tableChoose.html'}"></component>
+                </div>
+            </dd>
+            <dt>url</dt>
+            <dd>必填，数据接口地址，post方式，url不能带参数，<a href="javascript:;" data-modal="modules/frontend/tag/support/table-tableUrl.html">点击查看接口数据格式要求。</a></dd>
+            <dt>filterUrl</dt>
+            <dd>非必填，模糊查询接口地址</dd>
+            <dt>filterMoreUrl</dt>
+            <dd>非必填，精确查询接口地址</dd>
+            <dt>loadType</dt>
+            <dd>非必填，字符型，是否自动加载数据，默认为auto-自动加载，其他选项有false-非自动加载</dd>
+            <dt>pagination</dt>
+            <dd>非必填，是否分页，布尔型，默认为true-分页，其他选项有false-不分页。</dd>
+            <dt>select</dt>
+            <dd>非必填，字符型，选择框定义，默认为false-没有，其他选项有checkbox-复选框，radio-单选按钮</dd>
+            <dt>linenumber</dt>
+            <dd>非必填，字符型，序号定义，默认为false-没有，其他选项有page-当前页编号，db-全局编号</dd>
+            <dt>filterType</dt>
+            <dd>非必填，字符型，过滤规则定义，选项有default-自动(默认)page-当前页过滤false-不过滤db-后台数据库过滤</dd>
+            <dt>filterLayout</dt>
+            <dd>非必填，字符型，过滤显示定义，查询方式default-模糊查询、精确查询filter-只支持模糊查询filterMore-只支持精确查询</dd>
+            <dt>filterColumnSource</dt>
+            <dd>非必填，字符型，模糊查询字段来源：default-默认，数据库全部字段；filter-页面定义的filter不为false的字段；filterMore-等同于精确查询</dd>
+            <dt>orders</dt>
+            <dd>非必填，默认排序，格式为'字段名 排序方式, 字段名 排序方式'，排序方式支持asc,desc</dd>
+            <dt>entityName</dt>
+            <dd>实体类名</dd>
+            <dt>keys</dt>
+            <dd>主键定义，字符型，用于修改、删除等取值，格式为'字段1, 字段2, ...'。注意：跟之前的版本不兼容！主键的获取有几种方式：1、通过后台返回的实体类定义（已作废）；2、通过keys定义（推荐）；3、通过列定义的type=id</dd>
+            <dt>initRows</dt>
+            <dd>非必填，固定的table数据</dd>
+            <dt>initParam</dt>
+            <dd ms-html="pub.initParam"></dd>
+            <dt>initParamList</dt>
+            <dd ms-html="pub.initParamList"></dd>
+            <dt>columns</dt>
+            <dd>必填，数组，列定义，格式为：[{name: '显示名', ...}, ...]。<a href="javascript:;" data-modal="modules/frontend/tag/support/table-tableColumns-1.html">示例</a></dd>
+            <dt>operates</dt>
+            <dd>非必填，数组，按钮定义，格式为：[{id: 'xxx', text: '显示名'}, ...]。<a href="javascript:;" data-modal="modules/frontend/tag/support/table-tableOperates-1.html">示例</a></dd>
+            <dd><a href="javascript:;" data-modal="modules/frontend/tag/example/table/tableFilterLayout.html">点击查看示例</a></dd>
+            <dt>editable</dt>
+            <dd>是否支持行内编辑，暂不可用</dd>
+            <dt>chooseDesc</dt>
+            <dd>选择时显示的名称</dd>
+            <dt>chooseShow</dt>
+            <dd>函数，选择时显示名称，优先级高于chooseDesc</dd>
+            <dt>confirmChoose</dt>
+            <dd>确定选择调用函数</dd>
+        </dl>
+        <h4>列属性定义</h4>
+        <dl class="dl-horizontal">
+            <dt>name</dt>
+            <dd>必填，实体类属性名</dd>
+            <dt>head</dt>
+            <dd>必填，显示名称</dd>
+            <dt>title</dt>
+            <dd>非必填，提示信息，支持true-显示该列内容,#columnName-columnName对应列内容，或者固定内容</dd>
+            <dd><a href="javascript:;" data-modal="modules/frontend/tag/example/table/columnTitle.html">点击查看示例</a></dd>
+            <dt>type</dt>
+            <dd>非必填，默认为空，其他选项有id-主键，operate-操作列，如果定义为operate操作列，则应有operates数组属性</dd>
+            <dt>align</dt>
+            <dd>对齐方式，支持left-左对齐，right-右对齐，center-居中对齐</dd>
+            <dd><a href="javascript:;" data-modal="modules/frontend/tag/example/table/columnAlign.html">点击查看示例</a></dd>
+            <dt>width</dt>
+            <dd>列宽，支持px、百分比方式设置</dd>
+            <dd><a href="javascript:;" data-modal="modules/frontend/tag/example/table/columnWidth.html">点击查看示例</a></dd>
+            <dt>show</dt>
+            <dd>非必填，布尔型或函数，默认为空</dd>
+            <dt>hide</dt>
+            <dd>非必填，布尔型或函数，默认为空</dd>
+            <dd><a href="javascript:;" data-modal="modules/frontend/tag/example/table/columnShow.html">点击查看示例</a></dd>
+            <dt>format</dt>
+            <dd>非必填，默认为空，数据格式化</dd>
+            <dd><a href="javascript:;" data-modal="modules/frontend/tag/example/table/columnFormat.html">点击查看示例</a></dd>
+            <dt>sort</dt>
+            <dd>是否允许排序（之前为order属性），false表示该列不允许排序<a href="javascript:;" data-modal="modules/frontend/tag/example/table/columnSort.html">点击查看示例</a></dd>
+            <dt>filter</dt>
+            <dd>非必填，精确查询定义，选项有true（等同于like）、like、=、select、radio、checkbox、auto、between或json定义，如{type: 'date', operate: 'between', format: 'datetime'}</dd>
+            <dd><a href="javascript:;" data-modal="modules/frontend/tag/example/table/columnFilter.html">点击查看示例</a></dd>
+            <dt>config</dt>
+            <dd>该列扩展配置信息，json格式</dd>
+            <dt>href</dt>
+            <dd>在列上定义超链接，格式为href: function(event, name, id, row, column)</dd>
+            <dd><a href="javascript:;" data-modal="modules/frontend/tag/example/table/columnHref.html">点击查看示例</a></dd>
+            <dt>operates</dt>
+            <dd>操作按钮定义</dd>
+            <dd><a href="javascript:;" data-modal="modules/frontend/tag/example/table/columnOperates.html">点击查看示例</a></dd>
+            <dt>sub</dt>
+            <dd><p>是否关联子表，格式为{id: 'xxx', initParameter: {}}</p>initParameter参数定义，同table属性中的定义，多了一个属性from，设置为主表字段名，表示从主表当前行取值</dd>
+        </dl>
+        <h4>按钮定义</h4>
+        <dl class="dl-horizontal">
+            <dt>id</dt>
+            <dd>非必填</dd>
+            <dt>text</dt>
+            <dd>必填，显示信息，如果auth设置为true，则该项设置无效，从数据库配置中读取</dd>
+            <dt>icon</dt>
+            <dd>非必填，按钮图标</dd>
+            <dt>show</dt>
+            <dd>非必填，字符型，按钮显示条件，默认为空-显示，其他选项有true-一直显示,false-一直隐藏,one-选择单条数据时显示,oneOrMore-选择单条及多条数据时显示,none-不选择时显示，import-导入，export-导出，可以定义函数，格式为：show: function(selected) {}，selected为当前选中的行数据（数组），返回true表示显示，返回false表示隐藏；该参数还支持设置任意字符串，需要配合增加属性customShow来进行按钮条件判断（见table属性定义）</dd>
+            <dd><a href="javascript:;" data-modal="modules/frontend/tag/example/table/operateShow.html">点击查看示例</a></dd>
+            <dt>auth</dt>
+            <dd>非必填，字符型，是否根据用户权限控制按钮是否显示，默认为空-不控制，其他选项有true-有权限控制</dd>
+            <dt>preset</dt>
+            <dd>按钮类型，系统内置insert-新增，update-修改，delete-删除，post-提交，sub-子表</dd>
+            <dt>url</dt>
+            <dd>如果show=export或import，该url对应导出或导入的url</dd>
+            <dt>template</dt>
+            <dd>导入或导出的模板文件名</dd>
+            <dt>click</dt>
+            <dd>点击动作，参数为click: function (event, name, entityName, selected)，注意function内部的this为table标签</dd>
+        </dl>
+        <component is="bv-table" class="bv-docs-example-fixed" v-bind="config"></component>
+    </div>
+</div>
+<script type="text/javascript">
+require(['jquery', 'util', 'Const'], function($, util, Const) {
+    var vm = util.bind({
+        container: 'tagTableDoc',
+        data: {
+            pub: __doc,
+            formConfig: {
+                trueOrFalse: [true, false]
+            },
+            entity: {
+                tableChooseResult: ''
+            },
+            config: {
+                name: 'tagTableDocTable',
+                fixed: false,
+                title: '信息列表',
+                /// pagination: true,
+                entityName: 'sysCity',
+                keys: 'cityCode',
+                columns: [
+                    {
+                        name: 'cityCode',
+                        head: '城市代码',
+                        filter: '='
+                    },
+                    {
+                        name: 'cityName',
+                        head: '城市名称',
+                        filter: 'like'
+                    },
+                    {
+                        name: 'parentCode',
+                        head: '上级城市'
+                    },
+                    {
+                        name: 'cityType',
+                        head: '城市级别',
+                        config: {
+                            format: 'dict',
+                            choose: '#cityType',
+                            preset: 'json'
+                        }
+                    },
+                    {
+                        head: '操作',
+                        type: 'operate',
+                        align: 'center',
+                        operates: [
+                            {
+                                text: '查看详情',
+                                click: function(event, tableId, entityName, selected) {
+                                    util.modal({
+                                        url: 'modules/frontend/tag/example/common/common.html?tag=static'
+                                    });
+                                }
+                            }
+                        ]
+                    }
+                ],
+                operates: [
+                    {
+                        text: '查看',
+                        icon: 'icon-grant',
+                        show: 'one',
+                        click: function(event, tableId, entityName, selected) {
+                            util.modal({
+                                url: 'modules/frontend/tag/example/common/common.html?tag=static'
+                                /*refresh: true,
+                                vm: this*/
+                            });
+                        }
+                    }
+                ],
+                select: 'checkbox',
+                orders: 'cityCode'
+            }
+        }
+    });
+});
+</script>

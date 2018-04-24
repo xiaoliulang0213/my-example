@@ -1,0 +1,36 @@
+<component is="bv-layout" data-container="example-date">
+    <component is="bv-form" :key="tags.formKey" v-bind="formConfig"></component>
+</component>
+<script type="text/javascript">
+    require(['jquery', 'util', 'Const', 'bvForm', 'bvDate'], function($, util, Const) {
+        util.title('example-date');
+        var vm = util.bind({
+            container: 'example-date',
+            data: {
+                tags: {
+                    formKey: 'pickerForm'
+                },
+                formConfig: {
+                    columns: [
+                        {
+                            name: 'date1',
+                            head: '默认格式',
+                            edit: {
+                                type: 'date'
+                            }
+                        }, {
+                            name: 'date2',
+                            head: '有默认值',
+                            edit: {
+                                type: 'date'
+                            },
+                            config: {
+                                defaultValue: '2017-11-01'
+                            }
+                        }
+                    ]
+                }
+            }
+        });
+    });
+</script>

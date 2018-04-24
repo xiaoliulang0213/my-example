@@ -1,0 +1,131 @@
+group 'com.bestvike'
+version '1.0.0'
+
+apply plugin: 'java'
+apply plugin: 'idea'
+apply plugin: 'maven'
+apply plugin: 'org.springframework.boot'
+apply plugin: "io.spring.dependency-management"
+
+sourceCompatibility = 1.8
+ext {
+    snippetsDir = file("$buildDir/generated-snippets")
+}
+configurations.all {
+    //默认情况下包才上传后24小时更新一次，这个配置自动更新为10s
+    //10秒钟，可自定义，如10,'minutes'10分钟，10,'hours'10小时
+    resolutionStrategy.cacheChangingModulesFor 10,'seconds'
+}
+configurations {
+    provided
+}
+
+buildscript {
+    ext {
+        springBootVersion = '1.5.9.RELEASE'
+        // gralde -Prelease
+        if (project.hasProperty('release')) {
+            releasePublish = true
+        } else {
+            releasePublish = false;
+        }
+    }
+    repositories {
+        mavenLocal()
+        maven { url 'http://bv-nexus:8081/nexus/content/repositories/public/' }
+    }
+    dependencies {
+        classpath "io.spring.gradle:dependency-management-plugin:0.6.0.RELEASE"
+        classpath "org.springframework.boot:spring-boot-gradle-plugin:${springBootVersion}"
+    }
+}
+
+repositories {
+    mavenLocal()
+
+    maven { url 'http://bv-nexus:8081/nexus/content/repositories/snapshots/' }
+    maven { url 'http://bv-nexus:8081/nexus/content/repositories/public/' }
+    maven { url 'http://bv-nexus:8081/nexus/content/repositories/thirdparty/' }
+    flatDir {
+        dirs 'lib'
+    }
+}
+
+dependencyManagement {
+    imports {
+        mavenBom 'org.springframework.boot:spring-boot-starter-parent:'+springBootVersion
+        mavenBom 'org.springframework.cloud:spring-cloud-dependencies:Brixton.SR4'
+    }
+}
+
+jar {
+    baseName = project.name
+    version = project.version
+    from('static') {
+        into 'static'
+    }
+}
+springBoot {
+    classifier = 'exec'
+}
+sourceSets {
+    main {
+        compileClasspath += configurations.provided
+        java {
+            srcDir 'src/main/java'
+        }
+        resources {
+            srcDirs 'src/main/java'
+        }
+    }
+}
+test {
+    outputs.dir snippetsDir
+}
+dependencies {
+    //compile project(":bv-mybatis")
+    //compile project(":bv-jxls:bv-jxls-poi")
+    //compile project(":bv-jxls:bv-jxls-reader")
+    //compile project(":bv-util")
+    compile("com.bestvike:bv-mybatis:3.4.5-SNAPSHOT")
+    compile("com.bestvike:bv-jxls-poi:1.0.9-SNAPSHOT")
+    compile("com.bestvike:bv-jxls-reader:2.0.2-SNAPSHOT")
+    compile("com.bestvike:bv-util-commons:1.1.1-SNAPSHOT")
+    compile("com.bestvike:bv-util-mvc:1.1.1-SNAPSHOT")
+
+    // spring boot
+    compile("org.springframework.boot:spring-boot-starter")
+    compile("org.springframework.boot:spring-boot-starter-web")
+    // compile("org.springframework.boot:spring-boot-starter-redis")
+    compile("org.springframework.boot:spring-boot-starter-security")
+    compile("org.springframework.boot:spring-boot-starter-jdbc")
+    /* compile("org.springframework.boot:spring-boot-starter-log4j2")*/
+    ///compile('org.springframework.boot:spring-boot-starter-actuator')
+
+    // spring cloud
+    // compile("org.springframework.cloud:spring-cloud-commons:1.1.1.RELEASE")
+    // compile("org.springframework.cloud:spring-cloud-starter-ribbon")
+    // compile("org.springframework.cloud:spring-cloud-starter-eureka")
+    // spring
+    compile("org.springframework:spring-web")
+    compile("org.springframework:spring-webmvc")
+    // compile("org.springframework.session:spring-session")
+    compile("org.springframework.batch:spring-batch-core:3.0.7.RELEASE")
+    compile("org.springframework:spring-context-support:3.1.1.RELEASE")
+    // compile('org.springframework.data:spring-data-rest-hal-browser')
+    // jedis
+    // compile("redis.clients:jedis:2.8.1")
+    // jdbc
+    // compile("org.mariadb.jdbc:mariadb-java-client:2.2.1")
+    compile("com.oracle:ojdbc6:11g")
+
+    compile("org.apache.commons:commons-lang3:3.7")
+    compile("org.apache.logging.log4j:log4j-api:2.3")
+    compile("org.apache.logging.log4j:log4j-core:2.3")
+    // java
+    provided("javax.servlet:javax.servlet-api:3.1.0")
+
+    compile("org.aspectj:aspectjrt:1.8.10")
+    compile("org.aspectj:aspectjweaver:1.8.10")
+}
+[compileJava, compileTestJava]*.options*.encoding = 'UTF-8'

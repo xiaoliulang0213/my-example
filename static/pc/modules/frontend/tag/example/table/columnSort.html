@@ -1,0 +1,36 @@
+<div data-container="columnSort">
+	<component is="bv-table" v-bind="config"></component>
+</div>
+<script type="text/javascript">
+require(['jquery', 'util'], function($, util) {
+    var vm = util.bind({
+        container: 'columnSort',
+        data: {
+			config: {
+				entityName: 'sysCity',
+				keys: 'cityCode',
+                orders: 'cityCode',
+				columns: [
+					{
+						name: 'cityCode',
+						head: '城市代码'
+					}, {
+						name: 'cityName',
+						head: '城市名称'
+					}, {
+                        name: 'parentCode',
+                        head: '上级城市'
+                    }, {
+				    	name: 'cityType',
+						head: '城市类型'
+					}, {
+				    	name: 'remark',
+						head: '备注（不允许排序）',
+						sort: false
+					}
+				]
+			}
+		}
+    });
+});
+</script>

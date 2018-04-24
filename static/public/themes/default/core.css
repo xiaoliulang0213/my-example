@@ -1,0 +1,228 @@
+/**
+  全部页面共用
+**/
+[v-cloak] {
+    display: none;
+}
+body.bv-theme {
+	font-size: 12px;
+	font-family: "Microsoft YaHei",Helvetica Neue,sans-serif;
+	overflow: hidden;
+}
+.required {
+    font-size: 12px !important;
+    color: red;
+}
+#alert .modal-dialog {
+    margin-top: 150px;
+}
+.btn .formError {
+	white-space: normal;
+}
+.btn i {
+	font-size: 14px;
+}
+.seprator i {
+	font-size: 12px;
+}
+
+.bv-position .head, .bv-position .breadcrumb.with-head {
+    float: left;
+}
+.bv-position .head {
+    margin-right: 0;
+}
+.bv-position .breadcrumb.with-head {
+    padding: 0;
+    margin: 0;
+    background: none;
+}
+.bv-position .breadcrumb>.active {
+    color: #CDE6FF;
+}
+/*.bv-hide {
+	display: none;
+}
+.bv-unvisible {
+	visibility: hidden;
+}*/
+.bv-left {
+	float: left;
+}
+.bv-right {
+	float: right;
+}
+.bv-theme .btn.btn-primary, .bv-theme .btn.btn-default, .bv-theme .btn.btn-important, .bv-theme .btn.btn-warning, .bv-theme .btn.btn-link {
+	letter-spacing: 0.1em;
+	min-width: 80px;
+	font-size: 14px;
+}
+.bv-theme .input-group-addon i.bv-icon-button {
+	cursor: pointer;
+}
+.bv-theme .btn.btn-link, .bv-theme .btn.focus, .bv-theme .btn:focus, .bv-theme .btn:active:focus {
+	outline: none;
+}
+.bv-theme .modal-body {
+    width: 100%;
+    display: inline-block;
+}
+.bv-theme .bv-warn {
+	position: relative;
+}
+.bv-theme .bv-warn i {
+	font-size: 12px;
+}
+/********************************************* alert begin *************************************/
+.bv-theme .alert.error .modal-title {
+    color: red;
+}
+.bv-theme .alert.error .modal-title i {
+    font-size: 18px;
+    padding-right: 10px;
+}
+.bv-theme .alert.error .modal-body {
+    font-size: 14px;
+    color: red;
+}
+/********************************************* alert end *************************************/
+/********************************************* bootstrap begin *************************************/
+/*.bv-theme .col-lg-1, .bv-theme .col-lg-10, .bv-theme .col-lg-11, .bv-theme .col-lg-12, .bv-theme .col-lg-2, .bv-theme .col-lg-3,
+	.bv-theme .col-lg-4, .bv-theme .col-lg-5, .bv-theme .col-lg-6, .bv-theme .col-lg-7, .bv-theme .col-lg-8, .bv-theme .col-lg-9,
+	.bv-theme .col-md-1, .bv-theme .col-md-10, .bv-theme .col-md-11, .bv-theme .col-md-12, .bv-theme .col-md-2, .bv-theme .col-md-3,
+	.bv-theme .col-md-4, .bv-theme .col-md-5, .bv-theme .col-md-6, .bv-theme .col-md-7, .bv-theme .col-md-8, .bv-theme .col-md-9,
+	.bv-theme .col-sm-1, .bv-theme .col-sm-10, .bv-theme .col-sm-11, .bv-theme .col-sm-12, .bv-theme .col-sm-2, .bv-theme .col-sm-3,
+	.bv-theme .col-sm-4, .bv-theme .col-sm-5, .bv-theme .col-sm-6, .bv-theme .col-sm-7, .bv-theme .col-sm-8, .bv-theme .col-sm-9,
+	.bv-theme .col-xs-1, .bv-theme .col-xs-10, .bv-theme .col-xs-11, .bv-theme .col-xs-12, .bv-theme .col-xs-2, .bv-theme .col-xs-3,
+	.bv-theme .col-xs-4, .bv-theme .col-xs-5, .bv-theme .col-xs-6, .bv-theme .col-xs-7, .bv-theme .col-xs-8, .bv-theme .col-xs-9 {
+	padding-left: 8px;
+	padding-right: 8px;
+	overflow: hidden;
+}*/
+.bv-theme .form-group {
+    margin-bottom: 8px;
+}
+/*.bv-theme .form-group label.col-sm-3, .bv-theme .form-group label.col-sm-4 {
+    padding-left: 0;
+    padding-right: 0;
+}
+.bv-theme .form-group div.col-sm-9, .bv-theme .form-group div.col-sm-8 {
+    padding-left: 4px;
+    padding-right: 0;
+}
+.bv-theme div.col-sm-6, .bv-theme div.col-sm-8, .bv-theme div.col-sm-9, .bv-theme div.col-sm-10, .bv-theme div.col-sm-12 {
+    padding-left: 7px;
+    padding-right: 6px;
+	vertical-align: middle;
+}
+.bv-theme div.col-sm-12 {
+    padding-right: 7px;
+}
+.bv-theme div.col-sm-12, .bv-theme div.col-md-12 {
+    clear: both;
+}*/
+
+/*@media (min-width: 768px) {
+    .bv-theme .col-sm-2.col-sm-2y {
+        width: 16%;
+    }
+    .bv-theme .col-sm-10.col-sm-10x {
+        width: 84%;
+    }
+}
+@media (min-width: 992px) and (max-width: 1200px){
+    .bv-theme .col-md-1.col-md-1x {
+        width: 11%;
+    }
+    .bv-theme .col-md-11.col-md-11y {
+        width: 89%;
+    }
+}
+@media (min-width: 1200px) {
+    .bv-theme .col-lg-1.col-lg-1x {
+        width: 11%;
+    }
+    .bv-theme .col-lg-11.col-lg-11y {
+        width: 89%;
+    }
+}*/
+/********************************************* bootstrap end *************************************/
+/**************** 滚动条美化，支持谷歌浏览器 begin ***********************************************/
+@media (min-width: 768px) {
+    ::-webkit-scrollbar {
+        width: 10px;
+        height: 10px;
+    }
+    ::-webkit-scrollbar-button {
+        width: 0;
+        height: 0;
+    }
+    ::-webkit-scrollbar-button:start:decrement,
+    ::-webkit-scrollbar-button:end:increment {
+        display: block;
+    }
+    ::-webkit-scrollbar-button:vertical:start:increment,
+    ::-webkit-scrollbar-button:vertical:end:decrement {
+        display: none;
+    }
+    ::-webkit-scrollbar-track:vertical,
+    ::-webkit-scrollbar-track:horizontal,
+    ::-webkit-scrollbar-thumb:vertical,
+    ::-webkit-scrollbar-thumb:horizontal,
+    ::-webkit-scrollbar-track:vertical,
+    ::-webkit-scrollbar-track:horizontal,
+    ::-webkit-scrollbar-thumb:vertical,
+    ::-webkit-scrollbar-thumb:horizontal {
+        border-color: transparent;
+        border-style: solid;
+    }
+    ::-webkit-scrollbar-track:vertical::-webkit-scrollbar-track:horizontal {
+        background-color: #fff;
+        -webkit-background-clip: padding-box;
+        background-clip: padding-box;
+    }
+    ::-webkit-scrollbar-thumb {
+        min-height: 28px;
+        padding-top: 100;
+        background-color: rgba(0, 0, 0, .2);
+        -webkit-background-clip: padding-box;
+        background-clip: padding-box;
+        border-radius: 5px;
+        -webkit-box-shadow: inset 1px 1px 0 rgba(0, 0, 0, .1), inset 0 -1px 0 rgba(0, 0, 0, .07);
+    }
+    ::-webkit-scrollbar-thumb:hover {
+        background-color: rgba(0, 0, 0, .4);
+        -webkit-box-shadow: inset 1px 1px 1px rgba(0, 0, 0, .25);
+    }
+    ::-webkit-scrollbar-thumb:active {
+        background-color: rgba(0, 0, 0, .5);
+        -webkit-box-shadow: inset 1px 1px 3px rgba(0, 0, 0, .35);
+    }
+    ::-webkit-scrollbar-track:vertical,
+    ::-webkit-scrollbar-track:horizontal,
+    ::-webkit-scrollbar-thumb:vertical,
+    ::-webkit-scrollbar-thumb:horizontal {
+        border-width: 0;
+    }
+    ::-webkit-scrollbar-track:hover {
+        background-color: rgba(0, 0, 0, .05);
+        -webkit-box-shadow: inset 1px 0 0 rgba(0, 0, 0, .1);
+    }
+    ::-webkit-scrollbar-track:active {
+        background-color: rgba(0, 0, 0, .05);
+        -webkit-box-shadow: inset 1px 0 0 rgba(0, 0, 0, .14), inset -1px -1px 0 rgba(0, 0, 0, .07);
+    }
+    .scrollbar-hover::-webkit-scrollbar,
+    .scrollbar-hover::-webkit-scrollbar-button,
+    .scrollbar-hover::-webkit-scrollbar-track,
+    .scrollbar-hover::-webkit-scrollbar-thumb {
+        visibility: hidden;
+    }
+    .scrollbar-hover:hover::-webkit-scrollbar,
+    .scrollbar-hover:hover::-webkit-scrollbar-button,
+    .scrollbar-hover:hover::-webkit-scrollbar-track,
+    .scrollbar-hover:hover::-webkit-scrollbar-thumb {
+        visibility: visible;
+    }
+}
+/**************** 滚动条美化，支持谷歌浏览器 end ***********************************************/

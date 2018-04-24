@@ -1,0 +1,88 @@
+<div class="bs-docs-container" data-container="tagSelectDoc">
+    <div class="bs-docs-section">
+        <h4>概要说明</h4>
+        <p>select-下拉选择、radio-单选按钮、checkbox-复选框</p>
+        <dl class="dl-horizontal">
+            <dt>标签资源</dt>
+            <dd>位于/mobile/tags/bv-select.js，/mobile/tags/bv-radio.js，/mobile/tags/bv-checkbox.js</dd>
+        </dl>
+        <h4>公共属性定义</h4>
+        <dl class="dl-horizontal">
+            <dt>entity</dt>
+            <dd v-html="pub.entity"></dd>
+            <dt>name</dt>
+            <dd v-html="pub.name"></dd>
+            <dt>clazz</dt>
+            <dd v-html="pub.clazz"></dd>
+            <dt>attr</dt>
+            <dd v-html="pub.attr"></dd>
+            <dt>validate</dt>
+            <dd v-html="pub.validate"></dd>
+            <dt>defaultValue</dt>
+            <dd v-html="pub.defaultValue"></dd>
+            <dt>value</dt>
+            <dd v-html="pub.value"></dd>
+            <dt>load</dt>
+            <dd v-html="pub.load"></dd>
+            <dt>preset</dt>
+            <dd v-html="pub.preset"></dd>
+            <dt>code</dt>
+            <dd v-html="pub.code"></dd>
+            <dt>desc</dt>
+            <dd v-html="pub.desc"></dd>
+            <dt>choose</dt>
+            <dd v-html="pub.choose"></dd>
+            <dt>url</dt>
+            <dd><p>查询地址，可以不配置，默认为'/common/select/query'，需定义属性entityName、code、desc（可选）</p><p>仅在$data不配置时url才生效，即$data优先级高于url</p></dd>
+            <dt>method</dt>
+            <dd>查询方式，默认为post，可以设置get，但get时不支持设置查询条件及排序</dd>
+            <dt>entityName</dt>
+            <dd v-html="pub.entityName"></dd>
+            <dt>initParam</dt>
+            <dd v-html="pub.initParam"></dd>
+            <dt>initParamList</dt>
+            <dd v-html="pub.initParamList"></dd>
+            <dt>orders</dt>
+            <dd v-html="pub.orders"></dd>
+            <dt>trans</dt>
+            <dd v-html="pub.trans"></dd>
+            <dt>extras</dt>
+            <dd v-html="pub.extras"></dd>
+            <dt>excludes</dt>
+            <dd v-html="pub.excludes"></dd>
+            <dt>show</dt>
+            <dd v-html="pub.show"></dd>
+            <dt>onChange</dt>
+            <dd v-html="pub.onChange"></dd>
+        </dl>
+        <h4>select特殊属性定义</h4>
+        <dl class="dl-horizontal">
+            <dt>initOption</dt>
+            <dd>默认显示'请选择'，值为空</dd>
+        </dl>
+        <h4>radio、checkbox特殊属性定义</h4>
+        <dl class="dl-horizontal">
+            <dt>cols</dt>
+            <dd v-html="pub.cols"></dd>
+        </dl>
+        <h4>checkbox特殊属性定义</h4>
+        <dl class="dl-horizontal">
+            <dt>sticky</dt>
+            <dd>固定选中，不允许取消选中的属性，格式为#name</dd>
+        </dl>
+        <h4>示例</h4>
+        <div class="bs-docs-iframe">
+            <iframe src="example/#!/select.html"></iframe>
+        </div>
+    </div>
+</div>
+<script type="text/javascript">
+require(['jquery', 'util', 'Const'], function($, util, Const) {
+    var vm = util.bind({
+        container: 'tagSelectDoc',
+        data: {
+            pub: __doc
+        }
+    });
+});
+</script>

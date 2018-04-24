@@ -1,0 +1,142 @@
+<component is="bv-layout" data-container="example-select">
+    <component is="bv-form" :key="tags.formKey" v-bind="formConfig"></component>
+</component>
+<script type="text/javascript">
+    require(['jquery', 'util', 'Const', 'bvForm'], function($, util, Const) {
+        util.title('example-select');
+        var vm = util.bind({
+            container: 'example-select',
+            data: {
+                tags: {
+                    formKey: 'selectForm'
+                },
+                formConfig: {
+                    columns: [
+                        {
+                            name: 'select1',
+                            head: '默认下拉',
+                            edit: {
+                                type: 'select'
+                            },
+                            config: {
+                                preset: 'simple',
+                                choose: ['ON', 'OFF']
+                            }
+                        }, {
+                            name: 'select2',
+                            head: '有默认值',
+                            edit: {
+                                type: 'select'
+                            },
+                            config: {
+                                defaultValue: 'OFF',
+                                preset: 'json',
+                                choose: {
+                                    ON: '开',
+                                    OFF: '关'
+                                }
+                            }
+                        }, {
+                            name: 'select3',
+                            head: '自定义初始显示',
+                            edit: {
+                                type: 'select'
+                            },
+                            config: {
+                                choose: [
+                                    {
+                                        code: 'ON',
+                                        desc: '开'
+                                    }, {
+                                        code: 'OFF',
+                                        desc: '关'
+                                    }
+                                ],
+                                initOption: '---请选择---'
+                            }
+                        }, {
+                            name: 'select3',
+                            head: '自定义初始显示及初始值',
+                            edit: {
+                                type: 'select'
+                            },
+                            config: {
+                                choose: [
+                                    {
+                                        code: 'ON',
+                                        desc: '开'
+                                    }, {
+                                        code: 'OFF',
+                                        desc: '关'
+                                    }
+                                ],
+                                initOption: '---请选择---'
+                            }
+                        }, {
+                            name: 'radio1',
+                            head: '默认单选',
+                            edit: {
+                                type: 'radio'
+                            },
+                            config: {
+                                preset: 'simple',
+                                choose: ['ON', 'OFF']
+                            }
+                        }, {
+                            name: 'radio2',
+                            head: '额外选项-AA',
+                            edit: {
+                                type: 'radio'
+                            },
+                            config: {
+                                preset: 'simple',
+                                choose: ['YES', 'NO'],
+                                extras: ['AA']
+                            }
+                        }, {
+                            name: 'radio3',
+                            head: '屏蔽选项-NO',
+                            edit: {
+                                type: 'radio'
+                            },
+                            config: {
+                                preset: 'simple',
+                                choose: ['YES', 'NO'],
+                                excludes: ['NO']
+                            }
+                        }, {
+                            name: 'checkbox1',
+                            head: '默认复选',
+                            edit: {
+                                type: 'checkbox'
+                            },
+                            config: {
+                                preset: 'simple',
+                                choose: ['ON', 'OFF']
+                            }
+                        }, {
+                            name: 'checkbox2',
+                            head: '不能取消选项-ON',
+                            edit: {
+                                type: 'checkbox'
+                            },
+                            config: {
+                                preset: 'simple',
+                                choose: ['ON', 'OFF'],
+                                sticky: 'ON'
+                            }
+                        }
+                    ],
+                    operates: [
+                        {
+                            text: '保存',
+                            click: function (event, editType, entity) {
+                                console.log(entity);
+                            }
+                        }
+                    ]
+                }
+            }
+        });
+    });
+</script>

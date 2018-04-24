@@ -1,0 +1,77 @@
+<div data-container="validateUpload">
+	<component is="bv-form" v-bind="config"></component>
+</div>
+<script type="text/javascript">
+    require(['jquery', 'util', 'Const'], function ($, util, Const) {
+        var vm = util.bind({
+            container: 'validateUpload',
+            data: {
+                uploaded: false,
+                config: {
+                    columns: [
+						{
+						    name: 'demo1',
+							head: '预设条件',
+							config: {
+						        validate: {
+                                    required: true
+								}
+							}
+						}, {
+                            name: 'upload',
+                            edit: {
+                                type: 'upload'
+                            },
+                            config: {
+                                initParam: function (entity) {
+									return {
+									    demo1: entity.demo1
+									};
+                                },
+								autoUpload: false
+                            }
+                        }
+                    ],
+					operates: [
+						{
+                            text: '上传并导入',
+                            clazz: 'btn-primary',
+                            click: function (event, editType, entity, extraParams) {
+                                util.call({
+                                    // util.vm参数支持序号，name两种方式混用，下例中第二个参数0表示取vm的第一个子组件，即bv-form，第二个参数upload表示取bv-form下name为upload的子组件
+                                    vm: util.vm(vm, 0, 'upload'),
+                                    method: 'upload',
+                                    onUpload: function (entity, $container, data) {
+                                        // 处理导入
+										console.log(entity);
+										console.log(data);
+                                    }
+                                });
+                            }
+						}, {
+                            text: '上传',
+                            click: function (event, editType, entity, extraParams) {
+								util.call({
+									// util.vm参数支持序号，name两种方式混用，下例中第二个参数0表示取vm的第一个子组件，即bv-form，第二个参数upload表示取bv-form下name为upload的子组件
+									vm: util.vm(vm, 0, 'upload'),
+									method: 'upload',
+                                    onUpload: function () {
+									    vm.uploaded = true;
+										console.log('uploaded');
+                                    }
+								});
+                            }
+                        }, {
+                            text: '导入',
+                            click: function (event, editType, entity, extraParams) {
+								if (!vm.uploaded) {
+								    util.alert('请先上传');
+								}
+                            }
+                        }
+					]
+				}
+            }
+        });
+    });
+</script>

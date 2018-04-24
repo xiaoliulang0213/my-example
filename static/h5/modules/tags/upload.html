@@ -1,0 +1,63 @@
+<div data-container="tagUploadDoc">
+    <div class="bs-docs-container">
+        <div class="bs-docs-section">
+            <h4>概要说明</h4>
+            <p>upload-拍照上传</p>
+            <dl class="dl-horizontal">
+                <dt>标签资源</dt>
+                <dd>位于/mobile/tags/bv-upload.js</dd>
+            </dl>
+            <h4>属性定义</h4>
+            <dl class="dl-horizontal">
+                <dt>entity</dt>
+                <dd v-html="pub.entity"></dd>
+                <dt>name</dt>
+                <dd v-html="pub.name"></dd>
+                <dt>type</dt>
+                <dd>默认为default，可上传可拍照，可设置为camera-只能拍照（pc端无法限制，部分安卓手机无法限制）</dd>
+                <dt>clazz</dt>
+                <dd v-html="pub.clazz"></dd>
+                <dt>attr</dt>
+                <dd v-html="pub.attr"></dd>
+                <dt>validate</dt>
+                <dd v-html="pub.validate"></dd>
+                <dt>url</dt>
+                <dd>上传url</dd>
+                <dt>formName</dt>
+                <dd>form上传文件流的名字</dd>
+                <dt>files</dt>
+                <dd>数组，初始文件数量</dd>
+                <dt>autoUpload</dt>
+                <dd>是否选择后自动上传，默认为true</dd>
+                <dt>uploadType</dt>
+                <dd>上传类型, `file`为文件上传; `base64`为以base64上传，默认为file</dd>
+                <dt>compress</dt>
+                <dd>压缩配置, `false`则不压缩，格式为：{width: 1600, height: 1600, quality: 0.8}</dd>
+                <dt>autoIncrease</dt>
+                <dd>是否自动增加图片，默认为false</dd>
+                <dt>allowDelete</dt>
+                <dd>是否允许删除图片，默认为false</dd>
+                <dt>delete</dt>
+                <dd>函数，删除图片调用</dd>
+                <dt>maxSize</dt>
+                <dd>上传文件大小限制，默认为5 * 1024 * 1024（10M）</dd>
+                <dt>success</dt>
+                <dd>函数，上传成功调用</dd>
+            </dl>
+            <h4>示例</h4>
+            <div class="bs-docs-iframe">
+                <iframe src="example/#!/upload.html"></iframe>
+            </div>
+        </div>
+    </div>
+</div>
+<script type="text/javascript">
+require(['jquery', 'util', 'Const'], function($, util, Const) {
+    var vm = util.bind({
+        container: 'tagUploadDoc',
+        data: {
+            pub: __doc
+        }
+    });
+});
+</script>

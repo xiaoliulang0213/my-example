@@ -1,0 +1,200 @@
+<div data-container="treeForm">
+	<component is="bv-form" key="treeFormKey" v-bind="config"></component>
+</div>
+<script type="text/javascript">
+require(['jquery', 'util', 'Const'], function ($, util, Const) {
+	var vm = util.bind({
+		container: 'treeForm',
+		data: {
+			config: {
+				columns: [
+					{
+					    name: 'cityCode',
+						head: '测试树',
+						edit: {
+					        type: 'tree'
+						},
+						config: {
+                            check: true,
+                            type: 'select',
+                            entityName: 'sysCity',
+                            orders: 'cityCode',
+                            pack: function(entity) {
+                                return {
+                                    id: entity.cityCode,
+                                    pId: entity.parentCode,
+                                    name: entity.cityName,
+                                    open: true,//!entity.parentMenuId || entity.parentMenuId === '00',
+                                    entity: entity
+                                };
+                            },
+                            show: function (item) {
+                                if (!item.parentCode || item.cityType === 'city') {
+                                    return null;
+                                }
+                                return item.cityName;
+                            }
+						}
+					}, {
+                        name: 'cityName',
+                        head: '测试树-有初始值',
+                        edit: {
+                            type: 'tree'
+                        },
+                        config: {
+                            defaultValue: ['370000', '370100', '370101', '370102'],
+                            check: true,
+                            type: 'select',
+                            entityName: 'sysCity',
+                            orders: 'cityCode',
+                            pack: function(entity) {
+                                return {
+                                    id: entity.cityCode,
+                                    pId: entity.parentCode,
+                                    name: entity.cityName,
+                                    open: true,//!entity.parentMenuId || entity.parentMenuId === '00',
+                                    entity: entity
+                                };
+                            },
+                            show: function (item) {
+                                if (!item.parentCode || item.cityType === 'city') {
+                                    return null;
+                                }
+                                return item.cityName;
+                            }
+                        }
+                    }, {
+                        name: 'parentCode',
+                        head: '测试多选',
+                        edit: {
+                            type: 'select'
+                        },
+                        config: {
+                            preset: 'json',
+                            choose: [
+                                {
+                                    A: '第一项',
+                                    B: '第二项',
+                                    C: '第三项'
+                                }
+                            ],
+                            multiple: true
+                        }
+                    }, {
+                        name: 'remark',
+                        head: '测试多选-有初始值',
+                        edit: {
+                            type: 'select'
+                        },
+                        config: {
+                            defaultValue: ['A', 'C'],
+                            preset: 'json',
+                            choose: [
+                                {
+                                    A: '第一项',
+                                    B: '第二项',
+                                    C: '第三项'
+                                }
+                            ],
+                            multiple: true
+                        }
+                    }, {
+				    	name: 'demo1',
+						head: '输入框',
+						config: {
+							onChange: function (entity, value) {
+								util.get({
+									url: '/api/example/demo1',
+									success: function (res) {
+										entity.demo2 = res + value;
+                                    }
+								});
+                            }
+						}
+					}, {
+                        name: 'demo2',
+                        head: '结果框'
+                    }, {
+                        name: 'demo3',
+                        head: '选择一下',
+						edit: {
+                            type: 'select'
+						},
+						config: {
+                            preset: 'json',
+                            choose: [
+                                {
+                                    A: '隐藏第一项结果'
+                                }, {
+                                    B: '显示第二项结果'
+								}
+                            ],
+							onChange: function (entity, value) {
+                                if (value === 'A') {
+                                    util.call({
+                                        vm: util.vm(vm, 'treeFormKey'),
+                                        hide: {
+                                            name: 'demo3-1'
+                                        }
+                                    });
+								} else {
+                                    util.call({
+                                        vm: util.vm(vm, 'treeFormKey'),
+                                        show: {
+                                            name: 'demo3-1'
+                                        }
+                                    });
+								}
+                            }
+						}
+                    }, {
+                        name: 'demo3-1',
+                        head: '第一项结果',
+						config: {
+                            defaultValue: 'AAAA'
+						}
+                    }, {
+                        name: 'demo3-2',
+                        head: '第二项结果',
+                        config: {
+                            defaultValue: 'BBBB'
+                        },
+                        show: function (entity) {
+                            return entity && entity.demo3 === 'B';
+                        }
+                    }, {
+                        name: 'demo3-3',
+                        head: '第一项（创建或销毁）',
+                        config: {
+                            defaultValue: 'AAAA222'
+                        },
+                        destroy: function (entity) {
+                            return entity && entity.demo3 === 'B';
+                        }
+                    }, {
+                        name: 'demo3-4',
+                        head: '第二项（创建或销毁）',
+                        config: {
+                            defaultValue: 'BBBB222'
+                        },
+                        create: function (entity) {
+                            return entity && entity.demo3 === 'B';
+                        }
+                    }
+				],
+				operates: [
+					{
+                        text: '保存',
+                        clazz: 'btn-primary',
+                        icon: 'icon-save',
+                        loading: '处理中...',
+                        click: function (event, editType, entity, extraParams) {
+							console.log(entity)
+                        }
+					}
+				]
+			}
+		}
+	});
+});
+</script>

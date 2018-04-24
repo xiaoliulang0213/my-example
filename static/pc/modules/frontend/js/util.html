@@ -1,0 +1,2113 @@
+<div class="bv-fill" data-container="util">
+    <div class="col-sm-4 col-md-3 bv-fill-height bv-border bv-fill-scroll">
+        <component is="bv-tree" :key="tags.treeKey" @on-click="treeOnClick" v-bind="treeConfig"></component>
+    </div>
+    <div class="col-sm-7 col-md-8 bv-fill-height bv-border bv-fill-scroll">
+        <form class="form-horizontal">
+        <div class="col-md-11">
+            <div v-for="el in functions" v-if="el.parentName">
+                <h3>
+                    <a id="basic-type" :id="el.parentName + '-' + el.name"></a>
+                    <code v-text="showFunction(el)" :class="el.deprecated && 'del'"></code>
+                </h3>
+                <p v-text="el.describe"></p>
+                <mark v-text="el.version ? (el.version.start + (el.version.end ? '-' + el.version.end : '')) : ''" v-if="el.version"></mark>
+                <strong v-text="el.deprecated" v-if="el.deprecated"></strong>
+                <h4 v-if="el.params">参数</h4>
+                <ul v-if="el.params">
+                    <li v-for="param in el.params">
+                        <code v-text="param.name"></code>
+                        <em v-text="'(' + param.type + ')'"></em>
+                        <span v-text="': ' + param.describe"></span>
+                    </li>
+                </ul>
+                <h4 v-if="el.ret">返回值</h4>
+                <p v-if="el.ret">
+                    <em v-text="'(' + el.ret.type + ')'"></em>
+                    <span v-text="': ' + el.ret.describe"></span>
+                </p>
+                <h4 v-if="el.example">例子</h4>
+                <pre v-if="el.example">
+<code v-html="el.example">
+</code>
+                </pre>
+                <h4><a href="javascript:;" :data-function="el.name">试一下</a></h4>
+            </div>
+        </div>
+        </form>
+    </div>
+</div>
+<script type="text/javascript">
+    require(['jquery', 'util'], function($, util) {
+        var functions = [
+            {
+                name: 'index-basic',
+                parentName: ''
+            }, {
+                name: 'type',
+                parentName: 'index-basic',
+                version: {
+                    start: '1.1.0'
+                },
+                describe: '获取值对应的类型',
+                params: [
+                    {
+                        name: 'obj',
+                        type: '*',
+                        describe: '需要判断类型的值'
+                    }
+                ],
+                ret: {
+                    type: 'string',
+                    describe: '值对应的类型'
+                },
+                example: util.heredoc(function () {
+                    /*!
+util.type(123);
+// => 'number'
+util.type('abc');
+// => 'string'
+util.type(['a', 'b', 'c']);
+// => 'array'
+util.type({a: 'a', b: 'b'});
+// => 'object'
+util.type(alert);
+// => 'function'
+util.type();
+// => 'undefined'
+util.type(null);
+// => 'null'
+                    */
+                })
+            }, {
+                name: 'isEmpty',
+                parentName: 'index-basic',
+                version: {
+                    start: '1.1.0'
+                },
+                describe: '判断值是否为空',
+                params: [
+                    {
+                        name: 'v',
+                        type: '*',
+                        describe: '待判断的值'
+                    }
+                ],
+                ret: {
+                    type: 'boolean',
+                    describe: '是否为空'
+                },
+                example: util.heredoc(function () {
+                    /*!
+util.isEmpty();
+// => true
+util.isEmpty('');
+// => true
+util.isEmpty(null);
+// => true
+util.isEmpty('');
+// => true
+util.isEmpty(0);
+// => false
+util.isEmpty({});
+// => true
+util.isEmpty([]);
+// => true
+util.isEmpty('abc');
+// => false
+util.isEmpty({a: 'a'});
+// => false
+util.isEmpty(['a']);
+// => false
+                    */
+                })
+            }, {
+                name: 'isTrue',
+                parentName: 'index-basic',
+                version: {
+                    start: '1.1.0'
+                },
+                describe: '判断是否为真',
+                params: [
+                    {
+                        name: 'check',
+                        type: '*',
+                        describe: '待判断的值'
+                    }, {
+                        name: 'defaultTrueOrFalse',
+                        type: 'boolean',
+                        optional: true,
+                        defaultValue: true,
+                        describe: '默认值'
+                    }
+                ],
+                ret: {
+                    type: 'boolean',
+                    describe: '是否为真'
+                },
+                example: util.heredoc(function () {
+                    /*!
+util.isTrue();
+// => false
+util.isTrue('');
+// => false
+util.isTrue('abc');
+// => true
+util.isTrue(0);
+// => false
+util.isTrue(99);
+// => true
+util.isTrue(undefined, true);
+// => true
+util.isTrue(undefined, false);
+// => false
+util.isTrue(function () {
+return true;
+});
+// => true
+util.isTrue(function () {
+return false;
+});
+// => false
+util.isTrue(true);
+// => true
+util.isTrue(false);
+// => false
+util.isTrue('true');
+// => true
+util.isTrue('false');
+// => false
+                    */
+                })
+            }, {
+                name: 'check',
+                parentName: 'index-basic',
+                version: {
+                    start: '1.1.0'
+                },
+                describe: '执行正则表达式判断',
+                params: [
+                    {
+                        name: 'v',
+                        type: '*',
+                        describe: '需要判断的值'
+                    }, {
+                        name: 'regex',
+                        type: 'RegExp',
+                        describe: '正则表达式'
+                    }
+                ],
+                ret: {
+                    type: 'boolean',
+                    describe: '是否为真'
+                },
+                example: util.heredoc(function () {
+                    /*
+util.check(123, /^[\-\+]?\d+$/);
+// => true
+util.check('abc', /^[\-\+]?\d+$/);
+// => false
+                    */
+                })
+            }, {
+                name: 'index-trans',
+                parentName: ''
+            }, {
+                name: 'getBoolean',
+                parentName: 'index-trans',
+                version: {
+                    start: '1.1.0'
+                },
+                describe: '获取boolean结果',
+                params: [
+                    {
+                        name: 'value',
+                        type: '*',
+                        describe: '需要转换的值'
+                    }
+                ],
+                ret: {
+                    type: 'boolean',
+                    describe: 'boolean结果'
+                },
+                example: util.heredoc(function () {
+                    /*
+util.getBoolean(true);
+// => true
+util.getBoolean(false);
+// => false
+util.getBoolean('true');
+// => true
+util.getBoolean('false');
+// => false
+util.getBoolean(0);
+// => false
+util.getBoolean('abc');
+// => true
+                    */
+                })
+            }, {
+                name: 'toNumber',
+                parentName: 'index-trans',
+                version: {
+                    start: '1.1.0'
+                },
+                describe: '转number型',
+                params: [
+                    {
+                        name: 'value',
+                        type: '*',
+                        describe: '需要转换的值'
+                    }
+                ],
+                ret: {
+                    type: 'number',
+                    describe: 'number结果'
+                },
+                example: util.heredoc(function () {
+                    /*
+util.toNumber('123');
+// => 123
+util.toNumber(123);
+// => 123
+util.toNumber('abc');
+// => NaN
+util.toNumber('123abc');
+// => 123
+                    */
+                })
+            }, {
+                name: 'toString',
+                parentName: 'index-trans',
+                version: {
+                    start: '1.1.0'
+                },
+                describe: '转字符串',
+                params: [
+                    {
+                        name: 'value',
+                        type: '*',
+                        describe: '需要转换的值'
+                    }
+                ],
+                ret: {
+                    type: 'string',
+                    describe: 'string结果'
+                },
+                example: util.heredoc(function () {
+                    /*
+util.toString('123');
+// => '123'
+util.toString(123);
+// => '123'
+util.toString(null);
+// => null
+                    */
+                })
+            }, {
+                name: 'toByte',
+                parentName: 'index-trans',
+                version: {
+                    start: '1.1.0'
+                },
+                describe: '转字节（-128~127）',
+                params: [
+                    {
+                        name: 'v',
+                        type: '*',
+                        describe: '需要转换的值'
+                    }
+                ],
+                ret: {
+                    type: 'number',
+                    describe: '字节结果'
+                }
+            }, {
+                name: 'nvl',
+                parentName: 'index-trans',
+                version: {
+                    start: '1.1.0'
+                },
+                describe: '空值设置默认值',
+                params: [
+                    {
+                        name: 's',
+                        type: '*',
+                        describe: '待判断的数据'
+                    }, {
+                        name: 'defaultValue',
+                        type: '*',
+                        describe: '默认值'
+                    }
+                ],
+                ret: {
+                    type: '*',
+                    describe: '结果'
+                },
+                example: util.heredoc(function () {
+                    /*
+util.nvl('123');
+// => '123'
+util.nvl(null, 123);
+// => 123
+                    */
+                })
+            }, {
+                name: 'random',
+                parentName: 'index-trans',
+                version: {
+                    start: '1.1.0'
+                },
+                describe: '获取随机数',
+                params: [
+                    {
+                        name: 'min',
+                        type: 'number',
+                        describe: '最小值'
+                    }, {
+                        name: 'max',
+                        type: 'number',
+                        describe: '最大值'
+                    }
+                ],
+                ret: {
+                    type: 'number',
+                    describe: '随机数'
+                },
+                example: util.heredoc(function () {
+                    /*
+util.random(5, 10);
+// => 8
+// 每次结果不一样
+                    */
+                })
+            }, {
+                name: 'arrayToString',
+                parentName: 'index-trans',
+                version: {
+                    start: '1.1.0'
+                },
+                describe: '数组转字符串',
+                params: [
+                    {
+                        name: 'arr',
+                        type: 'Array',
+                        describe: '数组'
+                    }, {
+                        name: 'seprate',
+                        type: 'string',
+                        describe: '分隔符'
+                    }
+                ],
+                ret: {
+                    type: 'string',
+                    describe: '字符串结果'
+                },
+                example: util.heredoc(function () {
+                    /*
+util.arrayToString(['a', 'b', 'c'], ',');
+// => 'a,b,c'
+                     */
+                })
+            }, {
+                name: 'stringToArray',
+                parentName: 'index-trans',
+                version: {
+                    start: '1.1.0'
+                },
+                describe: '字符串转数组',
+                params: [
+                    {
+                        name: 'str',
+                        type: 'string',
+                        describe: '字符串'
+                    }, {
+                        name: 'seprate',
+                        type: 'string',
+                        describe: '分隔符'
+                    }
+                ],
+                ret: {
+                    type: 'Array',
+                    describe: '数组结果'
+                },
+                example: util.heredoc(function () {
+                    /*
+util.stringToArray('a,b,c', ',');
+// => ['a', 'b', 'c']
+                     */
+                })
+            }, {
+                name: 'orderBy',
+                parentName: 'index-trans',
+                version: {
+                    start: '1.1.0'
+                },
+                describe: '数组排序',
+                params: [
+                    {
+                        name: 'array',
+                        type: 'Array',
+                        describe: '待排序的数组'
+                    }, {
+                        name: 'name',
+                        type: 'string',
+                        describe: '排序的属性'
+                    }, {
+                        name: 'reverse',
+                        type: 'boolean',
+                        optional: true,
+                        describe: '是否倒序'
+                    }
+                ],
+                ret: {
+                    type: 'Array',
+                    describe: '数组结果'
+                },
+                example: util.heredoc(function () {
+                    /*
+util.trans([{name, 'a', desc: 'aa'}, {name: 'b', desc: 'bb'}], 'name', true);
+// => [{name, 'b', desc: 'bb'}, {name: 'a', desc: 'aa'}]
+                     */
+                })
+            }, {
+                name: 'index-param',
+                parentName: ''
+            }, {
+                name: 'gup',
+                parentName: 'index-param',
+                version: {
+                    start: '1.1.0'
+                },
+                describe: '取url参数',
+                params: [
+                    {
+                        name: 'name',
+                        type: 'string',
+                        describe: '截取的参数名'
+                    }, {
+                        name: 'url',
+                        type: 'string',
+                        optional: true,
+                        describe: 'url地址（不传时按顺序取modal、body、url的地址）'
+                    }
+                ],
+                ret: {
+                    type: 'string',
+                    describe: '获取的参数值'
+                },
+                example: util.heredoc(function () {
+                    /*!
+util.gup('name', 'http://localhost/xxx.html?name=123');
+// => '123'
+                    */
+                })
+            }, {
+                name: 'modalUrl',
+                parentName: 'index-param',
+                version: {
+                    start: '1.1.0'
+                },
+                describe: '获取当前弹窗url地址',
+                deprecated: '用util.url(\'modal\')代替',
+                ret: {
+                    type: 'string',
+                    describe: '弹窗地址'
+                },
+                example: util.heredoc(function () {
+                    /*!
+util.modalUrl();
+// => 'modules/frontend/js/try.html'
+                    */
+                })
+            }, {
+                name: 'currentUrl',
+                parentName: 'index-param',
+                version: {
+                    start: '1.1.0'
+                },
+                describe: '获取当前页面url地址',
+                deprecated: '用util.url(\'body\')代替',
+                params: [
+                    {
+                        name: 'tabs',
+                        type: 'Object',
+                        optional: true,
+                        describe: '标签页定义'
+                    }
+                ],
+                ret: {
+                    type: 'string',
+                    describe: '页面地址'
+                },
+                example: util.heredoc(function () {
+                    /*!
+util.currentUrl();
+// => 'modules/frontend/js/util.html'
+                    */
+                })
+            }, {
+                name: 'index-string',
+                parentName: ''
+            }, {
+                name: 'contains',
+                parentName: 'index-string',
+                version: {
+                    start: '1.1.0'
+                },
+                describe: '判断字符串/数组是否包含某个字符串',
+                params: [
+                    {
+                        name: 'v',
+                        type: 'string/Array',
+                        describe: '源字符串'
+                    }, {
+                        name: 'c',
+                        type: 'string',
+                        describe: '待判断的字符串'
+                    }
+                ],
+                ret: {
+                    type: 'boolean',
+                    describe: '是否包含'
+                },
+                example: util.heredoc(function () {
+                    /*!
+util.contains('abcd', 'bc');
+// => true
+util.contains(['a', 'b', 'c'], 'a');
+// => true
+                    */
+                })
+            }, {
+                name: 'startsWith',
+                parentName: 'index-string',
+                version: {
+                    start: '1.1.0'
+                },
+                describe: '判断字符串是否以某个字符串开始',
+                params: [
+                    {
+                        name: 'v',
+                        type: 'string',
+                        describe: '源字符串'
+                    }, {
+                        name: 'c',
+                        type: 'string',
+                        describe: '待判断的字符串'
+                    }
+                ],
+                ret: {
+                    type: 'boolean',
+                    describe: '是否以该字符串开始'
+                },
+                example: util.heredoc(function () {
+                    /*!
+util.startsWith('abcd', 'bc');
+// => false
+util.startsWith('abcd', 'a');
+// => true
+                    */
+                })
+            }, {
+                name: 'endsWith',
+                parentName: 'index-string',
+                version: {
+                    start: '1.1.0'
+                },
+                describe: '判断字符串是否以某个字符串结束',
+                params: [
+                    {
+                        name: 'v',
+                        type: 'string',
+                        describe: '源字符串'
+                    }, {
+                        name: 'c',
+                        type: 'string',
+                        describe: '待判断的字符串'
+                    }
+                ],
+                ret: {
+                    type: 'boolean',
+                    describe: '是否以该字符串结束'
+                },
+                example: util.heredoc(function () {
+                    /*!
+util.endsWith('abcd', 'bc');
+// => false
+util.endsWith('abcd', 'd');
+// => true
+                    */
+                })
+            }, {
+                name: 'replaceAll',
+                parentName: 'index-string',
+                version: {
+                    start: '1.1.0'
+                },
+                describe: '全局替换',
+                params: [
+                    {
+                        name: 's',
+                        type: 'string',
+                        describe: '源字符串'
+                    }, {
+                        name: 'r',
+                        type: 'string',
+                        describe: '待替换的字符串'
+                    }, {
+                        name: 'n',
+                        type: 'string',
+                        describe: '替换后的字符串'
+                    }
+                ],
+                ret: {
+                    type: 'string',
+                    describe: '结果字符串'
+                },
+                example: util.heredoc(function () {
+                    /*!
+util.replaceAll('abcd', 'bc', 'xx');
+// => 'axxd'
+util.replaceAll('abcd', 'bc', '');
+// => 'ad'
+                    */
+                })
+            }, {
+                name: 'encode',
+                parentName: 'index-string',
+                version: {
+                    start: '1.1.0'
+                },
+                describe: '字符转码',
+                params: [
+                    {
+                        name: 's',
+                        type: 'string',
+                        describe: '待处理字符'
+                    }
+                ],
+                ret: {
+                    type: 'string',
+                    describe: '转码结果'
+                },
+                example: util.heredoc(function () {
+                    /*!
+util.encode('a b');
+// => 'a%20b'
+                    */
+                })
+            }, {
+                name: 'index-http',
+                parentName: ''
+            }, {
+                name: 'url',
+                parentName: 'index-http',
+                version: {
+                    start: '1.1.0'
+                },
+                describe: '组织url地址',
+                params: [
+                    {
+                        name: 'url',
+                        type: 'string',
+                        describe: '原始url地址'
+                    }, {
+                        name: 'type',
+                        type: 'string',
+                        describe: '处理类型'
+                    }
+                ],
+                ret: {
+                    type: 'string',
+                    describe: '结果url'
+                },
+                example: util.heredoc(function () {
+                    /*!
+util.url();
+// => 'modules/frontend/js/try.html'
+util.url('modal');
+// => 'modules/frontend/js/try.html'
+util.url('body');
+// => 'modules/frontend/js/util.html'
+util.url('modules/demo/demo.html', 'html');
+// => 'modules/demo/demo.html'
+util.url('/demo/demo1');
+// => 'http://localhost/example/api/demo/demo1'
+util.url('/demo/demo1', 'timestamp');
+// => 'http://localhost/example/api/demo/demo1?_=1506563663155'
+util.url('${root}/api/demo/demo1');
+// => '/api/demo/demo1'
+util.url('${portal}/demo/demo1');
+// => 'http://localhost/api/demo/demo1'
+                    */
+                })
+            }, {
+                name: 'json',
+                parentName: 'index-http',
+                version: {
+                    start: '1.1.0'
+                },
+                describe: 'json及string类型互转',
+                params: [
+                    {
+                        name: 'url',
+                        type: 'string/Object',
+                        describe: '待处理的数据，如果为string则转json，否则json转string'
+                    }
+                ],
+                ret: {
+                    type: 'Object/string',
+                    describe: '处理后的数据'
+                }
+            }, {
+                name: 'get',
+                parentName: 'index-http',
+                version: {
+                    start: '1.1.0'
+                },
+                describe: 'get方式',
+                params: [
+                    {
+                        name: 'param',
+                        type: 'Object',
+                        describe: '参数'
+                    }
+                ],
+                example: util.heredoc(function () {
+                    /*!
+util.get({
+  $element: $('#xxx'),
+  url: '/demo/demo1',
+  close: true,
+  data: {
+    type: 'xx'
+  },
+  success: function () {
+    // 成功
+  },
+  error: function () {
+    // 失败
+  },
+  complete: function () {
+    // 结束
+  }
+});
+// $element => 如果存在（必须为按钮），则点击后自动设置加载中样式，请求执行完成后恢复
+// close => 如果存在并且为true，在ajax请求成功后会自动关闭弹窗（仅适用于modal弹窗中的请求）
+// refresh => 如果存在并且为true，并且param.vm（table标签的id）存在时，ajax执行完毕后会刷新vm对应的table
+// data => 参数会拼接到url，不会通过body传递
+                    */
+                })
+            }, {
+                name: 'post',
+                parentName: 'index-http',
+                version: {
+                    start: '1.1.0'
+                },
+                describe: 'post方式',
+                params: [
+                    {
+                        name: 'param',
+                        type: 'Object',
+                        describe: '参数'
+                    }
+                ]
+            }, {
+                name: 'del',
+                parentName: 'index-http',
+                version: {
+                    start: '1.1.0'
+                },
+                describe: 'delete方式',
+                params: [
+                    {
+                        name: 'param',
+                        type: 'Object',
+                        describe: '参数'
+                    }
+                ]
+            }, {
+                name: 'put',
+                parentName: 'index-http',
+                version: {
+                    start: '1.1.0'
+                },
+                describe: 'put方式',
+                params: [
+                    {
+                        name: 'param',
+                        type: 'Object',
+                        describe: '参数'
+                    }
+                ]
+            }, {
+                name: 'submit',
+                parentName: 'index-http',
+                version: {
+                    start: '1.1.0'
+                },
+                describe: '同post方式',
+                params: [
+                    {
+                        name: 'param',
+                        type: 'Object',
+                        describe: '参数'
+                    }
+                ]
+            }, {
+                name: 'ajax',
+                parentName: 'index-http',
+                version: {
+                    start: '1.1.0'
+                },
+                describe: 'ajax请求',
+                params: [
+                    {
+                        name: 'param',
+                        type: 'Object',
+                        describe: '参数'
+                    }
+                ]
+            }, {
+                name: 'query',
+                parentName: 'index-http',
+                version: {
+                    start: '1.1.0'
+                },
+                describe: '调用Const.url.select.query接口',
+                params: [
+                    {
+                        name: 'param',
+                        type: 'Object',
+                        describe: '参数'
+                    }
+                ]
+            }, {
+                name: 'queryOne',
+                parentName: 'index-http',
+                version: {
+                    start: '1.1.0'
+                },
+                describe: '调用Const.url.select.init接口',
+                params: [
+                    {
+                        name: 'param',
+                        type: 'Object',
+                        describe: '参数'
+                    }
+                ]
+            }, {
+                name: 'success',
+                parentName: 'index-http',
+                version: {
+                    start: '1.1.0'
+                },
+                describe: '判断结果数据是否为成功',
+                params: [
+                    {
+                        name: 'data',
+                        type: 'Object',
+                        describe: '待判断的数据'
+                    }
+                ],
+                ret: {
+                    type: 'boolean',
+                    describe: '是否成功'
+                },
+                example: util.heredoc(function () {
+                    /*!
+util.success({
+  head: {
+    retFlag: '00000'
+  },
+  body: {}
+});
+// => true
+util.success({
+  head: {
+    retFlag: 'P0123',
+    retMsg: 'xx异常'
+  }
+});
+// => false
+util.success({
+  a: 'aa'
+});
+// => true
+                    */
+                })
+            }, {
+                name: 'message',
+                parentName: 'index-http',
+                version: {
+                    start: '1.1.0'
+                },
+                describe: '获取提示信息',
+                params: [
+                    {
+                        name: 'data',
+                        type: 'Object',
+                        describe: '待判断的数据'
+                    }
+                ],
+                ret: {
+                    type: 'string',
+                    describe: '提示信息'
+                },
+                example: util.heredoc(function () {
+                    /*!
+util.message({
+  head: {
+    retFlag: 'P0129',
+    retMsg: 'xx异常'
+  },
+  body: {}
+});
+// => 'xx异常'
+util.message({
+  head: {
+    retFlag: '00000',
+    showMsg: '检查完成'
+  },
+  body: {}
+});
+// => '检查完成'
+                    */
+                })
+            }, {
+                name: 'data',
+                parentName: 'index-http',
+                version: {
+                    start: '1.1.0'
+                },
+                describe: '提取结果数据',
+                params: [
+                    {
+                        name: 'data',
+                        type: 'Object',
+                        describe: '待处理的数据'
+                    }
+                ],
+                ret: {
+                    type: 'Object',
+                    describe: '处理后的数据'
+                },
+                example: util.heredoc(function () {
+                    /*!
+util.data({
+  head: {
+    retFlag: '00000',
+  },
+  body: {
+    name: 'xxx'
+  }
+});
+// => {name: 'xxx'}
+util.data({
+  name: 'xxx'
+});
+// => {name: 'xxx'}
+                    */
+                })
+            }, {
+                name: 'index-window',
+                parentName: ''
+            }, {
+                name: 'modal',
+                parentName: 'index-window',
+                version: {
+                    start: '1.1.0'
+                },
+                describe: '打开弹出窗口，不支持多级窗口级联打开',
+                params: [
+                    {
+                        name: 'param',
+                        type: 'Object/string',
+                        describe: '参数'
+                    }
+                ],
+                example: util.heredoc(function () {
+                    /*!
+util.modal({
+  url: 'xx/xxx.html',
+  type: 'confirm',
+  onClose: function () {
+  },
+  refresh: true
+});
+// 打开选择确认窗口
+// type => 模态窗口类型，confirm-确认窗口，alert-警告窗口，login-登录窗口（内部用），空-普通弹窗
+// onClose => 窗口关闭时调用
+// refresh => 如果存在并且为true，并且param.vm（table标签的id）存在时，窗口关闭后会刷新vm对应的table
+
+util.modal('hide');
+// 关闭窗口
+                    */
+                })
+            }, {
+                name: 'confirm',
+                parentName: 'index-window',
+                version: {
+                    start: '1.1.0'
+                },
+                describe: '打开确认对话框',
+                params: [
+                    {
+                        name: 'param',
+                        type: 'Object',
+                        describe: '参数'
+                    }
+                ],
+                example: util.heredoc(function () {
+                    /*!
+util.confirm({
+  url: '/demo/demo1',
+  title: '确认一下',
+  content: '确定提交吗？',
+  buttonText: '确定'
+});
+// title => 标题，默认为“请确认”
+// content => 提示内容，默认为“确定删除选择的数据？”
+// buttonText => 按钮显示名称，默认为“确定删除”
+// onClose => 窗口关闭时调用
+// refresh => 如果存在并且为true，并且param.vm（table标签的id）存在时，窗口关闭后会刷新vm对应的table
+// url => 点击确认执行的动作
+                    */
+                })
+            }, {
+                name: 'alert',
+                parentName: 'index-window',
+                version: {
+                    start: '1.1.0'
+                },
+                describe: '弹出提示信息',
+                params: [
+                    {
+                        name: 'param',
+                        type: 'Object',
+                        describe: '参数'
+                    }
+                ],
+                example: util.heredoc(function () {
+                    /*!
+util.alert({
+  level: 'warn',
+  size: 'md',
+  title: 'xxxx',
+  content: 'yyyy'
+});
+// level => 提示级别，支持info/warn/error/或空
+// size => 弹窗大小，支持sm-小md-中lg-大
+// title => 标题，默认为“请确认”
+// content => 提示内容，默认为“确定删除选择的数据？”
+                    */
+                })
+            }, {
+                name: 'loading',
+                parentName: 'index-window',
+                version: {
+                    start: '1.1.0'
+                },
+                describe: '页面加载中显示或隐藏',
+                params: [
+                    {
+                        name: 'type',
+                        type: 'string',
+                        optional: true,
+                        describe: '显示类型'
+                    }
+                ],
+                example: util.heredoc(function () {
+                    /*!
+util.loading();
+// 加载中
+util.loading('hide);
+// 隐藏加载中
+                    */
+                })
+            }, {
+                name: 'index-layer',
+                parentName: ''
+            }, {
+                name: 'layout',
+                parentName: 'index-layer',
+                describe: '获取元素所属位置',
+                params: [
+                    {
+                        name: '$element',
+                        type: 'Object',
+                        describe: '元素'
+                    }
+                ],
+                ret: {
+                    type: 'string',
+                    describe: '位置'
+                },
+                example: util.heredoc(function () {
+                    /*!
+util.layout();
+// => 'modalBody'
+// 另外有modal、body
+                    */
+                })
+            }, {
+                name: 'isCurrent',
+                parentName: 'index-layer',
+                version: {
+                    start: '1.1.0'
+                },
+                describe: '判断该元素是否在当前活动页面',
+                params: [
+                    {
+                        name: '$element',
+                        type: 'Object',
+                        describe: '元素'
+                    }
+                ],
+                ret: {
+                    type: 'boolean',
+                    describe: '是否在当前活动页面'
+                }
+            }, {
+                name: 'editType',
+                parentName: 'index-layer',
+                version: {
+                    start: '1.1.0'
+                },
+                describe: '判断编辑状态是新增还是修改',
+                ret: {
+                    type: 'string',
+                    describe: '编辑状态insert-新增update-修改，依据url的type属性'
+                }
+            }, {
+                name: 'isEdit',
+                parentName: 'index-layer',
+                version: {
+                    start: '1.1.0'
+                },
+                describe: '判断当前页面是否为修改页面',
+                ret: {
+                    type: 'boolean',
+                    describe: '是否为修改页面'
+                }
+            }, {
+                name: 'index-cache',
+                parentName: ''
+            }, {
+                name: 'cache',
+                parentName: 'index-cache',
+                describe: '数据缓存，主要用于页面间传参',
+                params: [
+                    {
+                        name: 'param',
+                        type: 'Object/string',
+                        optional: true,
+                        describe: '参数'
+                    }, {
+                        name: 'value',
+                        type: 'Object',
+                        optional: true,
+                        describe: '参数值'
+                    }
+                ],
+                ret: {
+                    type: 'Object',
+                    describe: '结果'
+                },
+                example: util.heredoc(function () {
+                    /*!
+util.cache({
+  name: 'abc',
+  desc: 'xxxxx'
+});
+// 缓存数据
+util.cache();
+// => {name: 'abc', desc: 'xxxxx'}
+util.cache('id', 12345);
+// 缓存数据
+util.cache('id');
+// => 12345
+util.cache('modal');
+// 获取弹窗缓存参数
+// util.cache('row');
+// 获取行数据
+                    */
+                })
+            }, {
+                name: 'session',
+                parentName: 'index-cache',
+                version: {
+                    start: '1.1.0'
+                },
+                describe: '查询缓存数据',
+                params: [
+                    {
+                        name: 'key',
+                        type: 'string',
+                        describe: '返回键值为key的session（虚拟，实际还是js缓存）值'
+                    }
+                ],
+                ret: {
+                    type: 'Object',
+                    describe: '结果值'
+                }
+            }, {
+                name: 'storage',
+                parentName: 'index-cache',
+                version: {
+                    start: '1.1.0'
+                },
+                describe: '设置或查询localstorage中的值',
+                params: [
+                    {
+                        name: 'key',
+                        type: 'string',
+                        describe: '主键'
+                    }, {
+                        name: 'value',
+                        type: 'string',
+                        describe: '为空表示查询，非空设置'
+                    }, {
+                        name: 'id',
+                        type: 'string',
+                        describe: '如果设置表示跟key合并起来作为主键'
+                    }
+                ],
+                ret: {
+                    type: 'Object',
+                    describe: '存储的值'
+                },
+                example: util.heredoc(function () {
+                    /*!
+util.storage('name', 'abc');
+// 设置值为abc
+util.storage('name');
+// => 'abc'
+util.storage('name', 'bcd', 'bv');
+// 设置值
+util.storage('name', undefined, 'bv');
+// => 'bcd'
+                    */
+                })
+            }, {
+                name: 'index-date',
+                parentName: ''
+            }, {
+                name: 'date',
+                parentName: 'index-date',
+                version: {
+                    start: '1.1.0'
+                },
+                describe: '获取当前日期',
+                params: [
+                    {
+                        name: 'pattern',
+                        type: 'string',
+                        optional: true,
+                        describe: '日期格式，默认为yyyy-MM-dd'
+                    }, {
+                        name: 'date',
+                        type: 'Object',
+                        optional: true,
+                        describe: '日期'
+                    }, {
+                        name: 'period',
+                        type: 'string',
+                        optional: true,
+                        describe: '日期间隔，格式为10,day（支持second-秒，minute-分，hour-时，day-天，month-月，year-年）'
+                    }
+                ],
+                ret: {
+                    type: 'string',
+                    describe: '当前日期'
+                },
+                example: util.heredoc(function () {
+                    /*!
+util.date();
+// => '2017-09-28'
+util.date('datetime');
+// => 2017-09-28 14:57:06
+util.date('date', undefined, '10,day');
+// => 2017-10-08
+                    */
+                })
+            }, {
+                name: 'time',
+                parentName: 'index-date',
+                version: {
+                    start: '1.1.0'
+                },
+                describe: '获取当前时间',
+                params: [
+                    {
+                        name: 'pattern',
+                        type: 'string',
+                        optional: true,
+                        describe: '时间格式，默认为HH:mm:ss'
+                    }
+                ],
+                ret: {
+                    type: 'string',
+                    describe: '当前时间'
+                },
+                example: util.heredoc(function () {
+                    /*!
+util.time();
+// => '15:04:12'
+                    */
+                })
+            }, {
+                name: 'index-data',
+                parentName: ''
+            }, {
+                name: 'clone',
+                parentName: 'index-data',
+                version: {
+                    start: '1.1.0'
+                },
+                describe: '复制对象，支持object、array等格式，避免js对象传递后修改引起原始数据混乱',
+                params: [
+                    {
+                        name: 'value',
+                        type: 'Object/Array',
+                        optional: true,
+                        describe: '结果值'
+                    }, {
+                        name: 'origin',
+                        type: 'Object/Array',
+                        optional: true,
+                        describe: '新值'
+                    }, {
+                        name: 'onlyUpdate',
+                        type: 'boolean',
+                        optional: true,
+                        describe: '是否仅作更新，新的key值不做处理'
+                    }
+                ],
+                ret: {
+                    type: 'Object/Array',
+                    describe: '最终结果'
+                },
+                example: util.heredoc(function () {
+                    /*!
+util.clone({
+  name: 'abc'
+});
+// => {name: 'abc'}
+util.clone(['a', 'b', 'c']);
+// => ['a', 'b', 'c']
+util.clone({
+  name: 'abc'
+}, {
+  name: 'xyz',
+  desc: 'xxx'
+});
+// => {name: 'xyz', desc: 'xxx'}
+util.clone({
+  name: 'abc'
+}, {
+  name: 'xyz',
+  desc: 'xxx'
+}, true);
+// => {name: 'xyz'}
+                    */
+                })
+            }, {
+                name: 'mix',
+                parentName: 'index-data',
+                version: {
+                    start: '1.1.0'
+                },
+                describe: 'json串拷贝，url参数拼接',
+                params: [
+                    {
+                        name: 'url',
+                        type: 'String/Object',
+                        describe: '结果值'
+                    }, {
+                        name: 'param',
+                        type: 'Object',
+                        describe: '新值'
+                    }, {
+                        name: 'deep',
+                        type: 'boolean',
+                        optional: true,
+                        describe: '是否深度拷贝'
+                    }
+                ],
+                ret: {
+                    type: 'Object',
+                    describe: '最终结果'
+                },
+                example: util.heredoc(function () {
+                    /*!
+util.mix({
+  name: 'abc'
+}, {
+  desc: 'xxx'
+});
+// => {name: 'abc', desc: 'xxx'}
+util.mix('xxx.html', {
+  name: 'abc'
+});
+// => 'xxx.html?name=abc'
+                    */
+                })
+            }, {
+                name: 'index-dom',
+                parentName: ''
+            }, {
+                name: 'empty',
+                parentName: 'index-dom',
+                version: {
+                    start: '1.1.0'
+                },
+                describe: '清空该元素内容，保持该元素本身不删除',
+                params: [
+                    {
+                        name: '$element',
+                        type: 'Object',
+                        describe: '待清空的元素'
+                    }
+                ]
+            }, {
+                name: 'remove',
+                parentName: 'index-dom',
+                version: {
+                    start: '1.1.0'
+                },
+                describe: '清空该元素内容，并删除该元素本身',
+                params: [
+                    {
+                        name: '$element',
+                        type: 'Object',
+                        describe: '待删除的元素'
+                    }
+                ]
+            }, {
+                name: 'destroy',
+                parentName: 'index-dom',
+                version: {
+                    start: '1.1.0'
+                },
+                describe: '清除虚拟vm子元素',
+                params: [
+                    {
+                        name: 'parent',
+                        type: 'Object',
+                        describe: '待删除的虚拟vm'
+                    }
+                ]
+            }, {
+                name: 'replace',
+                parentName: 'index-dom',
+                version: {
+                    start: '1.1.0'
+                },
+                describe: '加载页面至指定元素',
+                params: [
+                    {
+                        name: '$element',
+                        type: 'Object',
+                        describe: '需要加载数据的元素'
+                    }, {
+                        name: 'url',
+                        type: 'string',
+                        describe: '数据来源，通过jquery.load加载'
+                    }, {
+                        name: 'callback',
+                        type: 'Function',
+                        optional: true,
+                        describe: '加载完成后回调'
+                    }
+                ]
+            }, {
+                name: 'redirect',
+                parentName: 'index-dom',
+                version: {
+                    start: '1.1.0'
+                },
+                describe: '页面跳转',
+                params: [
+                    {
+                        name: 'url',
+                        type: 'string',
+                        describe: '跳转的目标页面'
+                    }, {
+                        name: 'type',
+                        type: 'string',
+                        optional: true,
+                        describe: 'undefined-window跳转，body-仅body内容做页面跳转'
+                    }
+                ]
+            }, {
+                name: 'home',
+                parentName: 'index-dom',
+                version: {
+                    start: '1.1.0'
+                },
+                describe: '打开主页面'
+            }, {
+                name: 'location',
+                parentName: 'index-dom',
+                version: {
+                    start: '1.1.0'
+                },
+                describe: '页面跳转',
+                deprecated: '用util.redirect(url)代替',
+                params: [
+                    {
+                        name: 'url',
+                        type: 'string',
+                        describe: '跳转的目标页面'
+                    }
+                ]
+            }, {
+                name: 'width',
+                parentName: 'index-dom',
+                version: {
+                    start: '1.1.0'
+                },
+                describe: '获取单个或多个元素宽度',
+                params: [
+                    {
+                        name: '$elements',
+                        type: 'Object',
+                        describe: '单个或多个元素'
+                    }
+                ],
+                ret: {
+                    type: 'number',
+                    describe: '宽度'
+                },
+                example: util.heredoc(function () {
+                    /*!
+util.width($('div'));
+// => 402389
+                    */
+                })
+            }, {
+                name: 'click',
+                parentName: 'index-dom',
+                version: {
+                    start: '1.1.0'
+                },
+                describe: '绑定click事件',
+                params: [
+                    {
+                        name: 'container',
+                        type: 'string',
+                        describe: 'vue的container'
+                    }, {
+                        name: 'selector',
+                        type: 'string',
+                        describe: 'jquery格式的选择器'
+                    }, {
+                        name: 'callback',
+                        type: 'Function',
+                        describe: '点击执行动作'
+                    }
+                ]
+            }, {
+                name: 'open',
+                parentName: 'index-dom',
+                version: {
+                    start: '1.1.0'
+                },
+                describe: '打开新窗口',
+                params: [
+                    {
+                        name: 'url',
+                        type: 'string',
+                        describe: 'url地址'
+                    }
+                ]
+            }, {
+                name: 'download',
+                parentName: 'index-dom',
+                version: {
+                    start: '1.1.0'
+                },
+                describe: '下载文件',
+                params: [
+                    {
+                        name: 'url',
+                        type: 'string/Object',
+                        describe: '下载地址，如果为object格式为{url: \'xxx\', $element: \'xxx\', ...}'
+                    }, {
+                        name: '$trigger',
+                        type: 'Object',
+                        describe: '如果设置该参数则清除该元素对应tooltip提示'
+                    }, {
+                        name: 'checkBeforeDownload',
+                        type: 'boolean',
+                        optional: true,
+                        describe: '下载前是否先调用接口判断文件是否存在'
+                    }
+                ]
+            }, {
+                name: 'editor',
+                parentName: 'index-dom',
+                version: {
+                    start: '1.1.0'
+                },
+                describe: '获取或设置editor内容',
+                params: [
+                    {
+                        name: '$id',
+                        type: 'string/Object',
+                        describe: 'editor实例或editor标签的id'
+                    }, {
+                        name: 'value',
+                        type: 'string',
+                        optional: true,
+                        describe: '需要设置的内容'
+                    }
+                ],
+                ret: {
+                    type: 'string',
+                    describe: 'editor的内容'
+                }
+            }, {
+                name: 'mainTabs',
+                parentName: 'index-dom',
+                version: {
+                    start: '1.1.0'
+                },
+                describe: '主页面打开标签页',
+                params: [
+                    {
+                        name: 'config',
+                        type: 'string/Object',
+                        describe: '为字符串表示为菜单，否则表示为页面'
+                    }, {
+                        name: 'titles',
+                        type: 'string/Array',
+                        describe: '当前位置显示名称'
+                    }, {
+                        name: 'data',
+                        type: 'Object',
+                        describe: '标签定义'
+                    }
+                ]
+            }, {
+                name: 'validateInit',
+                parentName: 'index-dom',
+                version: {
+                    start: '1.1.0'
+                },
+                describe: '初始化form校验',
+                params: [
+                    {
+                        name: '$form',
+                        type: 'Object',
+                        describe: '待初始化的form元素，或则非form元素，但只能实现点击关闭错误浮动条功能'
+                    }
+                ]
+            }, {
+                name: 'validate',
+                parentName: 'index-dom',
+                version: {
+                    start: '1.1.0'
+                },
+                describe: '通常校验form表单，一般在表单提交时调用',
+                params: [
+                    {
+                        name: '$form',
+                        type: 'Object',
+                        describe: '如果为form则开始校验表单；如果为有校验规则的元素，则开始校验该元素；否则，如果为普通元素，则隐藏该元素上显示的浮动提示条'
+                    }
+                ],
+                ret: {
+                    type: 'boolean',
+                    describe: '如果为form则返回校验是否通过'
+                }
+            }, {
+                name: 'tooltip',
+                parentName: 'index-dom',
+                version: {
+                    start: '1.1.0'
+                },
+                describe: '初始化提示信息显示',
+                params: [
+                    {
+                        name: '$element',
+                        type: 'Object',
+                        describe: '待处理的容器'
+                    }, {
+                        name: 'titleName',
+                        type: 'string',
+                        optional: true,
+                        defaultValue: 'title',
+                        describe: 'title对应的属性名'
+                    }
+                ]
+            }, {
+                name: 'checked',
+                parentName: 'index-dom',
+                version: {
+                    start: '1.1.0'
+                },
+                describe: '查询或设置选择框的值',
+                params: [
+                    {
+                        name: '$element',
+                        type: 'Object',
+                        describe: '选择框'
+                    }, {
+                        name: 'value',
+                        type: 'string',
+                        optional: true,
+                        describe: 'value为空时查询，非空时设置'
+                    }
+                ],
+                ret: {
+                    type: 'boolean',
+                    describe: '是否已选中'
+                }
+            }, {
+                name: 'expand',
+                parentName: 'index-dom',
+                version: {
+                    start: '1.1.0'
+                },
+                describe: '展开树',
+                params: [
+                    {
+                        name: 'treeId',
+                        type: 'string',
+                        describe: '树的id'
+                    }, {
+                        name: 'treeNode',
+                        type: 'Object',
+                        describe: '需要展开的节点'
+                    }
+                ]
+            }, {
+                name: 'index-array',
+                parentName: ''
+            }, {
+                name: 'index',
+                parentName: 'index-array',
+                version: {
+                    start: '1.1.0'
+                },
+                describe: '获取数组在二维数组中的位置',
+                params: [
+                    {
+                        name: 'arrs',
+                        type: 'Array',
+                        describe: '二维数组'
+                    }, {
+                        name: 'values',
+                        type: 'Array',
+                        describe: '数组'
+                    }, {
+                        name: 'code',
+                        type: 'string',
+                        describe: '仅用于一维数组，要判断的属性值'
+                    }, {
+                        name: 'jsonValue',
+                        type: 'boolean',
+                        optional: true,
+                        describe: '是否返回json数据或者index位置'
+                    }
+                ],
+                ret: {
+                    type: 'Object/number',
+                    describe: '数组内容或数组所在位置'
+                }
+            }, {
+                name: 'find',
+                parentName: 'index-array',
+                version: {
+                    start: '1.1.0'
+                },
+                describe: '获取行数据所在位置',
+                params: [
+                    {
+                        name: 'rows',
+                        type: 'Array',
+                        describe: '所有行数据'
+                    }, {
+                        name: 'keys',
+                        type: 'Array/string',
+                        describe: '主键对应字段'
+                    }, {
+                        name: 'values',
+                        type: 'Array/string',
+                        describe: '主键值'
+                    }
+                ],
+                ret: {
+                    type: 'number',
+                    describe: '行数据所在位置'
+                }
+            }, {
+                name: 'index-vm',
+                parentName: ''
+            }, {
+                name: 'bind',
+                parentName: 'index-vm',
+                version: {
+                    start: '1.1.0'
+                },
+                describe: '初始化vm',
+                params: [
+                    {
+                        name: 'param',
+                        type: 'Object',
+                        describe: '参数'
+                    }
+                ],
+                ret: {
+                    type: 'Object',
+                    describe: '虚拟vm'
+                }
+            }, {
+                name: 'vm',
+                parentName: 'index-vm',
+                version: {
+                    start: '1.1.0'
+                },
+                describe: '获取虚拟vm',
+                params: [
+                    {
+                        name: 'parent',
+                        type: 'Object',
+                        describe: '父vm'
+                    }, {
+                        name: 'key',
+                        type: 'string',
+                        describe: '键值'
+                    }, {
+                        name: 'sub',
+                        type: 'string',
+                        describe: '子键值'
+                    }
+                ],
+                ret: {
+                    type: 'Object',
+                    describe: '虚拟vm'
+                }
+            }, {
+                name: 'tagName',
+                parentName: 'index-vm',
+                version: {
+                    start: '1.1.0'
+                },
+                describe: '获取标签类型',
+                params: [
+                    {
+                        name: 'vm',
+                        type: 'Object',
+                        describe: '虚拟vm'
+                    }
+                ],
+                ret: {
+                    type: 'string',
+                    describe: '标签类型bv-xxx'
+                }
+            }, {
+                name: 'call',
+                parentName: 'index-vm',
+                version: {
+                    start: '1.1.0'
+                },
+                describe: '第三方插件及自定义标签调用封装',
+                params: [
+                    {
+                        name: 'param',
+                        type: 'Object',
+                        describe: '参数'
+                    }
+                ]
+            }, {
+                name: 'refresh',
+                parentName: 'index-vm',
+                version: {
+                    start: '1.1.0'
+                },
+                deprecated: '用util.call代替',
+                describe: '刷新标签数据',
+                params: [
+                    {
+                        name: 'param',
+                        type: 'Object',
+                        describe: '参数'
+                    }
+                ]
+            }, {
+                name: 'show',
+                parentName: 'index-vm',
+                version: {
+                    start: '1.1.0'
+                },
+                describe: '显示错误提示信息，受参数Const.init.show.type控制',
+                params: [
+                    {
+                        name: 'param',
+                        type: 'Object',
+                        describe: '参数'
+                    }
+                ],
+                example: util.heredoc(function () {
+                    /*!
+util.show({
+  level: 'warn',
+  title: '标题',
+  message: '内容'
+});
+// level => error-warn-info-success
+// title => 标题
+// message => 内容
+                    */
+                })
+            }, {
+                name: 'hide',
+                parentName: 'index-vm',
+                version: {
+                    start: '1.1.0'
+                },
+                describe: '隐藏错误提示信息',
+                params: [
+                    {
+                        name: 'param',
+                        type: 'Object',
+                        describe: '参数'
+                    }
+                ]
+            }, {
+                name: 'index-support',
+                parentName: ''
+            }, {
+                name: 'guid',
+                parentName: 'index-support',
+                version: {
+                    start: '1.1.0'
+                },
+                describe: '获取guid',
+                ret: {
+                    type: 'string',
+                    describe: 'guid'
+                },
+                example: util.heredoc(function () {
+                    /*!
+util.guid();
+// => f965ec7b-175a-49b8-a162-4d77def9a6d8
+                    */
+                })
+            }, {
+                name: 'debug',
+                parentName: 'index-support',
+                version: {
+                    start: '1.1.0'
+                },
+                describe: '调试信息输出，Const.init.debug中设置开关',
+                params: [
+                    {
+                        name: 'title',
+                        type: 'string',
+                        describe: '标题'
+                    }, {
+                        name: 'content',
+                        type: 'string',
+                        optional: true,
+                        describe: '内容'
+                    }
+                ],
+                example: util.heredoc(function () {
+                    /*!
+util.debug('标题', '内容');
+util.debug('标题');
+                    */
+                })
+            }, {
+                name: 'heredoc',
+                parentName: 'index-support',
+                version: {
+                    start: '1.1.0'
+                },
+                describe: '获取html代码段',
+                params: [
+                    {
+                        name: 'fn',
+                        type: 'Function',
+                        describe: '处理'
+                    }
+                ],
+                ret: {
+                    type: 'string',
+                    describe: 'html代码段'
+                }
+            }
+        ];
+        util.bind({
+            container: 'util',
+            data: {
+                tags: {
+                    treeKey: 'utilTree'
+                },
+                treeConfig: {
+                    url: functions,
+                    pack: function(entity) {
+                        return {
+                            id: entity.name,
+                            pId: entity.parentName,
+                            name: entity.name + (entity.deprecated ? '(deprecated)' : ''),
+                            open: true,//!entity.parentMenuId || entity.parentMenuId === '00',
+                            entity: entity
+                        };
+                    }
+                },
+                functions: functions
+            },
+            methods: {
+                showFunction: function (func) {
+                    var show = func.name;
+                    if (func.params && func.params.length > 0) {
+                        show += '(';
+                        for (var i=0; i<func.params.length; i++) {
+                            if (i > 0) {
+                                show += ', ';
+                            }
+                            if (func.params[i].optional) {
+                                show += '[';
+                            }
+                            show += func.params[i].name;
+                            if (func.params[i].defaultValue) {
+                                show += '=' + func.params[i].defaultValue;
+                            }
+                            if (func.params[i].optional) {
+                                show += ']';
+                            }
+                        }
+                        show += ')';
+                    }
+                    return show;
+                },
+                treeOnClick: function (event, treeId, treeNode) {
+                    var parentNode = treeNode.getParentNode();
+                    if (parentNode && parentNode.id) {
+                        util.location('#' + parentNode.id + '-' + treeNode.id );
+                    }
+                }
+            },
+            mounted: function () {
+                $(document).on('click', 'a[data-function]', function () {
+                    var index = util.find(functions, 'name', $(this).attr('data-function'));
+                    if (index >= 0) {
+                        util.cache(functions[index]);
+                    }
+                    /*util.cache({
+                        functionName: $(this).attr('data-function')
+                    });*/
+                    util.modal({
+                        url: 'modules/frontend/js/try.html'
+                    });
+                });
+            }
+        });
+    });
+</script>

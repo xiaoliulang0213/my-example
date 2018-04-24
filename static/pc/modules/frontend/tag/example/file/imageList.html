@@ -1,0 +1,99 @@
+<div data-container="imageList">
+	<component is="bv-table" v-bind="config"></component>
+</div>
+<script type="text/javascript">
+    require(['jquery', 'util', 'Const'], function ($, util, Const) {
+        var items = [];
+        var vm = util.bind({
+            container: 'imageList',
+            data: {
+                config: {
+					entityName: 'logFile',
+					keys: 'fileId',
+					orders: 'fileId',
+					columns: [
+						/*{
+						    name: 'fileId',
+							head: 'ID'
+						}, {
+					    	name: 'fileType',
+							head: '类型'
+						}, */{
+					    	name: 'fileName',
+							head: '文件名'
+						}, {
+					    	name: 'originName',
+							head: '原始文件名'
+						}, {
+					    	name: 'filePath',
+							head: '文件路径'
+						}, {
+                            name: 'extName',
+                            head: '扩展名'
+                        }, /*{
+                            name: 'extType',
+                            head: '文件类型'
+                        },*/ {
+                            name: 'fileSize',
+                            head: '文件大小'
+                        }, {
+                            name: 'fileSign',
+                            head: '文件签名'
+                        }, {
+                            head: '操作',
+							type: 'operate',
+                            operates: [
+                                {
+                                    text: '浏览图片',
+									show: function (entity) {
+										return entity && entity.extName && (entity.extName.toLowerCase() === 'jpg' || entity.extName.toLowerCase() === 'png');
+                                    },
+                                    click: function (event, tableId, entityName, selected) {
+                                        if (items.length === 0) {
+                                            util.post({
+												url: Const.url.table.select,
+												data: {
+												    entityName: 'logFile',
+													orders: 'fileId',
+                                                    paramList: [
+                                                        {
+                                                            name: 'extName',
+                                                            operate: 'or',
+                                                            value: 'jpg,png,JPG,PNG'
+                                                        }
+                                                    ]
+												},
+												success: function (res) {
+													var data = util.data(res);
+													if (data) {
+                                                        for (var i=0; i<data.length; i++) {
+                                                            items.push({
+                                                                html: '<h4>' + data[i].originName + '</h4><p>' + (data[i].describe || '') + '</p>',
+                                                                url: '/api/file/' + data[i].fileSign,
+                                                                // downloadUrl: '/images/downloadFile.bv?sysGuid=' + res.recordList[i].sysGuid,
+                                                                // thumbUrl: 'custom/themes/images/placeholder.jpg',
+                                                                // lazyUrl: '/images/viewFile.bv?type=thumb&sysGuid=' + res.recordList[i].sysGuid,
+                                                                tooltip: data[i].originName
+                                                            });
+                                                        }
+                                                        util.gallery({
+                                                            items: items
+                                                        });
+													}
+                                                }
+											});
+										} else {
+                                            util.gallery({
+                                                items: items
+                                            });
+										}
+                                    }
+                                }
+							]
+                        }
+					]
+				}
+            }
+        });
+    });
+</script>

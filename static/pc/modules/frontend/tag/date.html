@@ -1,0 +1,55 @@
+<div data-container="tagDateDoc">
+    <div class="bs-docs-container">
+        <div class="bs-docs-section">
+            <h4>概要说明</h4>
+            <p>date-日期选择</p>
+            <p ms-text="@pub.formTag"></p>
+            <dl class="dl-horizontal">
+                <dt>标签资源</dt>
+                <dd>位于tags/bv-date.js</dd>
+            </dl>
+            <h4>公共属性定义</h4>
+            <p>
+                <a href="javascript:;" data-modal="modules/frontend/tag/example/common/common.html?tag=date">date-日期选择公共属性示例</a>
+            </p>
+            <dl class="dl-horizontal">
+                <dt>clazz</dt>
+                <dd v-html="pub.clazz"></dd>
+                <dt>attr</dt>
+                <dd v-html="pub.attr"></dd>
+                <dt>defaultValue</dt>
+                <dd v-html="pub.defaultValue"></dd>
+                <dt>value</dt>
+                <dd v-html="pub.value"></dd>
+            </dl>
+            <h4>date特殊属性定义</h4>
+            <p>
+                <a href="javascript:;" data-modal="modules/frontend/tag/example/common/dateSpecial.html?tag=date">date-日期选择特殊属性示例</a>
+            </p>
+            <dl class="dl-horizontal">
+                <dt>load</dt>
+                <dd>仅在triggerStart定义的情况下生效（即该标签为最大日期），目前应用场景为：load定义时间段，比如几分钟、几小时、几天等等，通过该值的变动自动更新name对应值，即实现最大日期的初始值设置</dd>
+                <dt>triggerStart</dt>
+                <dd>最小日期属性</dd>
+                <dt>triggerEnd</dt>
+                <dd>最大日期属性</dd>
+                <dt>format</dt>
+                <dd>日期格式，默认yyyy-MM-dd，支持：yyyy-MM-dd hh:mm:ss</dd>
+                <dt>startDate</dt>
+                <dd>最小日期值</dd>
+                <dt>endDate</dt>
+                <dd>最大日期值</dd>
+            </dl>
+        </div>
+    </div>
+</div>
+<script type="text/javascript">
+require(['jquery', 'util', 'Const'], function($, util, Const) {
+    var vm = util.bind({
+        container: 'tagDateDoc',
+        data: {
+            pub: __doc
+        }
+    });
+});
+</script>

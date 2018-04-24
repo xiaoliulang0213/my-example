@@ -1,0 +1,43 @@
+<div data-container="tableFilterLayoutExample">
+	<component is="bv-table" :key="tags.tableId" v-bind="config"></component>
+</div>
+<script type="text/javascript">
+require(['jquery', 'util'], function($, util) {
+    var vm = util.bind({
+        container: 'tableFilterLayoutExample',
+        data: {
+			tags: {
+				tableId: 'tableFilterLayoutExampleTable'
+			},
+			config: {
+				entityName: 'sysCity',
+				keys: 'cityCode',
+				columns: [
+					{
+						name: 'cityCode',
+						head: '城市代码',
+						filter: {
+							operate: '='
+						},
+						config: {
+							attr: {
+								'data-validation-engine': 'validate[required]',
+								'data-errormessage-value-missing': '城市代码不能为空'
+							}
+						}
+					},
+					{
+						name: 'cityName',
+						head: '城市名称',
+						filter: {
+							operate: 'like'
+						}
+					}
+				],
+				filterLayout: 'filterMore',
+				orders: 'cityCode'
+			}
+		}
+    });
+});
+</script>

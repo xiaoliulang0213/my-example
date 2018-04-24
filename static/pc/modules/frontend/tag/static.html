@@ -1,0 +1,121 @@
+<div data-container="tagStaticDoc">
+    <div class="bs-docs-container">
+        <div class="bs-docs-section">
+            <h4>概要说明</h4>
+            <p>static-静态文本、hidden-隐藏域、textfield-文本域、textarea-多行文本域</p>
+            <p v-text="pub.formTag"></p>
+            <dl class="dl-horizontal">
+                <dt>标签资源</dt>
+                <dd>位于tags/bv-basic.js</dd>
+            </dl>
+            <h4>公共属性定义</h4>
+            <p>
+                <a href="javascript:;" data-modal="modules/frontend/tag/example/common/common.html?tag=static">static-静态文本公共属性示例</a>
+                <a href="javascript:;" data-modal="modules/frontend/tag/example/common/common.html?tag=hidden">hidden-隐藏域公共属性示例</a>
+                <a href="javascript:;" data-modal="modules/frontend/tag/example/common/common.html?tag=textfield">textfield-文本域公共属性示例</a>
+                <a href="javascript:;" data-modal="modules/frontend/tag/example/common/common.html?tag=textarea">textarea-多行文本域公共属性示例</a>
+            </p>
+            <dl class="dl-horizontal">
+                <dt>entity</dt>
+                <dd v-html="pub.entity"></dd>
+                <dt>id</dt>
+                <dd v-html="pub.id"></dd>
+                <dt>name</dt>
+                <dd v-html="pub.name"></dd>
+                <dt>clazz</dt>
+                <dd v-html="pub.clazz"></dd>
+                <dt>attr</dt>
+                <dd v-html="pub.attr"></dd>
+                <dt>defaultValue</dt>
+                <dd v-html="pub.defaultValue"></dd>
+                <dt>value</dt>
+                <dd v-html="pub.value"></dd>
+            </dl>
+            <h4>static特殊属性定义</h4>
+            <p>
+                <a href="javascript:;" data-modal="modules/frontend/tag/example/common/staticSpecial.html?tag=static">static-静态文本特殊属性示例</a>
+                <a href="javascript:;" data-modal="modules/frontend/tag/example/common/staticInTable.html?tag=static">static-静态文本在table中显示</a>
+            </p>
+            <dl class="dl-horizontal">
+                <dt>from</dt>
+                <dd>容器，有table、form、operate等</dd>
+                <dt>text</dt>
+                <dd>显示内容</dd>
+                <dt>format</dt>
+                <dd v-html="pub.format"></dd>
+                <dt>show</dt>
+                <dd v-html="pub.show"></dd>
+                <dt>dicts</dt>
+                <dd>来源于table，用于字典项翻译，仅在format='dict'时有用</dd>
+                <dt>preset</dt>
+                <dd v-html="pub.preset"></dd>
+                <dt>code</dt>
+                <dd v-html="pub.code"></dd>
+                <dt>desc</dt>
+                <dd v-html="pub.desc"></dd>
+                <dt>choose</dt>
+                <dd v-html="pub.choose"></dd>
+            </dl>
+            <h4>input特殊属性定义</h4>
+            <p>
+                <a href="javascript:;" data-modal="modules/frontend/tag/example/common/inputSpecial.html?tag=textfield">textfield-文本域特殊属性示例</a>
+                <a href="javascript:;" data-modal="modules/frontend/tag/example/common/inputSpecial.html?tag=textarea">textfield-多行文本域特殊属性示例</a>
+            </p>
+            <dl class="dl-horizontal">
+                <dt>validate</dt>
+                <dd>
+                    <p v-html="pub.validate"></p>
+                    <p><a href="javascript:;" data-mainTabs="modules/frontend/js/check.html">点击查看示例</a></p>
+                </dd>
+                <dt>fix</dt>
+                <dd>
+                    <p>输入限制，支持integer-限制只能输入数字，number-限制只能输入数字、小数点、负号，+number-限制大于0的数，amount-限制输入金额（大于0，最多两位小数）</p>
+                    <p><a href="javascript:;" data-mainTabs="modules/frontend/js/check.html">点击查看示例</a></p>
+                </dd>
+            </dl>
+            <h4>textfield特殊属性定义</h4>
+            <p>
+                <a href="javascript:;" data-modal="modules/frontend/tag/example/common/textfieldSpecial.html?tag=textfield">textfield-文本域特殊属性示例</a>
+            </p>
+            <dl class="dl-horizontal">
+                <dt>type</dt>
+                <dd>类型，默认为text，还可支持hidden等</dd>
+                <dt>chooseUrl</dt>
+                <dd>用于点开table选择，仅支持textfield</dd>
+                <dd>
+                    <div class="col-md-3">
+                        <component is="bv-textfield" :entity="entity" name="tableChooseResult"
+                                   choose-url="modules/frontend/tag/example/table/tableChoose.html" :on-choose-preset="onChoosePreset"></component>
+                    </div>
+                </dd>
+                <dt>onChoosePreset</dt>
+                <dd>打开选择窗口前的预处理</dd>
+            </dl>
+            <h4>textarea特殊属性定义</h4>
+            <p>
+                <a href="javascript:;" data-modal="modules/frontend/tag/example/common/textareaSpecial.html?tag=textarea">textarea-多行文本域特殊属性示例</a>
+            </p>
+        </div>
+    </div>
+</div>
+<script type="text/javascript">
+require(['jquery', 'util', 'Const'], function($, util, Const) {
+    var vm = util.bind({
+        container: 'tagStaticDoc',
+        data: {
+            pub: __doc,
+            entity: {
+                tableChooseResult: ''
+            }
+        },
+        methods: {
+            onChoosePreset: function () {
+                util.cache({
+                    vm: util.vm(vm, 'tableChooseResult'),
+                    tableChoose: vm.entity.tableChooseResult
+                });
+            }
+        }
+    });
+});
+</script>

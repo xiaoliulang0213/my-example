@@ -1,0 +1,69 @@
+<div data-container="tagTableColumnFilterExample">
+	<component is="bv-table" :key="tags.tableId" v-bind="config"></component>
+</div>
+<script type="text/javascript">
+require(['jquery', 'util'], function($, util) {
+    var vm = util.bind({
+        container: 'tagTableColumnFilterExample',
+        data: {
+            tags: {
+                tableId: 'tagTableColumnFilterExampleTable'
+            },
+            config: {
+                entityName: 'sysCity',
+                keys: 'cityCode',
+                columns: [
+                    {
+                        name: 'cityCode',
+                        head: '代码',
+                        filter: 'between'
+                    },
+                    {
+                        name: 'cityName',
+                        head: '名称',
+                        filter: {
+                            operate: '>='
+                        }
+                    },
+                    {
+                        name: 'remark',
+                        head: '备注',
+                        filter: {
+                            type: 'date',
+                            operate: 'between'
+                        },
+                        config: {
+                            format: 'timestamp',
+                            period: {
+                                options: [
+                                    {
+                                        code: '60,seconds',
+                                        desc: '一分钟'
+                                    },
+                                    {
+                                        code: '120,seconds',
+                                        desc: '两分钟'
+                                    },
+                                    {
+                                        code: '5,minutes',
+                                        desc: '五分钟内'
+                                    },
+                                    {
+                                        code: '10,minutes',
+                                        desc: '十分钟内'
+                                    },
+                                    {
+                                        code: '1,hour',
+                                        desc: '一小时内'
+                                    }
+                                ]
+                            }
+                        }
+                    }
+                ],
+                orders: 'cityCode'
+            }
+        }
+    });
+});
+</script>

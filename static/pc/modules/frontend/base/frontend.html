@@ -1,0 +1,214 @@
+<div class="bs-docs-container">
+    <div class="bs-docs-section">
+        <h4>前端</h4>
+        <p>通常指：html+css+js</p>
+        <dl class="dl-horizontal">
+            <dt>http（超文本传输协议）</dt>
+            <dd>
+                <p>版本：</p>
+                <ul>
+                    <li>http1.0<p>为了提高系统的效率，HTTP 1.0规定浏览器与服务器只保持短暂的连接，浏览器的每次请求都需要与服务器建立一个TCP连接，服务器完成请求处理后立即断开TCP连接，服务器不跟踪每个客户也不记录过去的请求。但是，这也造成了一些性能上的缺陷。</p></li>
+                    <li>http1.1<p>为了克服HTTP 1.0的这个缺陷，HTTP 1.1支持持久连接，在一个TCP连接上可以传送多个HTTP请求和响应，减少了建立和关闭连接的消耗和延迟。一个包含有许多图像的网页文件的多个请求和应答可以在一个连接中传输，但每个单独的网页文件的请求和应答仍然需要使用各自的连接。HTTP 1.1还允许客户端不用等待上一次请求结果返回，就可以发出下一次请求，但服务器端必须按照接收到客户端请求的先后顺序依次回送响应结果，以保证客户端能够区分出每次请求的响应内容，这样也显著地减少了整个下载过程所需要的时间。</p></li>
+                </ul>
+                <p>Cache-Control</p>
+                <ul>
+                    <li>用于指定所有缓存机制在整个请求/响应链中必须服从的指令。这些指令指定用于阻止缓存对请求或响应造成不利干扰的行为。</li>
+                    <li>常用no-cache（不缓存）、max-age（指定缓存生命周期）</li>
+                </ul>
+                <p>header</p>
+                <ul>
+                    <li>HTTP请求方式：GET、POST...</li>
+                    <li>User-Agent：HTTP客户端运行的浏览器类型的详细信息。通过该头部信息，web服务器可以判断到当前HTTP请求的客户端浏览器类别。</li>
+                    <li>Accept：指定客户端能够接收的内容类型，内容类型中的先后次序表示客户端接收的先后次序。</li>
+                    <li>Accept-Encoding：指定客户端浏览器可以支持的web服务器返回内容压缩编码类型。表示允许服务器在将输出内容发送到客户端以前进行压缩，以节约带宽。而这里设置的就是客户端浏览器所能够支持的返回压缩格式。</li>
+                    <li>Content-Type：显示此HTTP请求提交的内容类型。</li>
+                    <li>Authorization：HTTP授权的授权证书。</li>
+                </ul>
+                <p>responseCode</p>
+                <ul>
+                    <li>200：（成功）表示成功处理了请求的状态代码。</li>
+                    <li>400：（错误请求） 服务器不理解请求的语法。</li>
+                    <li>401：（未授权） 请求要求身份验证。 对于需要登录的网页，服务器可能返回此响应。</li>
+                    <li>403：（禁止） 服务器拒绝请求。</li>
+                    <li>404：（未找到） 服务器找不到请求的网页。</li>
+                    <li>405：（方法禁用） 禁用请求中指定的方法。</li>
+                    <li>500：（服务器内部错误）  服务器遇到错误，无法完成请求。</li>
+                </ul>
+                <p>HTTP默认的端口号为80，HTTPS的端口号为443。</p>
+                <p>前端组成：结构（html）、表现（css）、行为（js）</p>
+            </dd>
+            <dt>html（超文本标记语言）</dt>
+            <dd>
+                <p>历史</p>
+                <ul>
+                    <li>第一版——在1993年6月作为互联网工程工作小组（IETF）工作草案发布（并非标准）</li>
+                    <li>HTML 2.0——1995年11月作为RFC 1866发布，在RFC 2854于2000年6月发布之后被宣布已经过时</li>
+                    <li>HTML 3.2——1997年1月14日，W3C推荐标准</li>
+                    <li>HTML 4.0——1997年12月18日，W3C推荐标准</li>
+                    <li><b>HTML 4.01</b>（微小改进）——1999年12月24日，W3C推荐标准</li>
+                    <li>HTML 5——2014年10月28日，W3C推荐标准</li>
+                </ul>
+                <p>XHTML 是更严谨更纯净的 HTML 版本。</p>
+                <ul>
+                    <li><b>XHTML1.0</b>——发布于2000年1月26日，是W3C推荐标准，后来经过修订于2002年8月1日重新发布。</li>
+                    <li>XHTML 1.1，于2001年5月31日发布，W3C推荐标准。</li>
+                    <li>XHTML 2.0，W3C工作草案。</li>
+                    <li>XHTML 5，从XHTML 1.x的更新版，基于HTML 5草案。</li>
+                </ul>
+                <p>常用标签</p>
+                <ul>
+                    <li>div</li>
+                    <li>标题：h1-h6</li>
+                    <li>段落：p</li>
+                    <li>连接：a</li>
+                    <li>图像：img</li>
+                    <li>表格：table</li>
+                    <li>列表：ul/ol li</li>
+                    <li>表单：form(input、textarea...)</li>
+                </ul>
+                <p>常用属性</p>
+                <ul>
+                    <li>类名：class</li>
+                    <li>id</li>
+                    <li>title</li>
+                </ul>
+                <p>跨域问题</p>
+                <ul>
+                    <li>两个域名之间不能跨过域名来发送请求或者请求数据，否则就是不安全的</li>
+                    <li>表现：ajax、iframe、frameset</li>
+                </ul>
+            </dd>
+            <dt>css（层叠样式表）</dt>
+            <dd>
+                <p>内容与表现分离</p>
+                <p>历史</p>
+                <ul>
+                    <li>CSS1 ：作为一项W3C推荐，CSS1发布于 1996年12月17 日。1999 年1月11日，此推荐被重新修订。 </li>
+                    <li><b>CSS2 </b>：作为一项 W3C 推荐，CSS2发布于 1999年1月11日。CSS2添加了对媒介（打印机和听觉设备）和可下载字体的支持。</li>
+                    <li>CSS3 ：2001年5月W3C开始进行CSS3标准的制定。</li>
+                </ul>
+                <p>css hack：通过在CSS样式中加入一些特殊的符号，让不同的浏览器识别不同的符号（什么样的浏览器识别什么样的符号是有标准的，CSS hack就是让你记住这个标准），以达到应用不同的CSS样式的目的。</p>
+            </dd>
+            <dt>浏览器缓存</dt>
+            <dd>
+                <p>浏览器缓存（Browser Caching）是为了节约网络的资源加速浏览，浏览器在用户磁盘上对最近请求过的文档进行存储，当访问者再次请求这个页面时，浏览器就可以从本地磁盘显示文档，这样就可以加速页面的阅览。</p>
+                <ul>
+                    <li>文件缓存</li>
+                    <li>Cookie：Cookie 是在 HTTP 协议下，服务器或脚本可以维护客户工作站上信息的一种方式。Cookie 是由 Web 服务器保存在用户浏览器（客户端）上的小文本文件，它可以包含有关用户的信息。无论何时用户链接到服务器，Web 站点都可以访问 Cookie 信息。常用：sessionId。</li>
+                    <li>localStorage：没有时间限制的数据存储。</li>
+                </ul>
+            </dd>
+            <dt>js</dt>
+            <dd>
+                <p>js（JavaScript）是属于 web 的语言，它适用于 PC、笔记本电脑、平板电脑和移动电话，被设计为向 HTML 页面增加<b>交互</b>性。</p>
+                <ul>
+                    <li>JavaScript 与 Java 是两种完全不同的语言，无论在概念还是设计上</li>
+                    <li>ECMA-262 是 JavaScript 标准的官方名称</li>
+                    <li>JavaScript 由 Brendan Eich 发明。它于 1995 年出现在 Netscape 中（该浏览器已停止更新），并于 1997 年被 ECMA（一个标准协会）采纳</li>
+                    <li>
+                        <p>基本概念</p>
+                        <ul>
+                            <li>语句：每一行都可看作语句</li>
+                            <li>变量</li>
+                            <li>表达式</li>
+                            <li>函数：具有一定功能的程序段</li>
+                        </ul>
+                        <p>数据类型</p>
+                        <ul>
+                            <li>数值型：整型、浮点型</li>
+                            <li>布尔型：true or false</li>
+                            <li>字符串型：单个或多个字符组成</li>
+                            <li>空值：null</li>
+                            <li>undefined</li>
+                        </ul>
+                        <p>对象</p>
+                        <ul>
+                            <li>Array：数组</li>
+                            <li>String</li>
+                            <li>Date</li>
+                            <li>Math</li>
+                            <li>screen：屏幕</li>
+                            <li>window：窗口对象</li>
+                            <li>document</li>
+                        </ul>
+                        <p>定时</p>
+                        <ul>
+                            <li>setTimeout、clearTimeout</li>
+                            <li>setInterval</li>
+                        </ul>
+                        <p>this的概念,xxx.call()</p>
+                    </li>
+                    <li>js同样要考虑内存泄漏的问题</li>
+                    <li>事件绑定机制：$(document).on('click', '#xxx')还是$('#xxx').on('click')</li>
+                </ul>
+                <p>调试</p>
+                <ul>
+                    <li>util.debug</li>
+                    <li>alert：不推荐</li>
+                    <li>开发者模式，调试代码</li>
+                </ul>
+                <p>引擎</p>
+                <ul>
+                    <li>Google Chrome：V8引擎</li>
+                    <li>Opera：Carakan</li>
+                    <li>Firefox：TraceMonkey引擎</li>
+                    <li>Safari：Nitro引擎（原名:SquirrelFish）</li>
+                    <li>Chakra 用于IE9，JScript用于IE3-8</li>
+                </ul>
+            </dd>
+            <dt>浏览器</dt>
+            <dd>
+                <p>引擎类别</p>
+                <ul>
+                    <li>基于Gecko排版引擎：Mozilla Firefox</li>
+                    <li>基于WebKit排版引擎：Google Chrome、Safari、Opera</li>
+                    <li>基于Presto排版引擎</li>
+                    <li>基于KHTML排版引擎</li>
+                    <li>基于Trident排版引擎：Internet Explorer</li>
+                </ul>
+                <p>兼容性考虑</p>
+                <ul>
+                    <li>IE8以下、IE8、IE9、IE10</li>
+                    <li>Firefox、Chrome</li>
+                    <li>移动版浏览器一般对html5支持较好，但要考虑屏幕分辨率</li>
+                </ul>
+            </dd>
+            <dt>一些约定</dt>
+            <dd>
+                <ul>
+                    <li>加载顺序：css优先于js，用户体验</li>
+                    <li>优化：减少http请求次数（如iconfont）</li>
+                </ul>
+            </dd>
+            <dt>缓存处理</dt>
+            <dd>
+                <ul>
+                    <li>
+                        <p>304(Not Modified)：客户端有缓存的文档并发出了一个条件性的请求（一般是提供If-Modified-Since头表示客户只想比指定日期更新的文档）。服务器告诉客户，原来缓冲的文档还可以继续使用。</p>
+                        <p>在请求头里有：If-Modified-Since，在响应头里有：Last-Modified，比较这二个日期发日期和时分秒，如果完全一致就从缓存中去获取内容</p>
+                        <p>如果cache-control：no-chache说明强制每次请求直接发送给源服务器，而不经过本地缓存版本的校验。</p>
+                        <p>如果cache-control：max-age有二种情况：1、max-age>0 时 直接从游览器缓存中提取2、max-age<=0时向server发送http请求确认，该资源是否有修改有的话 返回200,无的话 返回304 </p>
+                        <p>第一次访问 200，鼠标点击二次访问 (Cache)，按F5刷新 304，按Ctrl+F5强制刷新 200</p>
+                        <img src="modules/frontend/base/images/304.png" />
+                    </li>
+                    <li>
+                        <p>webkit资源的分类：主资源和派生资源</p>
+                        <p>200(from memory cache)：不访问服务器，直接读缓存，从内存中读取缓存。此时的数据时缓存到内存中的，当kill进程后，也就是浏览器关闭以后，数据将不存在。但是这种方式只能缓存派生资源</p>
+                        <p>200(from disk cache)：不访问服务器，直接读缓存，从磁盘中读取缓存，当kill进程时，数据还是存在。这种方式也只能缓存派生资源</p>
+                        <img src="modules/frontend/base/images/http.png" />
+                    </li>
+                    <li>缓存的控制：index.html中设置Cache-Control=no-cache，通过loader.style引入css，通过loader.script引入js（通过version控制缓存-config.js __env __version & version.js）</li>
+                </ul>
+            </dd>
+            <dt>loading设计</dt>
+            <dd>
+                <ul>
+                    <li>index.html加载完成前（一般用于h5项目）</li>
+                    <li>新页面加载过程</li>
+                    <li>ajax接口调用过程：初始化、查询、保存</li>
+                    <li>项目设计：body一个loading、tabs一个loading、modal一个loading用于不同的场景</li>
+                </ul>
+            </dd>
+        </dl>
+    </div>
+</div>

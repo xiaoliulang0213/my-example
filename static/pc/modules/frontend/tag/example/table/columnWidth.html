@@ -1,0 +1,49 @@
+<div data-container="tagTableColumnWidthExample">
+	<component is="bv-table" :key="tags.tableId" v-bind="config"></component>
+</div>
+<script type="text/javascript">
+require(['jquery', 'util'], function($, util) {
+    var vm = util.bind({
+        container: 'tagTableColumnWidthExample',
+        data: {
+			tags: {
+				tableId: 'tagTableColumnWidthExampleTable'
+			},
+			config: {
+				limit: 50,
+				entityName: 'sysCity',
+				keys: 'cityCode',
+				columns: [
+					{
+						name: 'cityCode',
+						head: '城市代码(100px)',
+						width: '100px'
+					},
+					{
+						name: 'cityName',
+						head: '城市名称(40%)',
+						width: '40%'
+					},
+					{
+						name: 'parentCode',
+						head: '上级城市(自动)'
+					},
+					{
+						name: 'operate',
+						head: '操作(150px)',
+						type: 'operate',
+						align: 'center',
+						width: '150px',
+						operates: [
+							{
+								text: '只能看不能动'
+							}
+						]
+					}
+				],
+				orders: 'cityCode'
+			}
+		}
+    });
+});
+</script>

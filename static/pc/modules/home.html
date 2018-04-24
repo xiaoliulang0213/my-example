@@ -1,0 +1,320 @@
+<div class="bs-docs-container" data-container="homeDoc">
+	<div class="bs-docs-section">
+        <nav id="home-spy" class="navbar navbar-default navbar-static" role="navigation">
+            <div class="container-fluid">
+                <!--
+                <div class="navbar-header">
+                    <a class="navbar-brand" href="#home-project">部署</a>
+                </div>
+                <div class="collapse navbar-collapse">
+                    <ul class="nav navbar-nav">
+                        <li><a href="#home-project-module">模块划分</a></li>
+                        <li><a href="#home-project-run">部署说明</a></li>
+                    </ul>
+                </div>
+                -->
+                <div class="navbar-header">
+                    <a class="navbar-brand" href="#home-frontend">技术体系</a>
+                </div>
+                <div class="collapse navbar-collapse">
+                    <ul class="nav navbar-nav">
+                        <li class="dropdown">
+                            <a href="#" class="dropdown-toggle" data-toggle="dropdown">前端技术框架<span class="caret"></span></a>
+                            <ul class="dropdown-menu" role="menu" aria-labelledby="home-frontend">
+                                <li><a href="#home-frontend-bootstrap" tabindex="-1">bootstrap 3</a></li>
+                                <li><a href="#home-frontend-jquery" tabindex="-1">jquery1-2</a></li>
+                                <li><a href="#home-frontend-vue" tabindex="-1">vue2</a></li>
+                            </ul>
+                        </li>
+                        <li class="dropdown">
+                            <a href="#" class="dropdown-toggle" data-toggle="dropdown">后台技术框架<span class="caret"></span></a>
+                            <ul class="dropdown-menu" role="menu" aria-labelledby="home-backend">
+                                <li><a href="#home-backend-spring-boot" tabindex="-1">spring boot</a></li>
+                                <li><a href="#home-backend-spring-cloud" tabindex="-1">spring cloud</a></li>
+                                <li><a href="#home-backend-spring-security" tabindex="-1">spring security</a></li>
+                                <li><a href="#home-backend-spring-mvc" tabindex="-1">spring mvc</a></li>
+                                <li><a href="#home-backend-spring" tabindex="-1">spring</a></li>
+                                <li class="divider"></li>
+                                <li><a href="#home-backend-mybatis" tabindex="-1">mybatis</a></li>
+                            </ul>
+                        </li>
+                        <li class="dropdown">
+                            <a href="#" class="dropdown-toggle" data-toggle="dropdown">其他技术框架<span class="caret"></span></a>
+                            <ul class="dropdown-menu" role="menu" aria-labelledby="home-backend">
+                                <li><a href="#home-other-redis" tabindex="-1">redis</a></li>
+                                <li><a href="#home-other-nginx" tabindex="-1">nginx</a></li>
+                            </ul>
+                        </li>
+                        <li><a href="#home-extend">未来扩展</a></li>
+                    </ul>
+                </div>
+            </div>
+        </nav>
+        <div data-spy="scroll" data-target="#home-spy" style="overflow-x:hidden;overflow-y:scroll" ms-css="{height: @height}">
+            <!--
+            <h4>开发</h4>
+            <h4 id="home-project">部署</h4>
+            <dl class="dl-horizontal">
+                <dt id="home-project-module">模块划分</dt>
+                <dd>
+                    <p>辅助模块（打包jar作为依赖用）：</p>
+                    <ul>
+                        <li>bv-jxls:bv-jxls-poi<p>excel导出</p></li>
+                        <li>bv-jxls:bv-jxls-reader<p>excel导入</p></li>
+                        <li>bv-mybatis<p>mybatis改版</p></li>
+                        <li>bv-util<p>工具包</p></li>
+                    </ul>
+                    <p>服务模块：</p>
+                    <ul>
+                        <li>bv-eureka<p>rest服务注册中心</p></li>
+                        <li>bv-resource<p>静态资源中心，包括网页版（public）及手机版（h5），以及文件服务</p></li>
+                        <li>bv-portal<p>门户，包括路由、权限管理功能</p></li>
+                    </ul>
+                </dd>
+                <dt id="home-project-run">部署说明</dt>
+                <dd>
+                    <p>相关配置</p>
+                    <ul>
+                        <li><a href="javascript:;" data-title="点击查看详细配置" data-mainTabs="modules/config/application-yml.html">application.yml</a>
+                            <p>redis配置，包括spring session用的，以及项目上缓存用的，可以分开配置不用的redis</p>
+                            <p>数据源配置，包括主数据源及日志使用的数据源</p>
+                            <p>eureka配置</p>
+                        </li>
+                        <li>logback.xml<p>logback配置，支持文件、数据库及其他扩展</p></li>
+                    </ul>
+                    <p>部署</p>
+                    <ul>
+                        <li>
+                            <a href="javascript:;" data-title="点击查看详细配置" data-mainTabs="modules/config/nginx-config.html">nginx.conf</a>
+                            <p>做服务代理，主要配置resource地址，项目用到的地址在portal的application.yml中通过网关配置、或者通过eureka做服务发现</p></li>
+                    </ul>
+                    <p>运行</p>
+                    <ul>
+                        <li>启动顺序：eureka->resource,portal,xxx->nginx，即需要先启动eureka，再启动其他项目，最后启动nginx</li>
+                    </ul>
+                </dd>
+            </dl>
+            -->
+            <h4 id="home-frontend">前端技术框架</h4>
+            <dl class="dl-horizontal">
+                <dt id="home-frontend-bootstrap">bootstrap3</dt>
+                <dd>
+                    <p>Bootstrap，来自 Twitter，是目前很受欢迎的前端框架。Bootstrap 是基于 HTML、CSS、JAVASCRIPT 的，它简洁灵活，使得 Web 开发更加快捷。它由Twitter的设计师Mark Otto和Jacob Thornton合作开发，是一个CSS/HTML框架。Bootstrap提供了优雅的HTML和CSS规范，它即是由动态CSS语言Less写成。</p>
+                    <h5><a href="javascript:;" data-title="点击查看相关文档" data-href="http://v3.bootcss.com/css/">相关文档</a></h5>
+                    <h5>对我们的帮助：</h5>
+                    <ul>
+                        <li><a href="javascript:;" data-title="点击查看具体说明" data-mainTabs="modules/frontend/base/support/respond.html" data-mainTabs-title="响应式布局">响应式布局</a></li>
+                        <li>内置一系列风格统一、界面简洁、运行高效的<abbr data-title="<p>tooltip：工具提示</p><p>tab：标签页</p><p>modal：模态窗</p><p>button：按钮</p>">插件</abbr></li>
+                        <li>大量兼容性强的<abbr data-title="<p>datetimepicker：日期时间选择</p><p>typeahead：自动完成</p><p>switch：开关</p>">第三方插件</abbr></li>
+                    </ul>
+                    <h5>兼容性：</h5>
+                    <ul>
+                        <li><abbr data-title="一般指支持html5+css3的浏览器，常用的包括火狐、谷歌、IE10及以上（IE9部分支持）">现代浏览器</abbr>，IE9及以上版本</li>
+                        <li>IE8可通过<abbr data-title="<p>html5shiv.js：让IE6、IE7、IE8支持html5</p>respond.js：让IE6-8支持CSS3 Media Query">js补丁</abbr>有限支持</li>
+                    </ul>
+                    <h5>版本：</h5>
+                    <ul>
+                        <li>Bootstrap3之于Bootstrap2最大的变化是移动优先、扁平化设计、以及浏览器兼容性方面</li>
+                        <li>Bootstrap4从Less迁移到Sass、改进网格系统、支持选择弹性盒模型（flexbox）、不再支持IE9，使用rem和em单位等</li>
+                    </ul>
+                    <h5>相关：</h5>
+                    <ul>
+                        <li>framework：是一个开源免费的框架可以用来开发混合移动应用（原生和HTML混合）或者开发 iOS & Android 风格的WEB APP。也可以用来作为原型开发工具，可以迅速创建一个应用的原型。</li>
+                        <li>foundation：是一个易用、强大而且灵活的响应式前端框架，用于构建基于任何设备上的响应式网站、 Web应用和电子邮件。结构语义化、移动设备优先、完全可定制。</li>
+                        <li>SUI Mobile（阿里巴巴共享业务事业部UED团队）：是一套基于 Framework7 开发的UI库，参考Ratchet、Ionic、Onsen各种不同的思路，兼容到 iOS 6.0+ 和 Android 4.0+，非常适合开发跨平台Web App。</li>
+                    </ul>
+                    <h5>延伸：</h5>
+                    <ul>
+                        <li>less：是一门 CSS 预处理语言,它扩展了 CSS 语言,增加了变量、Mixin、函数等特性。Less 可以运行在 Node 或浏览器端。</li>
+                        <li>sass：是一门高于 CSS 的元语言,它能用来清晰地、结构化地描述文件样式,有着比普通 CSS 更加强大的功能。能够提供更简洁、更优雅的语法，同时提供多种功能来创建可维护和管理的样式表。</li>
+                    </ul>
+                </dd>
+                <dt>jquery1-2</dt>
+                <dd id="home-frontend-jquery">
+                    <p>jQuery是一个快速、简洁的JavaScript框架，是继Prototype之后又一个优秀的JavaScript代码库（或JavaScript框架）。jQuery设计的宗旨是“write Less，Do More”，即倡导写更少的代码，做更多的事情。它封装JavaScript常用的功能代码，提供一种简便的JavaScript设计模式，优化HTML文档操作、事件处理、动画设计和Ajax交互。</p>
+                    <h5><a href="javascript:;" data-title="点击查看相关文档" data-href="http://www.w3school.com.cn/jquery/">相关文档</a></h5>
+                    <h5>版本</h5>
+                    <ul>
+                        <li>jquery 1.x：支持IE 6及以上</li>
+                        <li>jquery 2.x：支持IE9及以上</li>
+                        <li>jquery 3.x：支持IE9及以上</li>
+                    </ul>
+                    <h5>相关：</h5>
+                    <ul>
+                        <li>zepto：是一个专为mobile WebKit浏览器(如:Safari和Chrome)而开发的一个JavaScript框架,是超轻量级的,只有5KB。zepto.js的语法借鉴并且兼容jQuery。</li>
+                    </ul>
+                    <h5>延伸：</h5>
+                    <ul>
+                        <li>
+                            <p>node.js</p>
+                            <ul>
+                                <li>简单的说 Node.js 就是运行在服务端的 JavaScript。Node.js 是一个基于Chrome JavaScript 运行时建立的一个平台。</li>
+                                <li>Node.js是一个事件驱动I/O服务端JavaScript环境，基于Google的V8引擎，V8引擎执行Javascript的速度非常快，性能非常好。</li>
+                            </ul>
+                        </li>
+                        <li>
+                            <p>webpack</p>
+                            <ul>
+                                <li>是当下最热门的前端资源模块化管理和打包工具。它可以将许多松散的模块按照依赖和规则打包成符合生产环境部署的前端资源。还可以将按需加载的模块进行代码分隔，等到实际需要的时候再异步加载。</li>
+                                <li>通过 loader 的转换，任何形式的资源都可以视作模块，比如 CommonJs 模块、 AMD 模块、 ES6 模块、CSS、图片、 JSON、Coffeescript、 LESS 等。</li>
+                            </ul>
+                        </li>
+                        <li>
+                            <p>es6</p>
+                            <ul>
+                                <li>编程语言JavaScript是ECMAScript的实现和扩展，由ECMA（一个类似W3C的标准组织）参与进行标准化。</li>
+                                <li>ECMAScript标准的历史版本分别是1、2、3、5。2009年发布的改进版本ES5，引入了Object.create()、Object.defineProperty()、getters和setters、严格模式以及JSON对象。</li>
+                                <li>ES6是一次重大的版本升级，与此同时，由于ES6秉承着最大化兼容已有代码的设计理念，你过去编写的JS代码将继续正常运行。</li>
+                                <li>事实上，许多浏览器已经支持部分ES6特性，并将继续努力实现其余特性。这意味着，在一些已经实现部分特性的浏览器中，你的JS代码已经可以正常运行。</li>
+                            </ul>
+                        </li>
+                        <li>
+                            <p>requirejs</p>
+                            <ul>
+                                <li>RequireJS是一个非常小巧的JavaScript模块载入框架,是AMD规范最好的实现者之一</li>
+                                <li>RequireJS的目标是鼓励代码的模块化，它使用了不同于传统&lt;script&gt;标签的脚本加载步骤。可以用它来加速、优化代码，但其主要目的还是为了代码的模块化。</li>
+                            </ul>
+                        </li>
+                    </ul>
+                </dd>
+                <dt>vue2</dt>
+                <dd id="home-frontend-vue">
+                    <p>vue2是一套构建用户界面的渐进式框架。与其他重量级框架不同的是，Vue 采用自底向上增量开发的设计。Vue 的核心库只关注视图层，它不仅易于上手，还便于与第三方库或既有项目整合。</p>
+                    <h5>对我们的帮助：</h5>
+                    <ul>
+                        <li>vue将所有前端代码彻底分成两部分，视图的处理通过绑定实现， 业务逻辑则集中在一个个叫VM的对象中处理。我们只要操作VM的数据，它就自然而然地神奇地同步到视图。</li>
+                        <li>Object.defineProperty或VBS的作用是将对象的某一个属性，转换一个setter与getter， 我们只要劫持这两个方法，通过Pub/Sub模式就能偷偷操作视图。</li>
+                    </ul>
+                    <h5>版本：</h5>
+                    <ul>
+                        <li>vue2：支持IE9+及较新的W3C浏览器</li>
+                    </ul>
+                    <h5>相关：</h5>
+                    <ul>
+                        <li>angularjs（google）：诞生于2009年，由Misko Hevery 等人创建，后为Google所收购。是一款优秀的前端JS框架，已经被用于Google的多款产品当中。AngularJS有着诸多特性，最为核心的是：MVC、模块化、自动化双向数据绑定、语义化标签、依赖注入等等。</li>
+                        <li>React（facebook）：起源于 Facebook 的内部项目，因为该公司对市场上所有 JavaScript MVC 框架，都不满意，就决定自己写一套，用来架设 Instagram 的网站。</li>
+                    </ul>
+                </dd>
+            </dl>
+            <h4 id="home-backend">后台技术框架</h4>
+            <dl class="dl-horizontal">
+                <dt id="home-backend-spring-boot">spring boot</dt>
+                <dd>
+                    <p>Spring Boot的作用在于创建和启动新的基于Spring框架的项目。Spring Boot会选择最适合的Spring子项目和第三方开源库进行整合。大部分Spring Boot应用只需要非常少的配置就可以快速运行起来。</p>
+                    <h5>对我们的帮助：</h5>
+                    <ul>
+                        <li>简化配置，通过starter启动，通过application.yml可以实现大部分配置</li>
+                    </ul>
+                    <h5>版本</h5>
+                    <ul>
+                        <li>我们用的是1.5.9，跟之前的版本不兼容</li>
+                        <li>2.0版本已发布，增加了很多新的特性</li>
+                    </ul>
+                </dd>
+                <dt id="home-backend-spring-cloud">spring cloud</dt>
+                <dd>
+                    <p>Spring Cloud是Pivotal提供的用于简化分布式系统构建的工具集。Spring Cloud引入了云平台连接器(Cloud Connector)和服务连接器(Service Connector)的概念。云平台连接器是一个接口，需要由云平台提供者进行实现，以便库中的其他模块可以与该云平台协同工作。</p>
+                    <h5>模块：</h5>
+                    <ul>
+                        <li>Spring Cloud Netflix：针对多种Netflix组件提供打包方案，其中包括Eureka、Ribbon、Hystrix以及Zuul。
+                            <ul>
+                                <li>Eureka是一套弹性服务注册实现方案，其中服务注册属于服务发现模式的一种实现机制。</li>
+                                <li>Ribbon能够通过获取自Eureka服务器的动态服务器列表进行内容填充。Spring Cloud Netflix通过将spring-cloud-starter-ribbon关联性添加至Spring Boot应用程序的方式实现与Ribbon的集成。这套额外库允许用户将经过适当配置的LoadBalancerClient实例注入至Spring Bean当中，从而实现客户端负载均衡。</li>
+                                <li>Hystrix（未启用）能够为断路器以及密闭闸门等分布式系统提供一套通用型故障容错实现模式。</li>
+                                <li>Zuul能够处理全部指向Netflix边缘服务的输入请求，它能够与Ribbon以及Hystrix等其它Netflix组件相结合，从而提供一个灵活且具有弹性的Netflix服务路由层。</li>
+                            </ul>
+                        </li>
+                        <li>Spring Cloud Config Server（未启用）：将配置文件纳入git或svn管理</li>
+                    </ul>
+                    <h5>对我们的帮助：</h5>
+                    <ul>
+                        <li>构建微服务架构</li>
+                        <li>方便集群环境</li>
+                    </ul>
+                </dd>
+                <dt id="home-backend-spring-security">spring security</dt>
+                <dd>
+                    <p>Spring Security 的前身是 Acegi Security ，是 Spring 项目组中用来提供安全认证服务的框架。</p>
+                    <h5>常用认证技术：</h5>
+                    <ul>
+                        <li>HTTP BASIC authentication headers (一个基于IEFT  RFC 的标准)</li>
+                        <li>LDAP (一个非常常见的跨平台认证需要做法，特别是在大环境)</li>
+                        <li>Form-based authentication (提供简单用户接口的需求)</li>
+                        <li>OpenID authentication</li>
+                        <li>oauth2</li>
+                    </ul>
+                </dd>
+                <dt id="home-backend-spring-mvc">spring mvc</dt>
+                <dd>
+                    <p>典型的教科书式的mvc构架</p>
+                    <h5>相关：</h5>
+                    <ul>
+                        <li>struts2：Struts2是一个基于MVC设计模式的Web应用框架，它本质上相当于一个servlet，在MVC设计模式中，Struts2作为控制器(Controller)来建立模型与视图的数据交互。</li>
+                    </ul>
+                </dd>
+                <dt id="home-backend-spring">spring</dt>
+                <dd></dd>
+                <dt id="home-backend-mybatis">mybatis</dt>
+                <dd>
+                    <p>是一个基于Java的持久层框架</p>
+                    <h5>扩展：</h5>
+                    <ul>
+                        <li>Dialect：数据库方言支持，主要用于物理分页，需要在application.yml中配置mybatis.dialect</li>
+                        <li>BaseMapper：泛型通用增删改查，以及可以通过Example扩展</li>
+                        <li>Dynamic：resultType支持Dynamic，根据entityName确定实际返回类型</li>
+                        <!--<li>${@tableName}：支持根据cityCode、sysCode确定数据库用户名，即解析为dbUser.tableName</li>-->
+                        <li>$[]：支持自定义函数，以适应不同的数据库</li>
+                        <li>乐观锁（规划）：通过在更新时条件加上版本号的方式避免多人同时更新时数据被覆盖的问题</li>
+                    </ul>
+                    <h5>相关：</h5>
+                    <ul>
+                        <li>hibernate：Hibernate是一个开放源代码的对象关系映射框架，它对JDBC进行了非常轻量级的对象封装，它将POJO与数据库表建立映射关系，是一个全自动的orm框架。</li>
+                        <li>spring data jpa：spring的持久层框架</li>
+                    </ul>
+                </dd>
+            </dl>
+            <h4 id="home-other">其他技术框架</h4>
+            <dl class="dl-horizontal">
+                <dt id="home-other-redis">redis</dt>
+                <dd>
+                    <p>Redis是一个开源的使用ANSI C语言编写、支持网络、可基于内存亦可持久化的日志型、Key-Value数据库，并提供多种语言的API。从2010年3月15日起，Redis的开发工作由VMware主持。从2013年5月开始，Redis的开发由Pivotal赞助。</p>
+                    <h5>特点：</h5>
+                    <ul>
+                        <li>高性能</li>
+                        <li>支持集群</li>
+                    </ul>
+                    <h5>相关：</h5>
+                    <ul>
+                        <li>memcached：Memcached 是一个高性能的分布式内存对象缓存系统，用于动态Web应用以减轻数据库负载。它通过在内存中缓存数据和对象来减少读取数据库的次数，从而提高动态、数据库驱动网站的速度。Memcached基于一个存储键/值对的hashmap。其守护进程（daemon ）是用C写的，但是客户端可以用任何语言来编写，并通过memcached协议与守护进程通信。</li>
+                    </ul>
+                </dd>
+                <dt id="home-other-nginx">nginx</dt>
+                <dd>
+                    <p>Nginx ("engine x") 是一个高性能的HTTP和反向代理服务器，也是一个IMAP/POP3/SMTP服务器，因它的稳定性、丰富的功能集、示例配置文件和低系统资源的消耗而闻名。其特点是占有内存少，并发能力强，事实上nginx的并发能力确实在同类型的网页服务器中表现较好，中国大陆使用nginx网站用户有：百度、京东、新浪、网易、腾讯、淘宝等。</p>
+                    <h5>特点：</h5>
+                    <ul>
+                        <li>支持负载均衡</li>
+                        <li>高稳定性：几乎可以做到7*24不间断运行，即使运行数个月也不需要重新启动。</li>
+                    </ul>
+                </dd>
+            </dl>
+            <h4 id="home-extend">未来扩展</h4>
+            <dl class="dl-horizontal">
+                <dt>工作流</dt>
+                <dt>报表平台</dt>
+            </dl>
+        </div>
+	</div>
+</div>
+<script type="text/javascript">
+require(['jquery', 'util', 'Const'], function($, util, Const) {
+    /*var vm = util.bind({
+        container: 'homeDoc',
+        height: 0
+    });
+    vm.height = $(vm.$element).closest('.bv-content').height() - 145;
+    $(window).resize(function() {
+        vm.height = $(vm.$element).closest('.bv-content').height() - 145;
+    });*/
+});
+</script>

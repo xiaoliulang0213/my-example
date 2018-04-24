@@ -1,0 +1,81 @@
+<div class="bs-docs-container">
+    <div class="bs-docs-section">
+        <h4>json</h4>
+        <dl class="dl-horizontal">
+            <dt>约定</dt>
+            <dd>
+                <p>如果key值带-，需加引号包起来</p>
+            </dd>
+        </dl>
+        <h4>java开发规范</h4>
+        <dl class="dl-horizontal">
+            <dt>代码规范</dt>
+            <dd>参考开发工具的代码格式化结果，开发工具推荐使用IDEA</dd>
+            <dt>日志规范</dt>
+            <dd>
+                <p><strong>严禁使用</strong>System.out.print及e.printStackTrace记录日志</p>
+                <p>日志定义：public Log logger = LogFactory.getLog(getClass())，如果为静态类则public static Log logger = LogFactory.getLog(Xxx.class)</p>
+                日志使用：日志-logger.log，调试信息logger.debug，警告信息logger.warn，错误信息logger.error，记录日志时做好日志级别的选择
+            </dd>
+        </dl>
+        <h4>rest开发规范</h4>
+        <dl class="dl-horizontal">
+            <dt>method规范</dt>
+            <dd>API的资源操作方法支持：GET、POST、PUT、DELETE等，我们使用GET和POST即可，<strong>GET表示查询，POST表示数据增删改</strong></dd>
+            <dt>命名规则</dt>
+            <dd>
+                <p>Controller定义@RequestMapping("/api/moduleName")，接口方法定义@RequestMapping(value = "/xxx", method = RequestMethod.METHOD)</p>
+                <p>这样组合起来地址为：/api/moduleName/xxx</p>
+                <p>内部接口定义/api/xxx，公共接口定义/pub/xxx</p>
+                <p>前台通过util.get或util.post调用时，url为：/moduleName/xxx（/api无需定义，依赖于config.js中rest.baseUrl配置）</p>
+            </dd>
+            <dt>rest接口</dt>
+            <dd>private int status;
+                private String code;
+                private String message;
+                private String debug;
+                // 暂未使用
+                private String more;
+                // 暂未使用
+                private String id;
+                private String appId;
+                <p>成功返回200，否则返回400、500等Http Code</p>
+                <p>失败返回数据格式为：{status: xxx, code: 'xxx', message: 'xxx', debug: 'xxx', appId: 'xxx}</p>
+                <p>status为http code</p>
+                <p>code为5位错误码，规则为：<strong>系统代码（P表示门户）+2位模块代码（自行划分）+2位错误代码</strong></p>
+                <p>message为明确的可以直接反馈给用户的错误信息</p>
+                <p>debug为内部错误信息</p>
+                <p>appId为系统代码</p>
+            </dd>
+        </dl>
+        <h4>html开发规范</h4>
+        <dl class="dl-horizontal">
+            <dt>vue显示</dt>
+            <dd>
+                <p>data-container属性对应的div增加v-cloak，在vue初始化完成之前隐藏改div，避免页面把{{}}显示出来，如果没有{{}}格式的数据，可以不用加这个class</p>
+                <p>显示数据，尽量用&lt;div v-text="xxx"&gt;&lt;/div&gt;的方式，而不是&lt;div&gt;{{xxx}}&lt;/div&gt;</p>
+            </dd>
+            <dt>必填项</dt>
+            <dd>必填项前面必须有星号</dd>
+            <dt>label的使用</dt>
+            <dd>input输入框前应定义label for="id"，自定义标签通过属性attr定义id</dd>
+        </dl>
+        <h4>js开发规范</h4>
+        <dl class="dl-horizontal">
+            <dt>引号的使用</dt>
+            <dd>js中字符串定义应使用单引号（'），如果遇到嵌套则外层单引号，内层双引号，如var x = '这是"测试"数据';</dd>
+            <dt>空值的判断</dt>
+            <dd>取任何属性之前应判断对象是否为空，比如var attr = var && var.attr;</dd>
+            <dt>控制台输出</dt>
+            <dd>开发过程中可以自行调试控制台输出，但不允许提交，更有效的调试方式是通过浏览器的开发者模式加断点</dd>
+            <dt>require.js</dt>
+            <dd>
+                <p>框架采用require.js来控制js依赖，常用依赖均已通过main.js引入（比如table、select、auto等），页面上可以不用再次添加依赖</p>
+                <p>但用到jquery、util、Const时需要通过require(['jquery', 'util', 'Const'], function($, util, Const) {}方式引入</p>
+                <p>main.js是主配置，如果js修改需要刷新缓存，需要设置require.config({urlArgs: '_=1.0.0'})，将1.0.0改一下</p>
+            </dd>
+            <dt>提示信息</dt>
+            <dd>统一提示信息调用为util.show()</dd>
+        </dl>
+    </div>
+</div>

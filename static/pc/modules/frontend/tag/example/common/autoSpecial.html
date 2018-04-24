@@ -1,0 +1,137 @@
+<div data-container="tagAutoSpecialExample">
+    <div>
+        <component is="bv-form" v-bind="formConfig"></component>
+    </div>
+</div>
+<script type="text/javascript">
+require(['jquery', 'util', 'Const'], function($, util, Const) {
+    var tagType = util.nvl(util.gup('tag'), 'static');
+    var vm = util.bind({
+        container: 'tagAutoSpecialExample',
+        data: {
+            formConfig: {
+                title: '自动完成特殊属性示例',
+                editType: 'update',
+                initEntity: {
+                    default: '370000',
+                    initUrlPost: '370000',
+                    initUrlGet: '370000',
+                    onItemInit1: '370000'
+                },
+                columns: [
+                    {
+                        name: 'default',
+                        head: '默认(省市区)',
+                        edit: {
+                            type: tagType
+                        },
+                        config: {
+                            code: 'cityCode',
+                            desc: 'cityName',
+                            entityName: 'sysCity'
+                        }
+                    },
+                    {
+                        name: 'initUrlPost',
+                        head: '初始值',
+                        edit: {
+                            type: tagType
+                        },
+                        config: {
+                            code: 'cityCode',
+                            desc: 'cityName',
+                            url: '/api/example/selectCity',
+                            initUrl: '/api/example/initCity'
+                        }
+                    },
+                    {
+                        name: 'initUrlGet',
+                        head: '初始值-GET',
+                        edit: {
+                            type: tagType
+                        },
+                        config: {
+                            code: 'cityCode',
+                            desc: 'cityName',
+                            url: '/api/example/selectCity',
+                            initUrl: '/api/example/initCity',
+                            method: 'get'
+                        }
+                    },
+                    {
+                        name: 'extraColumns',
+                        head: '自定义显示',
+                        edit: {
+                            type: tagType
+                        },
+                        config: {
+                            code: 'cityCode',
+                            desc: 'cityName',
+                            entityName: 'sysCity',
+                            extraColumns: 'cityType',
+                            show: function(item) {
+                                return item.cityType + '-' + item.cityName
+                            }
+                        }
+                    },
+                    {
+                        name: 'limit',
+                        head: '每次查询5条',
+                        edit: {
+                            type: tagType
+                        },
+                        config: {
+                            code: 'cityCode',
+                            desc: 'cityName',
+                            entityName: 'sysCity',
+                            limit: 5
+                        }
+                    },
+                    {
+                        name: 'onItemInit1',
+                        head: '初始化调用(console)',
+                        edit: {
+                            type: tagType
+                        },
+                        config: {
+                            code: 'cityCode',
+                            desc: 'cityName',
+                            entityName: 'sysCity',
+                            onItemInit: function(item) {
+                                console.log('item inited');
+                                console.log(item);
+                            }
+                        }
+                    },
+                    {
+                        name: 'onChange1',
+                        head: '选择(console)',
+                        edit: {
+                            type: tagType
+                        },
+                        config: {
+                            code: 'cityCode',
+                            desc: 'cityName',
+                            entityName: 'sysCity',
+                            onChange: function(entity, val, item) {
+                                console.log('item selected');
+                                console.log(entity);
+                                console.log(val);
+                                console.log(item);
+                            }
+                        }
+                    }
+                ],
+                operates: [
+                    {
+                        text: '查看表单数据',
+                        click: function (event, editType, entity, extraParams) {
+                            console.log(entity);
+                        }
+                    }
+                ]
+            }
+        }
+    });
+});
+</script>

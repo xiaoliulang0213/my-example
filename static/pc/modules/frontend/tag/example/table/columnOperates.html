@@ -1,0 +1,51 @@
+<div data-container="tagTableColumnOperatesExample">
+	<component is="bv-table" :key="tags.tableId" v-bind="config"></component>
+</div>
+<script type="text/javascript">
+require(['jquery', 'util'], function($, util) {
+    var vm = util.bind({
+        container: 'tagTableColumnOperatesExample',
+        data: {
+            tags: {
+                tableId: 'tagTableColumnOperatesExampleTable'
+            },
+            config: {
+                entityName: 'sysCity',
+                keys: 'cityCode',
+                columns: [
+                    {
+                        name: 'cityCode',
+                        head: '城市代码'
+                    },
+                    {
+                        name: 'cityName',
+                        head: '城市名称'
+                    },
+                    {
+                        name: 'operate',
+                        head: '操作',
+                        type: 'operate',
+                        align: 'center',
+                        operates: [
+                            {
+                                text: '第一个',
+                                click: function(event, tableId, entityName, selected) {
+                                    console.log(entityName);
+                                    alert('点击了第一个');
+                                }
+                            },
+                            {
+                                text: '第二个',
+                                click: function(event, tableId, entityName, selected) {
+                                    alert('点击了第二个');
+                                }
+                            }
+                        ]
+                    }
+                ],
+                orders: 'cityCode'
+            }
+        }
+    });
+});
+</script>

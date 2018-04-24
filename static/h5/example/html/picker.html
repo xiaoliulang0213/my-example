@@ -1,0 +1,122 @@
+<component is="bv-layout" data-container="example-picker">
+    <component is="bv-form" :key="tags.formKey" v-bind="formConfig"></component>
+</component>
+<script type="text/javascript">
+    require(['jquery', 'util', 'Const', 'bvForm', 'bvPicker'], function($, util, Const) {
+        util.title('example-picker');
+        var vm = util.bind({
+            container: 'example-picker',
+            data: {
+                tags: {
+                    formKey: 'pickerForm'
+                },
+                formConfig: {
+                    columns: [
+                        {
+                            name: 'picker1',
+                            head: '单选项',
+                            edit: {
+                                type: 'picker'
+                            },
+                            config: {
+                                choose: [
+                                    {
+                                        items: [
+                                            {
+                                                code: 'code1',
+                                                desc: '选项1'
+                                            }, {
+                                                code: 'code2',
+                                                desc: '选项2'
+                                            }, {
+                                                code: 'code3',
+                                                desc: '选项3'
+                                            }
+                                        ]
+                                    }
+                                ]
+                            }
+                        }, {
+                            name: 'picker2',
+                            head: '单选项带默认值',
+                            edit: {
+                                type: 'picker'
+                            },
+                            config: {
+                                initOption: {
+                                    code: null,
+                                    desc: '请选择'
+                                },
+                                choose: [
+                                    {
+                                        items: [
+                                            {
+                                                code: 'code1',
+                                                desc: '选项1'
+                                            }, {
+                                                code: 'code2',
+                                                desc: '选项2'
+                                            }, {
+                                                code: 'code3',
+                                                desc: '选项3'
+                                            }
+                                        ]
+                                    }
+                                ]
+                            }
+                        }, {
+                            name: 'picker3',
+                            head: '多选项带默认值',
+                            edit: {
+                                type: 'picker'
+                            },
+                            config: {
+                                code: 'name',
+                                desc: 'show',
+                                initOption: {
+                                    name: null,
+                                    show: '请选择'
+                                },
+                                choose: [
+                                    {
+                                        items: [
+                                            {
+                                                name: 'code1',
+                                                show: '赵'
+                                            }, {
+                                                name: 'code2',
+                                                show: '钱'
+                                            }, {
+                                                name: 'code3',
+                                                show: '孙'
+                                            }, {
+                                                name: 'code4',
+                                                show: '李'
+                                            }
+                                        ]
+                                    }, {
+                                        items: [
+                                            {
+                                                name: 'code1',
+                                                show: '一'
+                                            }, {
+                                                name: 'code2',
+                                                show: '二'
+                                            }, {
+                                                name: 'code3',
+                                                show: '三'
+                                            }, {
+                                                name: 'code4',
+                                                show: '四'
+                                            }
+                                        ]
+                                    }
+                                ]
+                            }
+                        }
+                    ]
+                }
+            }
+        });
+    });
+</script>

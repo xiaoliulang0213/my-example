@@ -1,0 +1,717 @@
+<div>
+    <div class="input-group auto bv-auto" :class="clazz">
+        <input type="text" class="form-control" autocomplete="off" data-provide="typeahead" :id="name" v-bind="attr" />
+        <span class="input-group-addon"><i class="iconfont icon-more" @click="change($event)"></i></span>
+    </div>
+    <p class="form-static bv-static" :class="clazz" v-bind="staticAttr"><span v-text="showText"></span></p>
+    <label class="bv-label" :class="[wrap && 'wrap', clazz]">
+        <slot></slot>
+    </label>
+    <div class="bv-textfield" :class="[{'input-group': chooseUrl}, clazz]">
+        <input class="form-control" v-bind="attr" v-model="entity[name]" v-on:input="checkInput($event)" v-on:blur="onBlur($event)" />
+        <span class="input-group-addon bv-pointer" v-if="chooseUrl" @click="openModal($event)"><i class="iconfont icon-query"></i></span>
+    </div>
+    <div class="bv-hidden" :class="clazz"><input type="hidden" v-bind="attr" v-model="entity[name]" /></div>
+    <div class="bv-textarea" :class="clazz"><textarea class="form-control" v-bind="attr" v-model="entity[name]"></textarea></div>
+    <div class="bv-select" :class="clazz">
+        <select class="form-control" v-bind="attr" v-model="entity[name]">
+            <option v-bind="{value: null}" v-if="initOption && !multiple" v-text="initOption"></option>
+            <optgroup v-for="optgroup in groups" v-bind="{label: optgroup.label}">
+                <option v-for="option in optgroup.options" v-bind="{value: option[code]}" v-text="option[desc]"></option>
+            </optgroup>
+            <option v-for="option in options" v-bind="{value: option[code]}" v-text="option[desc]" v-show="!multiple"></option>
+        </select>
+    </div>
+    <div class="bv-radio" :class="clazz">
+        <label v-for="option in options" class="radio-inline" :class="labelClass" :style="labelStyle">
+            <input type="radio" :id="name + '-' + option[code]" :value="option[code]" v-bind="attr" v-model="entity[name]" />
+            <span v-text="option[desc]"></span>
+        </label>
+    </div>
+    <div class="bv-checkbox" :class="clazz">
+        <label v-for="option in options" class="checkbox-inline" :class="labelClass" @click="click && click($event)">
+            <input type="checkbox" :id="name + '-' + option[code]" :name="name" :value="option[code]" :disabled="option[code] === stickValue" v-bind="attr" v-model="values" />{{option[desc]}}
+        </label>
+    </div>
+    <button class="bv-button btn" :type="type" :class="clazz" v-bind="attr" @click="doClick($event)">
+        <i v-if="icon" class="iconfont" :class="icon"></i>{{value}}
+    </button>
+    <a href="javascript:;" class="bv-href" :class="clazz" v-bind="attr" @click="doClick($event)"><i v-if="icon" class="iconfont" :class="icon"></i>{{value}}</a>
+
+    <div class="bv-chart" :class="clazz"><canvas></canvas></div>
+
+    <div class="bv-date date" :class="clazz">
+        <input type="text" class="form-control" :class="{datepicker: from !== 'filter'}" v-bind="attr" v-model="entity[name]" />
+        <span class="input-group-addon" v-if="from !== 'filter'"><i class="iconfont icon-calendar"></i></span>
+    </div>
+
+    <div class="bv-editor" :class="clazz" :style="{width: width}">
+        <textarea :style="{height: height}" v-bind="attr"></textarea>
+    </div>
+
+    <div class="bv-upload" :class="[preview && 'thumbnail', clazz]">
+        <img :src="viewImage()" v-if="preview" />
+        <div class="form-group">
+            <label class="col-sm-3 control-label" v-text="browserTitle" v-if="browserTitle"></label>
+            <div :class="browserTitle ? 'col-sm-9' : 'col-sm-12'">
+                <button type="button" id="browser" class="btn btn-default"><i class="iconfont icon-browse"></i>{{browserButtonText}}</button>
+                <span v-if="fileName" v-show="showDetail">
+                            文件名：<span v-text="fileName"></span>
+                            大小：<span v-text="fileSizeFormat"></span>
+                            <span v-show="startUpload && !uploadError">上传进度：{{progressInfo}}</span>
+                            <span class="text-danger" v-show="uploadError" v-text="uploadError"></span>
+                        </span>
+                <div class="progress bv-progress-line bv-progress-upload" v-show="inProgress">
+                    <div class="progress-bar" :style="{width: progress}">
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <div class="bv-import" :class="{'modal-dialog': layout === 'modal'}">
+        <div :class="{'modal-content': layout === 'modal'}">
+            <div class="modal-header" v-if="layout === 'modal'">
+                <button type="button" class="close" data-dismiss="modal">
+                    &times;
+                </button>
+                <h4 class="modal-title" v-text="title"></h4>
+            </div>
+            <h4 v-if="layout === 'body'" v-text="title"></h4>
+            <form class="form-horizontal">
+                <div class="modal-body">
+                    <div class="col-md-12">
+                        <slot name="layoutBefore" />
+                    </div>
+                    <div class="col-md-12">
+                        <component is="bv-upload" :key="name + '-upload'" :entity="upload" v-bind="{name: name, url: uploadUrl}"></component>
+                    </div>
+                </div>
+                <div class="modal-footer">
+                    <div>
+                        <span class="text-danger" v-show="uploadHint" v-text="uploadHint"></span>
+                    </div>
+                    <button type="button" class="btn btn-warning" v-show="resultFile" @click="downloadResult"><i class="iconfont icon-download"></i>下载检查结果</button>
+                    <button type="button" class="btn btn-primary" data-loading-text="处理中..." @click="doImport"><i class="iconfont icon-import"></i>导入</button>
+                    <button type="button" class="btn btn-default" v-if="template" @click="downloadTemplate"><i class="iconfont icon-download"></i>模板文件下载</button>
+                    <button type="button" class="btn btn-default" data-dismiss="modal" v-if="layout === 'modal'"><i class="iconfont icon-cancel"></i>关闭</button>
+                </div>
+            </form>
+        </div>
+        <div class="loading"></div>
+    </div>
+
+    <div class="bv-export modal-dialog">
+        <div class="modal-content">
+            <div class="modal-header">
+                <button type="button" class="close" data-dismiss="modal">
+                    &times;
+                </button>
+                <h4 class="modal-title">导出数据</h4>
+            </div>
+            <form id="exportExcel" class="form-horizontal">
+                <div class="modal-footer">
+                    <button type="button" id="export" class="btn btn-primary" data-loading-text="处理中..." @click="doExport"><i class="iconfont icon-export"></i>导出</button>
+                    <button type="button" id="template" class="btn btn-default" v-if="template" @click="downloadTemplate"><i class="iconfont icon-download"></i>模板文件下载</button>
+                    <button type="button" class="btn btn-default" data-dismiss="modal"><i class="iconfont icon-cancel"></i>关闭</button>
+                </div>
+            </form>
+        </div>
+        <div class="loading"></div>
+    </div>
+
+    <div class="bv-file">
+        <div class="file-catalog">
+            <component is="bv-tree" v-bind="catalog"></component>
+        </div>
+        <div class="file-list">
+            <component is="bv-table" v-bind=""></component>
+        </div>
+    </div>
+
+    <div class="bv-form" :id="id" :name="name" :class="[{'modal-dialog': layout === 'modal', 'form-collapse': collapse}, layout === 'modal' && 'modal-' + size, validateInline && 'validate-inline', clazz]">
+        <div :class="{'modal-content': layout === 'modal'}">
+            <div class="modal-header" v-if="layout === 'modal'">
+                <button type="button" class="close" data-dismiss="modal">
+                    &times;
+                </button>
+                <h4 class="modal-title" v-text="title"></h4>
+            </div>
+            <h4 class="form-title" v-if="title && layout !== 'modal'">
+                <a href="javascript:;" @click="visible = !visible" v-if="collapse"><i class="iconfont" :class="visible ? 'icon-more' : 'icon-gt'"></i><span v-text="title"></span></a>
+                <span v-text="title" v-if="!collapse"></span>
+                <span class="pull-right" v-show="headerOperates.length > 0">
+                            <button v-for="el in headerOperates" type="button" class="btn" v-if="el.text"
+                                    v-bind="{id: el.id, 'data-loading-text': el.loading || ''}" :class="el.clazz || 'btn-default'"
+                                    @click="click($event, el)" v-show="isButtonVisible(el)">
+                                <i class="iconfont" :class="el.icon" v-if="el.icon"></i>{{el.text}}
+                            </button>
+                        </span>
+            </h4>
+            <component :is="container" :class="container === 'form' && 'form-inner form-horizontal'" v-bind="attr" v-show="visible">
+                <div :class="{'modal-body': layout === 'modal', 'form-body': layout !== 'modal'}" v-if="innerColumns && innerColumns.length > 0">
+                    <div v-for="el in innerColumns" class="form-container" :class="el.layoutClass" v-show="isColumnVisible(el)" v-if="isColumnCreate(el)">
+                        <div class="form-group" :class="el.groupClass">
+                            <component is="bv-label" class="form-label control-label" v-bind="checkColumnAttr(el, 'for')" :class="el.labelClass" v-if="el.head">
+                                <i class="required iconfont icon-required" v-if="isRequired(el.config.validate, el.config.attr)"></i>{{el.head !== '#placeholder' ? el.head + labelAppend : ''}}
+                            </component>
+                            <div class="form-tag" :class="el.tagClass">
+                                <component :is="el.type" :name="el.name" from="form" :entity="entity" v-bind="el.config"></component>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+                <div :class="{'modal-footer': layout === 'modal', 'form-footer': layout !== 'modal' && operateLayout !== 'inline' && operateLayout !== 'modal'}">
+                    <component :is="el.type ? 'bv-' + el.type : 'button'" v-for="(el, index) in footerOperates" :key="'footerOperate-' + index" :class="(!el.type || el.type === 'default') && ('btn ' + (el.clazz || 'btn-default'))" v-if="el.text"
+                               v-bind="[{id: el.id, from: 'operate', text: el.type === 'static' && el.text, type: (!el.type || el.type === 'default') && 'button', 'data-loading-text': (!el.type || el.type === 'default') && el.loading || ''}, el.config]"
+                               @click="(!el.type || el.type === 'default') && click($event, el)" v-show="isButtonVisible(el)">
+                        <i class="iconfont" :class="el.icon" v-if="el.icon"></i>{{el.text}}
+                    </component>
+                    <button type="button" class="btn btn-default" data-dismiss="modal" v-if="layout === 'modal' || operateLayout === 'modal'">
+                        <i class="iconfont icon-cancel"></i>{{closeText}}
+                    </button>
+                </div>
+            </component>
+        </div>
+        <div class="loading" v-if="layout === 'modal'"></div>
+    </div>
+
+    <div class="bv-grant">
+        <div class="col-sm-5">
+            <select class="form-control" multiple="multiple" :id="left"></select>
+        </div>
+
+        <div class="col-sm-2">
+            <button type="button" class="btn btn-default" :id="left + '_rightAll'"><i class="glyphicon glyphicon-forward"></i></button>
+            <button type="button" class="btn btn-default" :id="left + '_rightSelected'"><i class="glyphicon glyphicon-chevron-right"></i></button>
+            <button type="button" class="btn btn-default" :id="left + '_leftSelected'"><i class="glyphicon glyphicon-chevron-left"></i></button>
+            <button type="button" class="btn btn-default" :id="left + '_leftAll'"><i class="glyphicon glyphicon-backward"></i></button>
+        </div>
+
+        <div class="col-sm-5">
+            <select class="form-control" multiple="multiple" :id="left + '_to'"></select>
+        </div>
+    </div>
+
+    <div class="bv-position">
+        <span class="head" v-text="head" v-if="head"></span>
+        <ol class="breadcrumb" :class="head && 'with-head'">
+            <li v-for="(el, index) in titles" :class="index === titles.length - 1 && 'active'">
+                <a :href="el.href || 'javascript:;'" v-text="el.text || el" v-if="index !== titles.length - 1"></a>
+                <span v-text="el.text || el" v-if="index === titles.length - 1"></span>
+            </li>
+        </ol>
+    </div>
+    <div class="bv-tabs-pane tab-content" :class="[type === 'inline' ? 'tab-pane' : 'bv-content', type === 'inline' && active && 'active']">
+        <slot></slot>
+    </div>
+    <div class="bv-tabs" :class="clazz" v-bind="attr">
+        <div class="bv-tabs-container" :class="{'bv-tabs-overflow': overflow, 'bv-tabs-vertical': layout === 'vertical'}">
+            <button class="btn btn-default prev" v-show="overflow" @click="prev"><i class="iconfont icon-prev"></i></button>
+            <div class="bv-tabs-nav">
+                <ul class="nav nav-tabs" :style="{'margin-left': marginLeft + 'px'}">
+                    <li v-for="(el, index) in tabs" :key="'tab-' + index" role="presentation" v-bind="{'data-target': el.id}" :class="index === currentIndex && 'active'">
+                        <a href="javascript:;" @mouseenter="trigger === 'hover' && _trigger($event, index)" @click="trigger === 'click' && _trigger($event, index)">{{el.text}}</a>
+                        <button type="button" class="close" v-if="!sticky && !el.sticky" @click="remove($event, index)">
+                            ×
+                        </button>
+                    </li>
+                </ul>
+            </div>
+            <button class="btn btn-default next" v-show="overflow" @click="next"><i class="next iconfont icon-next"></i></button>
+            <button class="btn btn-default return" v-if="returnUrl" @click="doReturn"><i class="iconfont icon-return"></i>返回</button>
+        </div>
+        <div class="tab-content" v-if="type !== 'inline'">
+            <component is="bv-tabs-pane" v-for="(el, index) in tabs" :key="el.id" :type="type" v-bind="{id: el.id, 'data-active': index === currentIndex, target: el.target, prop: el.prop}"
+                       v-show="index === currentIndex"></component>
+        </div>
+        <div class="tab-content" v-if="type === 'inline'">
+            <slot></slot>
+        </div>
+    </div>
+    <div class="bv-wizard">
+        <div class="wizard-panel">
+            <div class="wizard-row">
+                <div class="wizard-step" v-for="(el, index) in steps" :key="'step-' + index">
+                    <a href="javascript:;" type="button" :data-target="el.id" :data-index="index" class="btn btn-circle" :class="index === currentIndex ? 'btn-primary' : 'btn-default'" v-text="index + 1"
+                       :disabled="el.disabled !== undefined && el.disabled !== false" :data-title="el.disabled && el.disabled !== true ? el.disabled : el.title"
+                       :data-original-title="el.disabled && el.disabled !== true ? el.disabled : el.title" @click="!el.disabled && active($event, index)"></a>
+                    <p v-text="el.text"></p>
+                </div>
+            </div>
+        </div>
+        <div class="wizard-content">
+            <slot></slot>
+        </div>
+        <div class="wizard-operate" v-if="operates && operates.length > 0">
+            <button v-for="(el, index) in operates" type="button" :key="'operate-' + index" class="btn" :class="['wizard-' + (el.preset || 'default'), el.clazz || 'btn-default']"
+                    v-show="checkOperateVisible(el)" @click="_click($event, el)">
+                <i class="iconfont" :class="el.icon" v-if="el.icon"></i>{{el.text}}
+            </button>
+        </div>
+    </div>
+    <div class="bv-wizard-content" :class="active && 'active'">
+        <slot></slot>
+    </div>
+    <div class="modal-dialog bv-modal" :class="clazz">
+        <div class="modal-content">
+            <div class="modal-header">
+                <button type="button" class="close" data-dismiss="modal">
+                    &times;
+                </button>
+                <h4 class="modal-title" v-text="title"></h4>
+            </div>
+            <component :is="container" :class="container === 'form' && 'form-horizontal'">
+                <div class="modal-body">
+                    <slot name="body"></slot>
+                </div>
+                <div class="modal-footer">
+                    <slot name="footer"></slot>
+                </div>
+            </component>
+        </div>
+        <div class="loading"></div>
+    </div>
+    <div class="bv-panel panel panel-default">
+        <div class="panel-heading" v-if="title || more">
+            <span v-text="title"></span>
+            <a class="panel-operate" href="javascript:;" v-text="more.text" v-if="more"></a>
+        </div>
+        <div class="panel-body">
+            <slot></slot>
+        </div>
+    </div>
+    <div class="bv-search input-group search">
+        <input type="text" class="form-control" :placeholder="placeholder" v-model="value" />
+        <span class="input-group-btn">
+                    <button class="btn btn-default" type="button" @click="click && click($event, value)"></button>
+                </span>
+    </div>
+    <div class="bv-media media" :class="clazz">
+        <div class="media-left media-middle" v-if="image.url">
+            <a href="#">
+                <img class="media-object" :class="image.clazz" :src="image.url" :width="image.width" />
+            </a>
+        </div>
+        <div class="media-body media-middle">
+            <h4 class="media-heading" v-text="title" v-if="title"></h4>
+            <p v-text="content" v-if="content"></p>
+            <slot></slot>
+        </div>
+    </div>
+    <div :id="id" class="bv-carousel carousel slide" :class="[clazz, vertical && 'vertical']" data-ride="carousel">
+        <ol class="carousel-indicators" v-if="!vertical">
+            <li v-for="(el, index) in items" :data-target="'#' + id" :data-slide-to="index" :class="active === index && 'active'"></li>
+        </ol>
+
+        <slot name="icon"></slot>
+        <div class="carousel-inner" v-if="vertical">
+            <div v-for="(el, index) in items" class="item" :class="active === index && 'active'">
+                <p class="ticker-headline">
+                    <a href="#">
+                        <strong v-text="el.title + '：'" v-if="el.title"></strong>
+                        <span v-text="el.content" v-if="el.content"></span>
+                    </a>
+                </p>
+            </div>
+        </div>
+        <div class="carousel-inner" v-if="!vertical">
+            <div v-for="(el, index) in items" class="item" :class="active === index && 'active'"  :style="{width: width, height: height, 'background-image': 'url(' + el.url + ')'}">
+                <div class="carousel-caption" v-text="el.title"></div>
+            </div>
+        </div>
+        <slot name="content"></slot>
+
+        <a class="carousel-control" :class="vertical ? 'up' : 'left'" :href="'#' + id" data-slide="prev">
+            <span class="glyphicon" :class="vertical ? 'glyphicon-chevron-up' : 'glyphicon-chevron-left'"></span>
+            <span class="sr-only">Previous</span>
+        </a>
+        <a class="carousel-control" :class="vertical ? 'down' : 'right'" :href="'#' + id" data-slide="next">
+            <span class="glyphicon" :class="vertical ? 'glyphicon-chevron-down' : 'glyphicon-chevron-right'"></span>
+            <span class="sr-only">Next</span>
+        </a>
+    </div>
+
+    <div class="bv-pager">
+        <component :is="'bv-pager-' + type"
+                   :current-page="currentPage" :total-page="totalPage" :row-count="rowCount" :limit="limit" :page-show="pageShow"
+                   @on-page="setPage" @on-limit="setLimit"></component>
+    </div>
+
+    <div class="bv-pager-normal">
+        <div class="bv-page-action">
+            <span><i class="iconfont icon-first" data-title="第一页" :class="{'invalid' : currentPage === 1}" @click="currentPage !== 1 && jumpTo('first', $event)"></i></span>
+            <span><i class="iconfont icon-prev" data-title="上一页" :class="{'invalid' : currentPage === 1}" @click="currentPage !== 1 && jumpTo('prev', $event)"></i></span>
+            <span><i class="iconfont icon-next" data-title="下一页" :class="{'invalid' : currentPage === totalPage || totalPage === 0}" @click="currentPage !== totalPage && totalPage !== 0 && jumpTo('next', $event)"></i></span>
+            <span><i class="iconfont icon-last" data-title="最后一页" :class="{'invalid' : currentPage === totalPage || totalPage <= 0}" @click="currentPage !== totalPage && totalPage !== 0 && jumpTo('last', $event)"></i></span>
+        </div>
+        <div class="bv-page-detail" v-if="rowCount >= 0">总页数{{totalPage}}，总记录数{{rowCount}}</div>
+        <div class="bv-page-limit">
+            <span class="pager-label">每页记录数：</span>
+            <div class="input-group">
+                <input type="text" maxlength="4" data-title="请输入每页记录数" v-bind="{value: limit}" @keypress="pressOnLimit($event)" />
+                <span class="input-group-addon">
+                    <i class="bv-icon-button iconfont icon-ok" @click="setLimit($event)"></i>
+                </span>
+            </div>
+        </div>
+        <div class="bv-page-current">
+            <span class="pager-label">当前页：</span>
+            <div class="input-group">
+                <input type="text" maxlength="6" data-title="请输入页码" :value="currentPage" @keypress="pressOnPage($event)" />
+                <span class="input-group-addon">
+                    <i class="bv-icon-button iconfont icon-ok" @click="setPage($event)"></i>
+                </span>
+            </div>
+        </div>
+    </div>
+    <nav class="bv-pager-more">
+        <ul class="pagination">
+            <li :class="currentPage === 1 && 'disabled'"><a href="javascript:;" @click="currentPage > 1 && currentPage-- && jumpTo('prev', $event)"><span>上一页</span></a></li>
+            <li :class="currentPage === 1 && 'active'"><a href="javascript:;" @click="jumpTo(1, $event)">1</a></li>
+            <li v-if="prevPointComputed"><a href="javascript:;">...</a></li>
+            <li v-for="el in pageShowComputed" :class="currentPage === el - 1 + pageStartComputed && 'active'" v-if="totalPage > 2">
+                <a href="javascript:;" v-text="el - 1 + pageStartComputed" @click="jumpTo(el - 1 + pageStartComputed, $event)"></a>
+            </li>
+            <li v-if="nextPointComputed"><a href="javascript:;">...</a></li>
+            <li :class="currentPage === totalPage && 'active'" v-if="totalPage > 1"><a href="javascript:;" @click="jumpTo(totalPage, $event)" v-text="totalPage"></a></li>
+            <li :class="currentPage === totalPage && 'disabled'"><a href="javascript:;" @click="currentPage < totalPage && currentPage++ && jumpTo('next', $event)"><span>下一页</span></a></li>
+        </ul>
+    </nav>
+
+    <div class="bv-list">
+        <ul :class="inline ? 'list-inline' : 'list-unstyled'">
+            <li v-for="el in items" v-if="type === 'default'">
+                <a href="javascript:;" v-text="el.text"></a>
+            </li>
+            <div class="media" v-for="el in items" v-if="type === 'media'">
+                <div class="media-left">
+                    <a href="#">
+                        <div class="media-date" v-if="mediaType === 'date' && el.date">
+                            <p class="media-day" v-text="el.date.substring(8, 10)"></p>
+                            <p class="medial-month" v-text="el.date.substring(0, 7)"></p>
+                        </div>
+                        <img class="media-object" :src="el.url" v-if="el.url" />
+                    </a>
+                </div>
+                <div class="media-body">
+                    <a href="javascript:;" @click="el.click" v-if="el.click">
+                        <h4 class="media-heading" v-text="el.title" v-if="el.title"></h4>
+                    </a>
+                    <h4 class="media-heading" v-text="el.title" v-if="el.title && !el.click"></h4>
+                    <p v-text="el.content" v-if="el.content"></p>
+                </div>
+            </div>
+        </ul>
+        <component is="bv-pager" class="pagination" v-if="pagination" v-bind="pager"></component>
+    </div>
+
+    <div class="bv-table" :class="[{'modal-dialog': layout === 'modal', 'modal-lg': layout === 'modal', 'table-collapse': collapse, 'table-with-title': title, 'table-with-operate': authedOperates.length > 0, 'collapsed': !visible}, clazz]"
+            :id="name && name + '-container'">
+        <div :class="{'modal-content': layout === 'modal'}">
+            <div class="modal-header no-line" v-if="layout === 'modal'">
+                <button type="button" class="close" data-dismiss="modal">
+                    &times;
+                </button>
+            </div>
+            <div :class="{'modal-body': layout === 'modal'}" :id="name" class="bv-table-container">
+                <div class="bv-table-toolbar" v-if="title || authedOperates.length > 0">
+                    <div class="bv-table-title" v-if="title">
+                        <a href="javascript:;" @click="visible = !visible" v-if="collapse"><i class="iconfont" :class="visible ? 'icon-more' : 'icon-gt'"></i><span v-text="title"></span></a>
+                        <span v-if="!collapse"><i class="iconfont icon-menu"></i>{{title}}</span>
+                    </div>
+                    <div class="bv-table-operate">
+                        <button type="button" class="btn btn-default" v-if="authedOperates.length > 0 && el.show !== 'import' && el.show !== 'export' && el.text"
+                                v-for="el in authedOperates" v-bind="{id: el.id}"
+                                v-show="isButtonVisible(el)" @click="click($event, el, 'head')">
+                            <i class="iconfont" v-if="el.icon" :class="el.icon"></i>{{el.text}}
+                        </button>
+                        <button type="button" class="btn btn-link" v-if="(!thead.rowNum || thead.rowNum === 1) && filterShow" @click="toggleFilterShow($event)">
+                            <i class="iconfont" :class="filterShowVisible ? 'icon-less' : 'icon-more'"></i>
+                            <span>过滤显示列</span>
+                        </button>
+                        <button type="button" id="filterToggleShowOrHide" class="btn btn-link" v-if="filterLayout !== 'none' && filterType !== 'false'"
+                                @click="toggleShowOrHide($event)">
+                            <i class="iconfont" :class="filterVisible || filterShowVisible ? 'icon-less' : 'icon-more'"></i>
+                            <span v-text="filterVisible ? '收起' : '展开'"></span>
+                        </button>
+                        <button type="button" id="filterToggleButton" class="btn btn-link" v-if="filterColumns.length > 0 && filterLayout === 'default'"
+                                @click="initFilterMore($event, 'change')">
+                            <i class="iconfont" :class="filterMore ? 'icon-less' : 'icon-more'"></i>
+                            <span v-text="filterMore ? '模糊查询' : '精确查询'"></span>
+                        </button>
+                        <button type="button" class="btn btn-link" v-for="el in authedOperates" v-bind="{id: el.id}"
+                                v-if="el.show === 'import'" v-show="isButtonVisible(el)" @click="toImport($event, el)">
+                            <i class="iconfont" v-if="el.icon" :class="el.icon"></i>{{el.text}}
+                        </button>
+                        <button type="button" class="btn btn-link" v-for="el in authedOperates" v-bind="{id: el.id}"
+                                v-if="el.show === 'export'" v-show="isButtonVisible(el)" @click="toExport($event, el)">
+                            <i class="iconfont" v-if="el.icon" :class="el.icon"></i>{{el.text}}
+                        </button>
+                        <button type="button" class="btn btn-link" @click="refresh($event)" v-if="showRefresh"><i class="iconfont icon-refresh"></i>刷新</button>
+                    </div>
+                </div>
+                <div class="bv-table-filter" v-show="!filterMore && filterVisible && !filterShowVisible" v-if="filterLayout !== 'none' && filterType !== 'false' && filterType !== false">
+                    <div class="bv-left">
+                        <div class="input-group" v-if="filterLayout !== 'filterMore'">
+                            <div class="input-group-addon" v-if="limitFilterColumns.length > 0">
+                                <select class="form-control" v-model="limitFilterColumnName">
+                                    <option v-for="limitColumn in limitFilterColumns" v-bind="{value: limitColumn.name}">{{limitColumn.head}}</option>
+                                </select>
+                            </div>
+                            <input type="text" id="filter" class="form-control" placeholder="请输入查询条件" @keyup="pressOnFilter($event)" />
+                            <span class="input-group-addon">
+                                <i class="bv-icon-button iconfont icon-query" @click="doFilter($event)"></i>
+                            </span>
+                        </div>
+                    </div>
+                </div>
+                <div class="bv-table-filter-more" v-show="filterMore && filterVisible && !filterShowVisible" v-if="filterLayout !== 'filter' && filterColumns.length > 0">
+                    <form id="queryForm" class="form-horizontal">
+                        <div v-for="(el, index) in filterColumns" class="bv-filter-container table-filter-container" :class="el.filterLayout.containerClass">
+                            <label class="control-label table-filter-label" :for="el.filterLayout.for">
+                                <i class="required iconfont icon-required" v-if="isRequired(el.config.validate, el.config.attr)"></i>{{el.head}}：
+                            </label>
+                            <div class="table-filter-tag">
+                                <component :is="el.filterConfig.operateTagName" :key="name + '-' + el.name + '-filter' + '-' + index" :entity="filterEntity" v-bind="[el.config, el.filterConfig]"></component>
+                            </div>
+                        </div>
+                        <div class="table-filter-operate bv-filter-container">
+                            <button type="button" class="btn btn-primary" @click="doFilterMore($event)"><i class="iconfont icon-query"></i>查询</button>
+                            <button type="button" class="btn btn-default" @click="initFilterMore($event, 'reset')"><i class="iconfont icon-init"></i>重置</button>
+                        </div>
+                    </form>
+                </div>
+                <div class="bv-table-filter-show" v-show="filterShowVisible" v-if="filterShow">
+                    <div class="bv-filter-container table-filter-container">
+                        <component is="bv-checkbox" :entity="filterShowEntity" name="filterShowChoose" code="name" desc="head" :choose="filterShowColumns"></component>
+                    </div>
+                    <div class="table-filter-operate bv-filter-container">
+                        <button type="button" class="btn btn-primary" @click="saveFilterShow"><i class="iconfont icon-save"></i>确定</button>
+                        <button type="reset" class="btn btn-default" @click="initFilterShow"><i class="iconfont icon-init"></i>全选</button>
+                    </div>
+                </div>
+                <div class="table-responsive">
+                    <component :is="editable ? 'form' : 'div'" :id="editable && 'editForm'" class="bv-table-body" :class="fixed && 'bv-table-fixed'">
+                        <table class="table table-striped table-hover bv-table-thead" style="display:none;" v-if="fixed">
+                            <thead>
+                            <tr class="bv-table-thead-tr">
+                                <th v-if="select && (select === 'checkbox' || select.type === 'checkbox')" class="center" :style="{width: width.checkbox}" :rowspan="thead.rowNum && thead.rowNum > 0 ? thead.rowNum : ''">
+                                    <input type="checkbox" @click="onHeadCheck($event, undefined, true)" />
+                                </th>
+                                <th v-if="select && (select === 'radio' || select.type === 'radio')" class="center" :style="{width: width.radio}" :rowspan="thead.rowNum && thead.rowNum > 0 ? thead.rowNum : ''">
+                                    <span>选择</span>
+                                </th>
+                                <th v-if="linenumber !== 'false'" class="center" :style="{width: width.linenumber}" :rowspan="thead.rowNum && thead.rowNum > 0 ? thead.rowNum : ''">
+                                    <span>序号</span>
+                                </th>
+                                <th v-for="el in columns"
+                                    v-show="columnShowOrHide(el)"
+                                    :colspan="el.colspan" :rowspan="el.rowspan"
+                                    :class="[el.align || '', {'fixed': el.width}, {'bv-order': allowSort(el)}, initOrder(el.name)]"
+                                    :style="{'min-width': el.width || 'auto'}"
+                                    @click="allowSort(el) && dataInited && onHeadClick($event, el)" v-if="!el.row">
+                                    <span>{{el.head}}</span><i class="iconfont icon-asc"></i><i class="iconfont icon-desc"></i>
+                                </th>
+                            </tr>
+                            <tr v-if="thead.rowNum && thead.rowNum > 1">
+                                <th v-for="el in columns"
+                                    v-show="columnShowOrHide(el)"
+                                    :colspan="el.colspan" :rowspan="el.rowspan"
+                                    :class="[el.align || '', {'fixed': el.width}, {'bv-order': allowSort(el)}, initOrder(el.name)]"
+                                    :style="{'min-width': el.width || 'auto'}"
+                                    @click="allowSort(el) && dataInited && onHeadClick($event, el)" v-if="el.row === 1">
+                                    <span>{{el.head}}</span><i class="iconfont icon-asc"></i><i class="iconfont icon-desc"></i>
+                                </th>
+                            </tr>
+                            <tr v-if="thead.rowNum && thead.rowNum > 2">
+                                <th v-for="el in columns"
+                                    v-show="columnShowOrHide(el)"
+                                    :colspan="el.colspan" :rowspan="el.rowspan"
+                                    :class="[el.align || '', {'fixed': el.width}, {'bv-order': allowSort(el)}, initOrder(el.name)]"
+                                    :style="{'min-width': el.width || 'auto'}"
+                                    @click="allowSort(el) && dataInited && onHeadClick($event, el)" v-if="el.row === 2">
+                                    <span>{{el.head}}</span><i class="iconfont icon-asc"></i><i class="iconfont icon-desc"></i>
+                                </th>
+                            </tr>
+                            <tr class="bv-progress-container" v-if="progress">
+                                <th v-bind="{colspan: thead.columnNum}">
+                                    <div class="progress bv-progress-line">
+                                        <div class="progress-bar">
+                                        </div>
+                                    </div>
+                                </th>
+                            </tr>
+                            </thead>
+                        </table>
+                        <table class="table table-striped table-hover bv-table-tbody">
+                            <thead>
+                            <tr>
+                                <th v-if="select && (select === 'checkbox' || select.type === 'checkbox')" class="center" :style="{width: width.checkbox}" :rowspan="thead.rowNum && thead.rowNum > 0 ? thead.rowNum : ''">
+                                    <input type="checkbox" @click="onHeadCheck($event, undefined, true)" />
+                                </th>
+                                <th v-if="select && (select === 'radio' || select.type === 'radio')" class="center" :style="{width: width.radio}" :rowspan="thead.rowNum && thead.rowNum > 0 ? thead.rowNum : ''">
+                                    <span>选择</span>
+                                </th>
+                                <th v-if="linenumber !== 'false'" class="center" :style="{width: width.linenumber}" :rowspan="thead.rowNum && thead.rowNum > 0 ? thead.rowNum : ''">
+                                    <span>序号</span>
+                                </th>
+                                <th v-for="el in columns"
+                                    v-show="columnShowOrHide(el)"
+                                    :colspan="el.colspan" :rowspan="el.rowspan"
+                                    :class="[el.align || '', {'fixed': el.width}, {'bv-order': allowSort(el)}, initOrder(el.name)]"
+                                    :style="{'min-width': el.width || 'auto'}"
+                                    @click="allowSort(el) && dataInited && onHeadClick($event, el)" v-if="!el.row">
+                                    <span>{{el.head}}</span><i class="iconfont icon-asc"></i><i class="iconfont icon-desc"></i>
+                                </th>
+                            </tr>
+                            <tr v-if="thead.rowNum && thead.rowNum > 1">
+                                <th v-for="el in columns"
+                                    v-show="columnShowOrHide(el)"
+                                    :colspan="el.colspan" :rowspan="el.rowspan"
+                                    :class="[el.align || '', {'fixed': el.width}, {'bv-order': allowSort(el)}, initOrder(el.name)]"
+                                    :style="{'width': el.width || 'auto'}"
+                                    @click="allowSort(el) && dataInited && onHeadClick($event, el)" v-if="el.row === 1">
+                                    <span>{{el.head}}</span><i class="iconfont icon-asc"></i><i class="iconfont icon-desc"></i>
+                                </th>
+                            </tr>
+                            <tr v-if="thead.rowNum && thead.rowNum > 2">
+                                <th v-for="el in columns"
+                                    v-show="columnShowOrHide(el)"
+                                    :colspan="el.colspan" :rowspan="el.rowspan"
+                                    :class="[el.align || '', {'fixed': el.width}, {'bv-order': allowSort(el)}, initOrder(el.name)]"
+                                    :style="{'width': el.width || 'auto'}"
+                                    @click="allowSort(el) && dataInited && onHeadClick($event, el)" v-if="el.row === 2">
+                                    <span>{{el.head}}</span><i class="iconfont icon-asc"></i><i class="iconfont icon-desc"></i>
+                                </th>
+                            </tr>
+                            <tr class="bv-progress-container" v-if="!fixed && progress">
+                                <th v-bind="{colspan: thead.columnNum}">
+                                    <div class="progress bv-progress-line">
+                                        <div class="progress-bar">
+                                        </div>
+                                    </div>
+                                </th>
+                            </tr>
+                            </thead>
+                            <tbody>
+                            <tr v-for="(tr, i) in rows" :key="tr[keys] || i" :class="{'bv-odd': i%2 === 0, 'bv-even': i%2 !== 0}" v-bind="{'data-index': i}">
+                                <td class="center table-select" v-if="select.type || select">
+                                    <input :type="select.type || select" v-bind="{name: name + '-' + (select.type || select), value: i}" @click="onBodyCheck($event)" v-if="isShowCheckboxOrRadio(tr)" />
+                                </td>
+                                <td v-if="linenumber !== 'false'" class="center">
+                                    <span>{{linenumber === 'page' ? i + 1 : offset + i + 1}}</span>
+                                </td>
+                                <td v-for="(el, j) in columns" v-show="columnShowOrHide(el)" :class="[editable ? 'edit-group' : '', el.align || '']" v-if="el.name || el.type === 'operate'">
+                                    <i class="required iconfont icon-required" v-if="editable && el.config && isRequired(el.config.validate, el.config.attr)"></i>
+                                    <component :is="initColumnType(tr, el)" :id="el.name + '-' + i" :class="editable && 'edit-tag'" :key="el.name + '-' + (tr[keys] || i) + '-' + j" :name="el.name" from="table" :entity="tr" :dicts="dicts" v-bind="[columnAttr(tr, el, i), el.config, el.editConfig]"></component>
+                                </td>
+                            </tr>
+                            </tbody>
+                        </table>
+                    </component>
+                    <component is="bv-pager" class="bv-table-footer" v-if="pagination && pagination !== 'hide'"
+                                v-bind="pager" @on-page="setPage" @on-limit="setLimit"></component>
+                </div>
+            </div>
+            <div class="modal-footer" v-if="type === 'choose'">
+                <div style="width: 100%; text-align: left;"><label>当前已选：</label><span v-for="(el, $index) in chooseArrayResult"><span v-if="$index > 0">,</span>{{el.show}}</span></div>
+                <button type="button" class="btn btn-primary" @click="confirmChoose($event)" v-if="layout === 'modal'">
+                    <i class="iconfont icon-ok"></i>确定选择
+                </button>
+                <button type="button" class="btn btn-default" data-dismiss="modal" v-if="layout === 'modal'">
+                    <i class="iconfont icon-cancel"></i>关闭
+                </button>
+            </div>
+        </div>
+        <div class="loading"></div>
+    </div>
+    <div class="bv-operate" :class="clazz" v-bind="attr">
+        <component :is="op.type || 'a'" v-for="(op, index) in operates" :key="'operate-' + index" href="javascript:;" v-if="checkShow(op)" @click="_click($event, op, 'body')">
+            <i class="iconfont" v-if="op.icon || op.preset === 'sub'" :class="op.preset === 'sub' ? 'icon-more' : op.icon"></i>{{op.text}}
+        </component>
+    </div>
+    <div class="input-group bv-between">
+        <component :is="tagName" :key="start + '-filter'" :from="'filter'" :entity="entity" :id="start" :name="start" :format="format" :trigger-end="end" :default-value="defaultValueFrom"></component>
+        <div class="input-group-addon" v-if="!period">至</div>
+        <component class="input-group-addon bv-group" v-if="period" is="bv-select" :key="end + '-range'" :from="'filter'" :entity="entity" :name="range" :choose="period && period.options" v-bind="{code: 'code', desc: 'desc'}"></component>
+        <component :is="tagName" :key="end + '-filter'" :from="'filter'" :entity="entity" :name="end" :format="format" :trigger-start="start" :default-value="defaultValueTo" :load="range"></component>
+    </div>
+
+    <div class="switch bv-toggle"><input type="checkbox" /></div>
+
+    <div class="bv-tree" :class="[clazz, 'tree-' + type]">
+        <component is="bv-textfield" class="tree-choose" :entity="entity" :name="resultName" v-if="type === 'select'"></component>
+        <ul class="ztree" v-bind="attr" v-show="type !== 'select' || showSelect"></ul>
+    </div>
+
+    <div class="bv-building" :class="[entity.viewType, entity.viewType === 'detail' && ('detail-' + this.rowspan), 'cell-floor-' + cellFloorNum]">
+        <div class="view-legends">
+            <div v-for="el in legendList" class="view-legend" :class="el.clazz">
+                <span class="head" v-text="el.head"></span>
+            </div>
+        </div>
+        <div class="view-config">
+            <component is="bv-form" :entity="entity" v-bind="viewConfig"></component>
+        </div>
+        <div class="view-properties">
+            <div v-for="el in propertyList" class="view-property" :data-property="el.propertyCode">
+                <div class="operate">
+                    <span class="head" v-text="el.propertyName"></span>
+                    <component is="bv-checkbox" class="cells" code="cellNo" desc="cellName" :entity="propertyCells" :name="el.propertyCode" :choose="el.cellList" :init-select-all="true"
+                        :click="changeCellView"></component>
+                </div>
+                <div class="building">
+                    <div class="floors">
+                        <div v-for="floor in el.floorList" class="floor" :class="initFloorRowspan(el, floor)" :data-title="floor.title">
+                            <label class="checkbox-inline" v-if="el.selectFloor">
+                                <input type="checkbox" data-position="floor" :data-floor="floor.floorNo" />
+                                <span v-text="floor.floorName"></span>
+                            </label>
+                            <span v-text="floor.floorName" v-else></span>
+                        </div>
+                        <div class="floor-head" :class="[el.selectCol && 'allow-col', el.selectCol && initCellHeadRowspan(el)]">
+                            <span>楼层/单元</span>
+                        </div>
+                    </div>
+                    <div class="cells-container">
+                        <div class="cells">
+                            <div v-for="cell in el.cellList" class="cell" v-show="propertyCells[el.propertyCode] && propertyCells[el.propertyCode].split(',').indexOf(cell.cellNo) >= 0">
+                                <div v-for="floor in el.floorList" class="cell-floor" :class="initFloorRowspan(el, floor)">
+                                    <div class="house" :class="[house.clazz, house.skipNum && house.skipNum > 1 && 'rowspan-' + house.skipNum, house.mergeNum && house.mergeNum > 1 && 'colspan-' + house.mergeNum, house.skipNum && house.skipNum < 0 && 'empty']"
+                                            :data-title="house.title" v-for="house in cellFloorHouses[el.propertyCode + '-' + floor.floorNo] && cellFloorHouses[el.propertyCode + '-' + floor.floorNo][cell.cellNo]" v-if="house.cellNo === cell.cellNo && house.floorNo === floor.floorNo">
+                                        <label class="checkbox-inline" v-if="house.selectHouse && (!house.skipNum || house.skipNum >= 0)">
+                                            <input type="checkbox" data-position="house" :data-cell="cell.cellNo" :data-floor="floor.floorNo" :data-col="transCol(house.roomNo)" :data-room="house.roomNo" />
+                                            <span v-html="_showHouse(house)"></span>
+                                        </label>
+                                        <span v-html="_showHouse(house)" v-else></span>
+                                    </div>
+                                    <!--
+                                    <span v-text="cell.cellName + '-' + floor.floorName"></span>
+                                    -->
+                                </div>
+                                <div class="cell-head" :class="[el.selectCol && 'allow-col', el.selectCol && initCellHeadRowspan(el)]">
+                                    <div class="cell-col" v-if="el.selectCol">
+                                        <div class="col-select" v-for="col in cellHouseNum[el.propertyCode + '-' + cell.cellNo]">
+                                            <label class="checkbox-inline">
+                                                <input type="checkbox" data-position="col" :data-cell="cell.cellNo" :data-col="col" />
+                                                <span v-text="col"></span>
+                                            </label>
+                                        </div>
+                                    </div>
+                                    <div class="cell-name" :data-title="cell.title">
+                                        <label class="checkbox-inline" v-if="el.selectCell">
+                                            <input type="checkbox" data-position="cell" :data-cell="cell.cellNo" />
+                                            <span v-text="cell.cellName"></span>
+                                        </label>
+                                        <span v-text="cell.cellName" v-else></span>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>

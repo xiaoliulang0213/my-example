@@ -1,0 +1,86 @@
+<div data-container="simpleTable">
+	<component is="bv-table" v-bind="config"></component>
+</div>
+<script type="text/javascript">
+require(['jquery', 'util'], function($, util) {
+    var vm = util.bind({
+        container: 'simpleTable',
+        data: {
+			config: {
+				entityName: 'sysCity',
+				keys: 'cityCode',
+                orders: 'cityCode',
+				select: 'checkbox',
+                linenumber: 'page',
+				pageType: 'more',
+				columns: [
+					{
+						name: 'cityCode',
+						head: '城市代码',
+						filter: '='
+					}, {
+						name: 'cityName',
+						head: '城市名称',
+                        filter: {
+						    type: 'date',
+							operate: 'between'
+						}
+					}, {
+                        name: 'parentCode',
+                        head: '上级城市',
+						filter: '='
+                    }, {
+				    	name: 'cityType',
+						head: '城市类型',
+                        filter: {
+                            type: 'select'
+                        },
+						config: {
+				    	    format: 'dict',
+				    	    preset: 'json',
+				    	    choose: '#cityType',
+							attr: {
+				    	        disabled: true
+							}
+						}
+					}, {
+				    	name: 'remark',
+						head: '备注',
+						hide: true
+					}, {
+				    	head: '操作',
+                        type: 'operate',
+						operates: [
+							{
+							    text: '查看',
+								click: function (event, name, entityName, selected, index) {
+									console.log(selected);
+                                    console.log(index)
+                                }
+							}
+						]
+					}
+				],
+				filterValue: {
+                    cityType: 'city'
+				},
+				operates: [
+					{
+                        text: '弹窗查看',
+                        icon: 'icon-add',
+                        show: 'none',
+                        preset: 'modal',
+                        url: 'modules/frontend/tag/example/table/simpleTableInModal.html'
+					}, {
+				    	text: '测试',
+						click: function (event, name, entityName, selected, indexes) {
+                            console.log(selected);
+                            console.log(indexes)
+                        }
+					}
+				]
+			}
+		}
+    });
+});
+</script>

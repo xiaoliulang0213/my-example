@@ -1,0 +1,204 @@
+<div data-container="modalTabExample" v-cloak>
+	<component is="bv-modal" size="lg">
+		<div slot="body">
+			<component is="bv-form" :key="tags.formId" v-bind="formConfig"></component>
+			<component is="bv-tabs" :key="tags.tabsId" v-bind="tabsConfig">
+				<div class="tab-content">
+					<div class="tab-pane active" id="tabs-1">
+						<component is="bv-form" :key="tags.tabs11Id" v-bind="tabs11Config"></component>
+						<component is="bv-form" :key="tags.tabs12Id" v-bind="tabs12Config"></component>
+						<component is="bv-table" :key="tags.tabs13Id" v-bind="tabs13Config"></component>
+					</div>
+					<div class="tab-pane" id="tabs-2">
+						<component is="bv-form" :key="tags.tabs2Id" v-bind="tabs2Config"></component>
+					</div>
+				</div>
+			</component>
+		</div>
+	</component>
+</div>
+<script type="text/javascript">
+require(['jquery', 'util', 'Const'], function ($, util, Const) {
+	var vm = util.bind({
+		container: 'modalTabExample',
+		data: {
+			tags: {
+				formId: 'modalTabExampleForm',
+				tabsId: 'modalTabExampleTabs',
+				tabs11Id: 'modalTabExampleTabs11',
+				tabs12Id: 'modalTabExampleTabs12',
+				tabs13Id: 'modalTabExampleTabs13',
+				tabs2Id: 'modalTabExampleTabs2'
+			},
+			formConfig: {
+				title: '复合标签展示页面',
+				layout: 'body',
+				columns: [
+					{
+						name: 'queryNo',
+						head: '贷款编号/申请流水号',
+						config: {
+							attr: {
+								'data-validation-engine': 'validate[required]',
+								'data-errormessage-value-missing': '请输入贷款编号/申请流水号'
+							}
+						}
+					}
+				],
+				operates: [
+					{
+						text: '查看贷款信息',
+						loading: '处理中...',
+						click: function (event, editType, entity) {
+							console.log(vm);
+							util.call({
+								vm: util.vm(vm, vm.tags.tabsId, vm.tags.tabs11Id),
+								entity: {
+									c1: 'aaaaaa',
+									c2: 'bbbbb',
+									c3: 'ccccc'
+								}
+							});
+							util.call({
+								vm: util.vm(vm, vm.tags.tabsId, vm.tags.tabs12Id),
+								entity: {
+									c1: '123456789'
+								}
+							});
+							util.call({
+								vm: util.vm(vm, vm.tags.tabsId, vm.tags.tabs13Id),
+								initRows: [
+									{
+										name: '姓名1',
+										certType: '01',
+										certNo: '134567'
+									},
+									{
+										name: '姓名2',
+										certType: '02',
+										certNo: 'dfsdfsdf'
+									}
+								]
+							});
+						}
+					},
+					{
+						text: '同步贷款信息',
+						//loading: '处理中...',
+						click: function (event, editType, entity) {
+						}
+					}
+				]
+			},
+			tabsConfig: {
+				tabs: [
+					{
+						id: 'tabs-1',
+						text: '贷款信息',
+						target: 'tabs1',
+						sticky: true
+					},
+					{
+						id: 'tabs-2',
+						text: '申请人信息',
+						target: 'tabs2',
+						sticky: true
+					}
+				]
+			},
+			tabs11Config: {
+				title: '商品贷款申请',
+                layout: 'body',
+				collapse: true,
+				columns: [
+					{
+						name: 'c1',
+						head: '申请金额',
+						config: {
+							attr: {
+								'data-validation-engine': 'validate[required,minSize[6]]',
+								'data-errormessage-value-missing': '申请金额不能为空'
+							}
+						}
+					},
+					{
+						name: 'c2',
+						head: '贷款品种'
+					},
+					{
+						name: 'c3',
+						head: '还款期限',
+						config: {
+							validate: {
+								required: true
+							}
+						}
+					},
+					{
+						name: 'c4',
+						head: '还款期限111'
+					}
+				]
+			},
+			tabs12Config: {
+				title: '还款方式',
+                layout: 'body',
+				collapse: true,
+				columns: [
+					{
+						name: 'c1',
+						head: '还款流水'
+					}
+				]
+			},
+			tabs13Config: {
+				title: '联系人信息',
+                layout: 'body',
+				collapse: true,
+				fixed: false,
+				loadType: 'false',
+				pagination: false,
+				filterType: 'false',
+				columns: [
+					{
+						name: 'name',
+						head: '姓名',
+						order: 'false'
+					},
+					{
+						name: 'certType',
+						head: '证件类型',
+						order: 'false',
+						config: {
+                            format: 'dict',
+							preset: 'json',
+							choose: [
+								{
+									'01': '身份证'
+								},
+								{
+									'02': '其他'
+								}
+							]
+						}
+					},
+					{
+						name: 'certNo',
+						head: '证件号',
+						order: 'false'
+					}
+				]
+			},
+			tabs2Config: {
+                layout: 'body',
+				columns: [
+					{
+						name: 'queryNo',
+						head: 'yyyyy'
+					}
+				]
+			}
+		}
+	});
+});
+</script>

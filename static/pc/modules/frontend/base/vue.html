@@ -1,0 +1,50 @@
+<div class="bs-docs-container">
+    <div class="bs-docs-section">
+        <h4>vue介绍</h4>
+        <p>是一套构建用户界面的渐进式框架</p>
+        <p>参考：<a href="javascript:;" data-title="点击查看官方文档" data-href="https://cn.vuejs.org/v2/guide/">官方文档</a></p>
+        <h4>关于vm</h4>
+        <p>组件（通过util.bind引入的和通过自定义标签引入的统称为组件）之间通讯方式：（1）通过事件（2）通过vm修改属性或调用接口（function）</p>
+        <p>vm的获取方式：（1）methods、mounted等内部可以用this（2）设置key属性，通过父组件遍历子组件过滤key值获取</p>
+        <p>vm的串联：新创建的组件应该有$parent，父组件销毁时会销毁子组件</p>
+        <h4>例子</h4>
+        <div data-container="demoVue">
+            <input type="textfield" v-model="demoValue1" />
+            <component is="bv-textfield" key="demoComponent1Key" name="demoComponent1"></component>
+            <component is="bv-form" name="demoComponent2">
+                <component is="bv-textarea" key="demoComponent3"></component>
+            </component>
+            <button type="button" @click="getContainer">获取container的vm</button>
+            <button type="button" @click="getDemoValue1">获取demoValue1</button>
+            <button type="button" @click="getDemoComponent1">获取demoComponent1的vm</button>
+            <button type="button" @click="getDemoComponent3">获取demoComponent3的vm</button>
+        </div>
+    </div>
+</div>
+<script type="text/javascript">
+require(['jquery', 'util', 'Const'], function($, util, Const) {
+    var vm = util.bind({
+        container: 'demoVue',
+        data: {
+            demoValue1: 'default-1'
+        },
+        methods: {
+            getContainer: function () {
+                console.log(this);
+                console.log(vm);
+            },
+            getDemoValue1: function () {
+                console.log(vm.demoValue1);
+            },
+            getDemoComponent1: function () {
+                // 可以通过name、key来查询子组件
+                console.log(util.vm(vm, 'demoComponent1Key'));
+                console.log(util.vm(vm, 'demoComponent1'));
+            },
+            getDemoComponent3: function () {
+                console.log(util.vm(vm, 'demoComponent2', 'demoComponent3'));
+            }
+        }
+    });
+});
+</script>

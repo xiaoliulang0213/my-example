@@ -1,0 +1,90 @@
+<div data-container="login">
+	<div class="modal-dialog login">
+		<div class="modal-content">
+			<div class="modal-header">
+				<button type="button" class="close" data-dismiss="modal">
+			          &times;
+			    </button>
+				<h4 id="confirmTitle" class="modal-title">请登录</h4>
+			</div>
+			<div id="confirmBody" class="modal-body">
+                <form id="loginForm" class="form-inline col-sm-offset-3">
+                    <div class="form-group">
+                        <div class="col-md-12">
+                            <div class="input-group">
+                                <div class="input-group-addon"><i class="iconfont icon-user"></i></div>
+                                <input type="text" id="userId" class="form-control" placeholder="请输入用户名" v-model="credentials.userId" />
+                            </div>
+                        </div>
+                        <div class="col-md-12">
+                            <div class="input-group">
+                                <div class="input-group-addon"><i class="iconfont icon-pass"></i></div>
+                                <input type="password" id="userPass" class="form-control" placeholder="请输入密码" v-model="credentials.userPass" />
+                            </div>
+                        </div>
+                    </div>
+                </form>
+			</div>
+			<div class="modal-footer">
+				<button type="button" class="btn btn-primary" data-loading-text="登录中..." @click="doLogin($event)"><i class="iconfont icon-save"></i>登录</button>
+				<button type="button" class="btn btn-default" data-dismiss="modal"><i class="iconfont icon-cancel"></i>取消</button>
+			</div>
+		</div>
+	</div>
+</div>
+<script type="text/javascript">
+require(['jquery', 'util', 'Const'], function ($, util, Const) {
+    var vm = util.bind({
+        container: 'login',
+        data: {
+            credentials: {
+                userId: '',
+                userPass: '',
+                validateCode: ''
+            }
+        },
+        methods: {
+            doLogin: function(event) {
+                if (!util.validate($('#loginForm', vm.$el))) {
+                    return;
+                }
+                // 登录 admin->100001表示模拟为100001用户登录
+                var userId = vm.credentials.userId;
+                var simulate = '';
+                if (util.contains(vm.credentials.userId, '->')) {
+                    var arr = vm.credentials.userId.split('->');
+                    userId = arr[0];
+                    simulate = arr[1];
+                }
+                util.post({
+                    $element: $(event.target),
+                    url: Const.url.authority.login,
+                    headers: {
+                        authorization: 'Basic ' + btoa(userId + (vm.validateCode ? '<->' + vm.credentials.validateCode : '') + ':' + md5(vm.credentials.userPass))
+                    },
+                    data: {
+                        simulate: simulate
+                    },
+                    close: true,
+                    error: function(xhr, status, e) {
+                        if (xhr && xhr.responseJSON) {
+                            util.show({
+                                message: '登录失败：' + xhr.responseJSON.message,
+                                level: 'error'
+                            });
+                        } else {
+                            util.show({
+                                message: '登录失败',
+                                level: 'error'
+                            });
+                        }
+                    }
+                });
+            }
+        }
+    });
+
+    //$.fn.keySwitch();
+    util.validateInit($('#loginForm', vm.$el));
+});
+</script>

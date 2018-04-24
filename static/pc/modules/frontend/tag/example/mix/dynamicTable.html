@@ -1,0 +1,89 @@
+<div data-container="dynamicTable">
+	<component is="bv-table" key="dynamicTableKey1" v-bind="config1"></component>
+	<component is="bv-table" key="dynamicTableKey2" v-bind="config2"></component>
+</div>
+<script type="text/javascript">
+require(['jquery', 'util', 'Const'], function ($, util, Const) {
+    util.bind({
+        container: 'dynamicTable',
+        data: {
+            config1: {
+                fixed: false,
+                //sort: false,
+                loadType: false,
+				select: 'checkbox',
+                // filterLayout: 'none',
+                filterShow: false,
+                entityName: 'sysCity',
+                keys: 'cityCode',
+                orders: 'cityCode',
+                //columns: [],
+                // rows: [],
+				operates: [
+                    {
+                        text: '测试',
+                        icon: 'icon-add',
+                        show: 'one'
+                    }
+				]
+            },
+			config2: {
+                fixed: false,
+                // sort: false,
+                /// loadType: false,
+                filterLayout: 'filterMore',
+                filterShow: false,
+                // columns: [],
+				extraFilters: [
+					{
+                        name: 'xxx',
+                        head: 'yyy',
+                        filter: {
+                            type: 'select',
+                            operate: '=',
+                            position: 'BEFORE:cityCode'
+                        },
+                        config: {
+                            preset: 'json',
+                            choose: [
+                                {'A': '第一项'}, {'B': '第二项'}
+                            ]
+                        }
+					}
+				],
+				// rows: [],
+				url: '/api/example/dynamicTable2'
+			}
+        },
+		mounted: function () {
+            var vm = this;
+            util.get({
+                url: '/api/example/dynamicTable1',
+                success: function (res) {
+                    var data = util.data(res);
+                    if (data && data.length > 0) {
+                        util.call({
+							vm: util.vm(vm, 'dynamicTableKey1'),
+							columns: data
+						});
+                    }
+                }
+            });
+            /*util.post({
+                url: '/api/example/dynamicTable2',
+                success: function (res) {
+                    var data = util.data(res);
+                    if (data) {
+                        util.call({
+                            vm: util.vm(vm, 'dynamicTableKey2'),
+                            columns: data.columns,
+							rows: data.rows,
+							count: data.count
+                        });
+                    }
+                }
+            });*/
+        }
+    });
+});
+</script>

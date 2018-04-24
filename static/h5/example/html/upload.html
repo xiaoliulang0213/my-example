@@ -1,0 +1,79 @@
+<component is="bv-layout" data-container="example-upload">
+    <component is="bv-form" :key="tags.formKey" v-bind="formConfig"></component>
+</component>
+<script type="text/javascript">
+    require(['jquery', 'util', 'Const', 'bvForm', 'bvUpload'], function($, util, Const) {
+        util.title('example-upload');
+        var vm = util.bind({
+            container: 'example-upload',
+            data: {
+                tags: {
+                    formKey: 'uploadForm'
+                },
+                formConfig: {
+                    columns: [
+                        {
+                            name: 'upload1',
+                            head: '单张图片',
+                            edit: {
+                                type: 'upload'
+                            },
+                            config: {
+                                type: 'camera',
+                                autoUpload: false,
+                                files: [
+                                    {
+                                        name: 'file1',
+                                        head: '文件1'
+                                    }
+                                ]
+                            }
+                        }, {
+                            name: 'upload2',
+                            head: '两张图片',
+                            edit: {
+                                type: 'upload'
+                            },
+                            config: {
+                                type: 'camera',
+                                autoUpload: false,
+                                files: [
+                                    {
+                                        name: 'file1',
+                                        head: '文件1'
+                                    }, {
+                                        name: 'file2',
+                                        head: '文件2'
+                                    }
+                                ]
+                            }
+                        }, {
+                            name: 'upload2',
+                            head: '自动增长',
+                            edit: {
+                                type: 'upload'
+                            },
+                            config: {
+                                type: 'camera',
+                                autoUpload: false,
+                                autoIncrease: true,
+                                files: [
+                                    {
+                                        name: 'file1',
+                                        head: '文件1'
+                                    }, {
+                                        name: 'file2',
+                                        head: '文件2'
+                                    }, {
+                                        name: 'file3',
+                                        head: '文件3'
+                                    }
+                                ]
+                            }
+                        }
+                    ]
+                }
+            }
+        });
+    });
+</script>

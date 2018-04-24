@@ -1,0 +1,515 @@
+<div data-container="tagSelectCommonExample">
+    <component is="bv-form" v-bind="formConfig"></component>
+</div>
+<script type="text/javascript">
+require(['jquery', 'util', 'Const'], function($, util, Const) {
+    var tagType = util.nvl(util.gup('tag'), 'static');
+    var vm = util.bind({
+        container: 'tagSelectCommonExample',
+        data: {
+            formConfig: {
+                title: 'select公共属性示例',
+                columns: [
+                    {
+                        name: 'default',
+                        head: '默认格式',
+                        edit: {
+                            type: tagType
+                        },
+                        config: {
+                            choose: [
+                                {
+                                    code: '1',
+                                    desc: '选项1'
+                                },
+                                {
+                                    code: '2',
+                                    desc: '选项2'
+                                }
+                            ]
+                        }
+                    },
+                    {
+                        name: 'simple1',
+                        head: '简单格式数据',
+                        edit: {
+                            type: tagType
+                        },
+                        config: {
+                            choose: ['选项1', '选项2'],
+                            preset: 'simple'
+                        }
+                    },
+                    {
+                        name: 'simple2',
+                        head: '单个选项',
+                        edit: {
+                            type: tagType
+                        },
+                        config: {
+                            choose: ['选项1'],
+                            preset: 'simple',
+                            initOption: ''
+                        }
+                    },
+                    {
+                        name: 'json',
+                        head: 'json格式数据',
+                        edit: {
+                            type: tagType
+                        },
+                        config: {
+                            choose: [
+                                {
+                                    '1': '选项1'
+                                },
+                                {
+                                    '2': '选项2'
+                                }
+                            ],
+                            preset: 'json'
+                        }
+                    },
+                    {
+                        name: 'jsonNoOrder',
+                        head: '无序json格式数据',
+                        edit: {
+                            type: tagType
+                        },
+                        config: {
+                            choose: {
+                                '1': '选项1',
+                                '2': '选项2'
+                            },
+                            preset: 'json'
+                        }
+                    },
+                    {
+                        name: 'jsonFromConst',
+                        head: '配置选项',
+                        edit: {
+                            type: tagType
+                        },
+                        config: {
+                            choose: '#optionsJson',
+                            preset: 'json'
+                        }
+                    },
+                    {
+                        name: 'jsonShow',
+                        head: '自定义显示',
+                        edit: {
+                            type: tagType
+                        },
+                        config: {
+                            choose: '#optionsJson',
+                            preset: 'json',
+                            show: function(item) {
+                                return item.code + '-' + item.name;
+                            }
+                        }
+                    },
+                    {
+                        name: 'transArr',
+                        head: '字典翻译-数组',
+                        edit: {
+                            type: tagType
+                        },
+                        config: {
+                            choose: [
+                                {
+                                    code: '1'
+                                },
+                                {
+                                    code: '2'
+                                }
+                            ],
+                            trans: [
+                                {
+                                    code: '1',
+                                    desc: '选项1'
+                                },
+                                {
+                                    code: '2',
+                                    desc: '选项2'
+                                }
+                            ]
+                        }
+                    },
+                    {
+                        name: 'transJson',
+                        head: '字典翻译-json',
+                        edit: {
+                            type: tagType
+                        },
+                        config: {
+                            choose: [
+                                {
+                                    code: '1'
+                                },
+                                {
+                                    code: '2'
+                                }
+                            ],
+                            trans: {
+                                '1': '选项1',
+                                '2': '选项2'
+                            }
+                        }
+                    },
+                    {
+                        name: 'jsonFromConstExtras',
+                        head: '追加选项3、4',
+                        edit: {
+                            type: tagType
+                        },
+                        config: {
+                            choose: '#optionsJson',
+                            preset: 'json',
+                            extras: [
+                                {
+                                    code: '3',
+                                    name: '选项3'
+                                },
+                                {
+                                    code: '4',
+                                    name: '选项4'
+                                }
+                            ]
+                        }
+                    },
+                    {
+                        name: 'jsonFromConstExcludes',
+                        head: '屏蔽选项1',
+                        edit: {
+                            type: tagType
+                        },
+                        config: {
+                            choose: '#optionsJson',
+                            preset: 'json',
+                            excludes: ['1']
+                        }
+                    },
+                    {
+                        name: 'fromUrl',
+                        head: '从后台取值',
+                        edit: {
+                            type: tagType
+                        },
+                        config: {
+                            entityName: 'sysCity',
+                            code: 'cityCode',
+                            desc: 'cityName',
+                            initParamList: [
+                                {
+                                    name: 'parentCode',
+                                    operate: 'is'
+                                }
+                            ],
+                            orders: 'cityCode, cityName desc'
+                        }
+                    },
+                    {
+                        name: 'fromCustomUrlPost',
+                        head: '自定义后台-POST',
+                        edit: {
+                            type: tagType
+                        },
+                        config: {
+                            code: 'cityCode',
+                            desc: 'cityName',
+                            url: '/api/example/selectCity'
+                        }
+                    },
+                    {
+                        name: 'fromCustomUrlGet',
+                        head: '自定义后台-GET',
+                        edit: {
+                            type: tagType
+                        },
+                        config: {
+                            code: 'cityCode',
+                            desc: 'cityName',
+                            url: '/api/example/selectCity',
+                            method: 'get'
+                        }
+                    },
+                    {
+                        name: 'fromCustomUrlGet2',
+                        head: '自定义后台-GET2',
+                        edit: {
+                            type: tagType
+                        },
+                        config: {
+                            code: 'cityCode',
+                            desc: 'cityName',
+                            url: 'GET:/api/example/selectCity'
+                        }
+                    },
+                    {
+                        name: 'cascadeProvince',
+                        head: '级联-省',
+                        edit: {
+                            type: tagType
+                        },
+                        config: {
+                            entityName: 'sysCity',
+                            code: 'cityCode',
+                            desc: 'cityName',
+                            initParamList: [
+                                {
+                                    name: 'parentCode',
+                                    operate: 'is'
+                                }
+                            ]
+                        }
+                    },
+                    {
+                        name: 'cascadeCity',
+                        head: '级联-市',
+                        edit: {
+                            type: tagType
+                        },
+                        config: {
+                            load: 'cascadeProvince',
+                            entityName: 'sysCity',
+                            code: 'cityCode',
+                            desc: 'cityName',
+                            initParamList: [
+                                {
+                                    name: 'parentCode',
+                                    operate: '=',
+                                    from: 'cascadeProvince'
+                                }
+                            ]
+                        }
+                    },
+                    {
+                        name: 'cascadeArea',
+                        head: '级联-区',
+                        edit: {
+                            type: tagType
+                        },
+                        config: {
+                            load: 'cascadeCity',
+                            entityName: 'sysCity',
+                            code: 'cityCode',
+                            desc: 'cityName',
+                            initParamList: [
+                                {
+                                    name: 'parentCode',
+                                    operate: '=',
+                                    from: 'cascadeCity'
+                                }
+                            ]
+                        }
+                    },
+                    {
+                        name: 'cascadeProvince2',
+                        head: '级联-省（有初始值）',
+                        edit: {
+                            type: tagType
+                        },
+                        config: {
+                            defaultValue: '370000',
+                            entityName: 'sysCity',
+                            code: 'cityCode',
+                            desc: 'cityName',
+                            initParamList: [
+                                {
+                                    name: 'parentCode',
+                                    operate: 'is'
+                                }
+                            ]
+                        }
+                    },
+                    {
+                        name: 'cascadeCity2',
+                        head: '级联-市（有初始值）',
+                        edit: {
+                            type: tagType
+                        },
+                        config: {
+                            defaultValue: '370100',
+                            load: 'cascadeProvince2',
+                            entityName: 'sysCity',
+                            code: 'cityCode',
+                            desc: 'cityName',
+                            initParamList: [
+                                {
+                                    name: 'parentCode',
+                                    operate: '=',
+                                    from: 'cascadeProvince2'
+                                }
+                            ]
+                        }
+                    },
+                    {
+                        name: 'cascadeProvince3',
+                        head: '级联-省（锁定市）',
+                        edit: {
+                            type: tagType
+                        },
+                        config: {
+                            entityName: 'sysCity',
+                            code: 'cityCode',
+                            desc: 'cityName',
+                            initParamList: [
+                                {
+                                    name: 'parentCode',
+                                    operate: 'is'
+                                }
+                            ]
+                            /*onChange: function (entity, value, option) {
+                                if (value === '370000') {
+                                    util.call({
+                                        vm: util.vm(vm, 0, 'cascadeCity3'),
+                                        value: '370100',
+                                        attr: {
+                                            disabled: true
+                                        }
+                                    });
+                                } else {
+                                    util.call({
+                                        vm: util.vm(vm, 0, 'cascadeCity3'),
+                                        value: null,
+                                        attr: {
+                                            disabled: false
+                                        }
+                                    });
+                                }
+                            }*/
+                        }
+                    },
+                    {
+                        name: 'cascadeCity3',
+                        head: '级联-市',
+                        edit: {
+                            type: tagType
+                        },
+                        config: {
+                            load: 'cascadeProvince3',
+                            entityName: 'sysCity',
+                            code: 'cityCode',
+                            desc: 'cityName',
+                            initParamList: [
+                                {
+                                    name: 'parentCode',
+                                    operate: '=',
+                                    from: 'cascadeProvince3'
+                                }
+                            ],
+                            onLoad: function (entity, value) {
+                                if (entity.cascadeProvince3 === '370000') {
+                                    util.call({
+                                        vm: util.vm(vm, 0, 'cascadeCity3'),
+                                        value: '370100',
+                                        attr: {
+                                            disabled: true
+                                        }
+                                    });
+                                } else {
+                                    util.call({
+                                        vm: util.vm(vm, 0, 'cascadeCity3'),
+                                        value: null,
+                                        attr: {
+                                            disabled: false
+                                        }
+                                    });
+                                }
+                            }
+                        }
+                    },
+                    {
+                        name: 'change',
+                        head: '选择事件',
+                        edit: {
+                            type: tagType
+                        },
+                        config: {
+                            choose: [
+                                {
+                                    code: '1',
+                                    desc: '选项1'
+                                },
+                                {
+                                    code: '2',
+                                    desc: '选项2'
+                                }
+                            ],
+                            onChange: function (entity, val, option) {
+                                alert(val);
+                                console.log(option);
+                            }
+                        }
+                    },
+                    {
+                        name: 'quarter',
+                        head: '季度',
+                        edit: {
+                            type: 'select'
+                        },
+                        config: {
+                            choose: [
+                                {
+                                    '1': '第一季度'
+                                },
+                                {
+                                    '2': '第二季度'
+                                },
+                                {
+                                    '3': '第三季度'
+                                },
+                                {
+                                    '4': '第四季度'
+                                }
+                            ],
+                            preset: 'json',
+                            onChange: function (entity, value, option) {
+                                if (value === '1') {
+                                    util.call({
+                                        vm: util.vm(vm, 0, 'endflag'),
+                                        value: '1',
+                                        attr: {
+                                            disabled: true
+                                        }
+                                    });
+                                } else if (value) {
+                                    util.call({
+                                        vm: util.vm(vm, 0, 'endflag'),
+                                        value: '0',
+                                        attr: {
+                                            disabled: true
+                                        }
+                                    });
+                                }
+                            }
+                        }
+                    },
+                    {
+                        name: 'endflag',
+                        head: '考核模式',
+                        edit: {
+                            type: 'select'
+                        },
+                        config: {
+                            // load: 'quarter',
+                            choose: [
+                                {
+                                    '0': '季度考核'
+                                }, {
+                                    '1': '年终清算'
+                                }
+                            ],
+                            preset: 'json',
+                            validate: {
+                                required: '请选择考核模式'
+                            }
+                        }
+                    }
+                ]
+            }
+        }
+    });
+});
+</script>

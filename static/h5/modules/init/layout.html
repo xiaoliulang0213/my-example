@@ -1,0 +1,61 @@
+<div class="bs-docs-container" data-container="h5-layout">
+    <h4>页面布局</h4>
+    <div>
+        <pre v-text="content">
+        </pre>
+    </div>
+    <h4>数据校验(validate属性)</h4>
+    <dl class="dl-horizontal">
+        <dt>必填</dt>
+        <dd>required: true</dd>
+    </dl>
+</div>
+<script type="text/javascript">
+    require(['jquery', 'util', 'Const'], function($, util, Const) {
+        var vm = util.bind({
+            container: 'h5-layout',
+            data: {
+                content: util.heredoc(function () {
+                    /*
+普通form表单页面布局：
+<component is="bv-layout" data-container="xxx">
+    <component is="bv-form"></component>
+</component>
+结果为：
+<div class="view view-main" data-container="xxx">
+    <div class="pages">
+        <div data-page="home" class="page">
+            <div class="page-content">
+                <div class="bv-form list-block">
+                    <form>
+                        ...
+                    </form>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+带标签页的页面布局（示例）：
+<component class="fullPage-gray" is="bv-layout-nav" data-container="installmentBill" v-cloak>
+    <component is="bv-tabs" slot="nav" :key="tags.tabsKey" @on-active="onActive" v-bind="tabsConfig"></component>
+    <component is="bv-tabs-container" :key="tags.tabsContainerKey" slot="content">
+        <component is="bv-tabs-content" :key="tags.tabsContentKey1" @on-active="onContentActive(0)">
+            <component is="bv-list" :key="tags.listKey1" v-bind="listConfig1" @on-refresh="onRefresh(0)" @on-infinite="onInfinite(0)"></component>
+        </component>
+        <component is="bv-tabs-content" :key="tags.tabsContentKey2" @on-active="onContentActive(1)">
+            <component is="bv-list" :key="tags.listKey2" v-bind="listConfig2" @on-refresh="onRefresh(1)" @on-infinite="onInfinite(1)"></component>
+        </component>
+        <component is="bv-tabs-content" :key="tags.tabsContentKey3" @on-active="onContentActive(2)">
+            <component is="bv-list" :key="tags.listKey3" v-bind="listConfig3" @on-refresh="onRefresh(2)" @on-infinite="onInfinite(2)"></component>
+        </component>
+        <component is="bv-tabs-content" :key="tags.tabsContentKey4" @on-active="onContentActive(3)">
+            <component is="bv-list" :key="tags.listKey4" v-bind="listConfig4" @on-refresh="onRefresh(3)" @on-infinite="onInfinite(3)"></component>
+        </component>
+    </component>
+</component>
+                    */
+                }, true)
+            }
+        });
+    });
+</script>

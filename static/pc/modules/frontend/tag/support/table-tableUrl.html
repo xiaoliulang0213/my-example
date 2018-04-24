@@ -1,0 +1,84 @@
+<div data-container="tableTableUrl">
+    <component is="bv-modal" :key="tags.modalId" v-bind="config">
+        <div slot="body">
+            <p>请求参数-分页</p>
+<pre>
+{"entityName":"dicCityInfo","initParamList":[],"orderList":[{"name":"cityCode"}],"offset":0,"limit":10}
+</pre>
+                <p>返回数据-分页</p>
+<pre>
+{
+    "data":[
+        {
+            "cityCode":"370100",
+            "cityName":"济南市",
+            "hasWebsite":"N",
+            "isDefault":"Y",
+            "isMajor":"Y",
+            "isUse":"Y",
+            "majorCity":"370100",
+            "remark":"Y"
+        },
+        {
+            "cityCode":"370200",
+            "cityName":"青岛市",
+            "hasWebsite":"Y",
+            "isDefault":"N",
+            "isMajor":"N",
+            "isUse":"Y",
+            "majorCity":"370100",
+            "remark":null
+        }
+    ],
+    "count":2,
+    "sum":null
+}
+</pre>
+                <p>请求参数-不分页</p>
+<pre>
+{"entityName":"dicCityInfo","initParamList":[],"orderList":[{"name":"cityCode"}]}
+</pre>
+                <p>返回数据-不分页</p>
+<pre>
+[
+    {
+        "cityCode":"370100",
+        "cityName":"济南市",
+        "hasWebsite":"N",
+        "isDefault":"Y",
+        "isMajor":"Y",
+        "isUse":"Y",
+        "majorCity":"370100",
+        "remark":"Y"
+    },
+    {
+        "cityCode":"370200",
+        "cityName":"青岛市",
+        "hasWebsite":"Y",
+        "isDefault":"N",
+        "isMajor":"N",
+        "isUse":"Y",
+        "majorCity":"370100",
+        "remark":null
+    }
+]
+</pre>
+        </div>
+    </component>
+</div>
+<script type="text/javascript">
+require(['util', 'Const'], function (util, Const) {
+    var vm = util.bind({
+        container: 'tableTableUrl',
+        data: {
+            tags: {
+                modalId: 'tableTableUrlModal'
+            },
+            config: {
+                size: 'lg',
+                title: '自定义url数据要求'
+            }
+        }
+    });
+});
+</script>

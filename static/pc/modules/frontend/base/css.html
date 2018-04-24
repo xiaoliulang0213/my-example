@@ -1,0 +1,125 @@
+<div class="bs-docs-container">
+    <div class="bs-docs-section">
+        <h4>css介绍</h4>
+        <p>CSS 指层叠样式表 (Cascading Style Sheets)</p>
+        <dl class="dl-horizontal">
+            <dt>CSS 语法</dt>
+            <dd>
+                <ul>
+                    <li>CSS 规则由：选择器，属性，值</li>
+                    <li>可以对选择器进行分组，这样，被分组的选择器就可以分享相同的声明。用逗号将需要分组的选择器分开</li>
+                    <li>子元素从父元素继承属性</li>
+                    <li>派生选择器：通过依据元素在其位置的上下文关系来定义样式，你可以使标记更加简洁，如ul li</li>
+                    <li>id 选择器以 "#" 来定义</li>
+                    <li>类选择器以一个点号显示</li>
+                    <li>
+                        <p>属性选择器：可以为拥有指定属性的 HTML 元素设置样式，而不仅限于 class 和 id 属性</p>
+                        <ul>
+                            <li>[attribute]：用于选取带有指定属性的元素</li>
+                            <li>[attribute=value]：用于选取带有指定属性和值的元素</li>
+                            <li>[attribute~=value]：用于选取属性值中包含指定词汇的元素</li>
+                            <li>[attribute|=value]：用于选取带有以指定值开头的属性值的元素，该值必须是整个单词</li>
+                            <li>[attribute^=value]：匹配属性值以指定值开头的每个元素</li>
+                            <li>[attribute$=value]：匹配属性值以指定值结尾的每个元素</li>
+                            <li>[attribute*=value]：匹配属性值中包含指定值的每个元素</li>
+                        </ul>
+                    </li>
+                    <li>样式的嵌套和优先级，!important的使用</li>
+                </ul>
+            </dd>
+            <dt>如何插入样式表</dt>
+            <dd>
+                <ul>
+                    <li>外部样式表：最常用</li>
+                    <li>内部样式表：一般放到head中</li>
+                    <li>内联样式</li>
+                </ul>
+            </dd>
+            <dt>背景</dt>
+            <dd>
+                <ul>
+                    <li>CSS 允许应用纯色作为背景，也允许使用背景图像创建相当复杂的效果</li>
+                    <li>背景色：可以使用 background-color 属性为元素设置背景色</li>
+                    <li>背景图像：要把图像放入背景，需要使用 background-image 属性。background-image 属性的默认值是 none</li>
+                    <li>background</li>
+                </ul>
+            </dd>
+            <dt>文本</dt>
+            <dd>
+                <ul>
+                    <li>通过文本属性，您可以改变文本的颜色、字符间距，对齐文本，装饰文本，对文本进行缩进，等等</li>
+                    <li>text-align</li>
+                    <li>color</li>
+                </ul>
+            </dd>
+            <dt>字体</dt>
+            <dd>
+                <ul>
+                    <li>字体属性定义文本的字体系列、大小、加粗、风格（如斜体）和变形（如小型大写字母）</li>
+                    <li>font-family：定义文本的字体系列</li>
+                    <li>font-style：定义字体风格</li>
+                    <li>font-size：设置文本的大小</li>
+                </ul>
+            </dd>
+            <dt>链接</dt>
+            <dd>
+                <p>链接的四种状态</p>
+                <ul>
+                    <li>a:link - 普通的、未被访问的链接</li>
+                    <li>a:visited - 用户已访问的链接</li>
+                    <li>a:hover - 鼠标指针位于链接的上方</li>
+                    <li>a:active - 链接被点击的时刻</li>
+                </ul>
+            </dd>
+            <dt>内边距</dt>
+            <dd>
+                <ul>
+                    <li>元素的内边距在边框和内容区之间。控制该区域最简单的属性是 padding 属性</li>
+                    <li>padding 属性定义元素边框与元素内容之间的空白区域/li>
+                </ul>
+            </dd>
+            <dt>边框</dt>
+            <dd>
+                <ul>
+                    <li>元素的边框 (border) 是围绕元素内容和内边距的一条或多条线</li>
+                    <li>border 属性允许你规定元素边框的样式、宽度和颜色</li>
+                </ul>
+            </dd>
+            <dt>外边距</dt>
+            <dd>
+                <ul>
+                    <li>围绕在元素边框的空白区域是外边距。设置外边距会在元素外创建额外的“空白”</li>
+                    <li>设置外边距的最简单的方法就是使用 margin 属性，这个属性接受任何长度单位、百分数值甚至负值</li>
+                </ul>
+            </dd>
+            <dt>定位</dt>
+            <dd>
+                <p>CSS 有三种基本的定位机制：相对定位、绝对定位和浮动</p>
+                <ul>
+                    <li>relative</li>
+                    <li>absolute</li>
+                    <li>fixed</li>
+                </ul>
+                <p>块级元素与行内元素</p>
+                <ul>
+                    <li>块级元素：div、p、h1-h6，高度、行高、边距均可控，换行显示</li>
+                    <li>行内元素：a、img、span，高度、行高、边距均不可控，行内显示</li>
+                    <li>可通过display属性转换</li>
+                </ul>
+                <p>浮动</p>
+                <ul>
+                    <li>float属性</li>
+                    <li>clear属性</li>
+                </ul>
+            </dd>
+            <dt>选择器</dt>
+            <dd>
+                <ul>
+                    <li>元素选择器（类型选择器）：文档的元素就是最基本的选择器，比如 p、h1、em、a，甚至可以是 html 本身</li>
+                    <li>伪类 (Pseudo-classes)：:active:focus:hover:visited:first-child</li>
+                    <li>伪元素：:before:after</li>
+                </ul>
+            </dd>
+        </dl>
+    </div>
+</div>

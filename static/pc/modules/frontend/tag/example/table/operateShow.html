@@ -1,0 +1,60 @@
+<div data-container="tagTableOperateShowExample">
+	<component is="bv-table" v-bind="config"></component>
+</div>
+<script type="text/javascript">
+require(['jquery', 'util'], function($, util) {
+    var vm = util.bind({
+        container: 'tagTableOperateShowExample',
+        data: {
+			config: {
+				entityName: 'sysCity',
+				keys: 'cityCode',
+				columns: [
+					{
+						name: 'cityCode',
+						head: '城市代码'
+					},
+					{
+						name: 'cityName',
+						head: '城市名称'
+					}
+				],
+				select: 'checkbox',
+				orders: 'cityCode',
+				operates: [
+					{
+						text: '选择省可见',
+						icon: 'icon-grant',
+						show: function(selected) {
+							return selected && selected.length === 1 && util.endsWith(selected[0].cityCode, '0000');
+						},
+						click: function(event, tableId, entityName, selected) {
+							alert('点击自定义按钮')
+						}
+					},
+					{
+						text: '增加',
+						icon: 'icon-add',
+						show: 'none',
+						preset: 'insert',
+						url: 'xxx'
+					},
+					{
+						text: '修改',
+						icon: 'icon-edit',
+						show: 'one',
+                        preset: 'update',
+						url: 'xxx'
+					},
+					{
+						text: '删除',
+						icon: 'icon-delete',
+						show: 'oneOrMore',
+                        preset: 'delete'
+					}
+				]
+			}
+		}
+    });
+});
+</script>

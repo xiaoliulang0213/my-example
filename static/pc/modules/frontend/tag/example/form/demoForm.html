@@ -1,0 +1,181 @@
+<div data-container="demoForm">
+	<!--
+	<form class="form-horizontal">
+		<div class="form-container container-auto">
+			<label class="control-label">类型</label>
+			<component is="bv-select" :choose="[{code: 'text', desc: '文本'}, {code: 'auto', desc: '下拉'}]"></component>
+		</div>
+	</form>
+	-->
+	<component is="bv-form" :entity="entity" v-bind="editConfig"></component>
+	<form class="form-horizontal">
+		<component is="bv-form" v-for="(el, index) in entity.extras" :data-index="index" container="div" :entity="el.entity" :key="'extra-' + index"
+			v-bind="initFormConfig(el, index)"></component>
+		<component is="bv-form" container="div" :entity="entity" v-bind="config"></component>
+	</form>
+</div>
+<script type="text/javascript">
+    require(['jquery', 'util', 'Const'], function ($, util, Const) {
+        var vm = util.bind({
+            container: 'demoForm',
+            data: {
+                extrasConfig: [],
+                entity: {
+                    extras: []
+				},
+                editConfig: {
+                    title: '维护支付渠道',
+                    columns: [
+						{
+						    name: 'type',
+						    head: '类型',
+							edit: {
+						        type: 'select'
+							},
+							config: {
+						        validate: {
+						            required: true
+								},
+						        choose: [
+									{
+									    code: 'INSERT_SYSTEM_ID',
+										desc: '支付商户号'
+									}, {
+						            	code: 'LOAN_VARIETY',
+										desc: '贷款品种'
+									}, {
+                                        code: 'OPEN_BANK',
+                                        desc: '开户行'
+                                    }, {
+                                        code: 'BUSY_NUMBER',
+                                        desc: '业务流水号'
+                                    }
+								],
+								onChange: function (entity, value, item) {
+									util.clone(entity, 'typeName', item.desc);
+                                }
+							}
+						}, {
+                        	name: 'valueText',
+							head: '值',
+                            create: function (entity) {
+                                return !entity || entity.type !== 'LOAN_VARIETY';
+                            },
+							config: {
+                                validate: {
+                                    required: true
+                                }
+							}
+						}, {
+                        	name: 'valueAuto',
+							head: '值',
+							edit: {
+                        	    type: 'auto'
+							},
+							create: function (entity) {
+								return entity && entity.type === 'LOAN_VARIETY';
+                            },
+							config: {
+                                validate: {
+                                    required: true
+                                },
+                        	    choose: [
+									{
+									    code: 'code1',
+										desc: '贷款品种1'
+									}, {
+                        	        	code: 'code2',
+										desc: '贷款品种2'
+									}
+								]
+							}
+						}, {
+                        	edit: {
+                        	    type: 'button'
+							},
+							config: {
+                        	    text: '增加',
+								click: function (event, entity) {
+									//
+									if (util.validate($('form'), vm.$el)) {
+									    // 判断是否重复
+										if (vm.entity.extras.length > 0) {
+										    for (var i=0; i<vm.entity.extras.length; i++) {
+												if (vm.entity.extras[i].entity.show === (entity.typeName + ':' + (entity.valueAuto || entity.valueText))) {
+												    util.alert('不能重复');
+												    return;
+												}
+											}
+										}
+                                        vm.entity.extras.push({
+                                            head: '路由维度列表',
+                                            entity: {
+                                                value: entity.valueAuto || entity.valueText,
+                                                show: entity.typeName + ':' + (entity.valueAuto || entity.valueText)
+                                            }
+                                        });
+									}
+                                }
+							}
+						}
+					]
+					/*operates: [
+						{
+						    text: '增加',
+							click: function (event, editType, entity) {
+                            }
+						}
+					]*/
+				},
+                config: {
+                    columns: [
+                        {
+                            name: 'col1',
+                            head: '列1'
+                        }, {
+                        	name: 'col2',
+							head: '列2'
+						}
+					],
+                    operates: [
+                        {
+                            text: '保存',
+							clazz: 'btn-primary',
+                            click: function (event, editType, entity) {
+                                console.log(entity)
+                            }
+                        }
+                    ]
+                }
+            },
+			methods: {
+                initFormConfig: function (config, index) {
+					return {
+                        editType: 'update',
+                        columns: [
+                            {
+                                name: 'show',
+								head: index === 0 ? '路由维度列表' : '#placeholder',
+								edit: {
+                                    type: 'static'
+								}
+                            }, {
+                                edit: {
+                                    type: 'button'
+                                },
+                                config: {
+                                    text: '删除',
+                                    click: function (event, entity) {
+                                        //
+                                        var index = $(event.target).closest('.bv-form').attr('data-index');
+                                        vm.entity.extras.splice(index, 1);
+                                    }
+                                }
+                            }
+						]
+                    };
+                }
+			}
+        });
+    });
+</script>

@@ -1,0 +1,66 @@
+<div data-container="tagStaticDoc">
+    <div class="bs-docs-container">
+        <div class="bs-docs-section">
+            <h4>概要说明</h4>
+            <p>static-静态文本、textfield-文本域</p>
+            <dl class="dl-horizontal">
+                <dt>标签资源</dt>
+                <dd>位于/mobile/tags/bv-static.js，mobile//tags/bv-textfield.js</dd>
+            </dl>
+            <h4>公共属性定义</h4>
+            <dl class="dl-horizontal">
+                <dt>entity</dt>
+                <dd v-html="pub.entity"></dd>
+                <dt>name</dt>
+                <dd v-html="pub.name"></dd>
+                <dt>clazz</dt>
+                <dd v-html="pub.clazz"></dd>
+                <dt>attr</dt>
+                <dd v-html="pub.attr"></dd>
+                <dt>defaultValue</dt>
+                <dd v-html="pub.defaultValue"></dd>
+                <dt>value</dt>
+                <dd v-html="pub.value"></dd>
+            </dl>
+            <h4>static特殊属性定义</h4>
+            <dl class="dl-horizontal">
+                <dt>text</dt>
+                <dd>显示内容，会覆盖value设置的值</dd>
+                <dt>format</dt>
+                <dd v-html="pub.format"></dd>
+                <dt>show</dt>
+                <dd v-html="pub.show"></dd>
+            </dl>
+            <h4>textfield特殊属性定义</h4>
+            <dl class="dl-horizontal">
+                <dt>type</dt>
+                <dd>input类型，默认为text</dd>
+                <dt>validate</dt>
+                <dd v-html="pub.validate"></dd>
+                <dt>autocomplete</dt>
+                <dd v-html="pub.autocomplete"></dd>
+                <dt>fix</dt>
+                <dd>输入限制，支持integer-限制只能输入数字，number-限制只能输入数字、小数点、负号，+number-限制大于0的数</dd>
+                <dt>blur</dt>
+                <dd>函数，失去焦点调用，参数为(event, value, entity)</dd>
+            </dl>
+            <h4>示例</h4>
+            <div class="bs-docs-iframe">
+                <iframe src="example/#!/static.html"></iframe>
+            </div>
+        </div>
+    </div>
+</div>
+<script type="text/javascript">
+require(['jquery', 'util', 'Const'], function($, util, Const) {
+    var vm = util.bind({
+        container: 'tagStaticDoc',
+        data: {
+            pub: __doc,
+            entity: {
+                tableChooseResult: ''
+            }
+        }
+    });
+});
+</script>

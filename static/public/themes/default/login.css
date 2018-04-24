@@ -1,0 +1,55 @@
+div.bv-login {
+    position: fixed;
+    left: 0;
+    right: 0;
+    top: 0;
+    bottom: 0;
+}
+div.bv-login #toast-container.toast-top-center {
+    position: absolute;
+    top: 10px;
+}
+#loginForm {
+    width: 460px;
+    position: absolute;
+    left: 50%;
+    margin-left: -230px;
+    top: 50%;
+    margin-top: -100px;
+    /*display: inline-block;
+    margin: 0 auto;*/
+    /*border: 1px solid;*/
+    border-radius: 5px;
+    padding: 40px 25px;
+    /*position: absolute;
+    bottom: 25%;*/
+    background: #fff;
+}
+#loginForm .form-group {
+    text-align: left;
+    padding: 10px 0;
+}
+#loginForm .form-group .input-group .input-group-addon {
+    background: transparent;
+}
+#loginForm .form-group .input-group input {
+    border-left: none;
+}
+
+#loginForm .input-lg {
+    font-size: 14px;
+}
+#loginForm .form-group .input-group.focused {
+    border-color: #66afe9;
+    outline: 0;
+    -webkit-box-shadow: inset 0 1px 1px rgba(0,0,0,.075),0 0 8px rgba(102,175,233,.6);
+    box-shadow: inset 0 1px 1px rgba(0,0,0,.075),0 0 8px rgba(102,175,233,.6);
+}
+#loginForm .form-group .input-group.focused .input-group-addon {
+    border: 1px solid #66afe9;
+    border-right: none;
+}
+#loginForm .form-group .input-group.focused .form-control:focus {
+    -webkit-box-shadow: none;
+    box-shadow: none;
+}

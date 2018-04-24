@@ -1,0 +1,60 @@
+<div data-container="tagRadioCheckboxSpecialExample">
+    <div>
+        <component is="bv-form" v-bind="formConfig"></component>
+    </div>
+</div>
+<script type="text/javascript">
+require(['jquery', 'util', 'Const'], function($, util, Const) {
+    var tagType = util.nvl(util.gup('tag'), 'static');
+    var vm = util.bind({
+        container: 'tagRadioCheckboxSpecialExample',
+        data: {
+            formConfig: {
+                title: '复选框特殊属性示例',
+                columns: [
+                    {
+                        name: 'cols6',
+                        head: '显示两列',
+                        edit: {
+                            type: tagType
+                        },
+                        config: {
+                            entityName: 'sysCity',
+                            code: 'cityCode',
+                            desc: 'cityName',
+                            initParamList: [
+                                {
+                                    name: 'parentCode',
+                                    operate: 'is'
+                                }
+                            ],
+                            cols: 2
+                        }
+                    },
+                    {
+                        name: 'cols4',
+                        head: '显示三列',
+                        edit: {
+                            type: tagType
+                        },
+                        config: {
+                            load: 'cols6',
+                            entityName: 'sysCity',
+                            code: 'cityCode',
+                            desc: 'cityName',
+                            initParamList: [
+                                {
+                                    name: 'parentCode',
+                                    operate: '=',
+                                    from: 'cols6'
+                                }
+                            ],
+                            cols: 3
+                        }
+                    }
+                ]
+            }
+        }
+    });
+});
+</script>

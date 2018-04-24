@@ -1,0 +1,67 @@
+<div data-container="tagCommonExample">
+    <div>
+        <component is="bv-form" v-bind="formConfig"></component>
+    </div>
+</div>
+<script type="text/javascript">
+require(['jquery', 'util', 'Const'], function($, util, Const) {
+    var tagType = util.nvl(util.gup('tag'), 'static');
+    var vm = util.bind({
+        container: 'tagCommonExample',
+        data: {
+            formConfig: {
+                attr: {
+                    id: 'tagCommonExampleForm'
+                },
+                title: '常用属性示例',
+                columns: [
+                    {
+                        name: 'defaultValue',
+                        head: 'defaultValue-默认值',
+                        edit: {
+                            type: tagType
+                        },
+                        config: {
+                            defaultValue: tagType === 'date' ? '2017-04-12' : '默认值'
+                        }
+                    },
+                    {
+                        name: 'value',
+                        head: 'value-固定值',
+                        edit: {
+                            type: tagType
+                        },
+                        config: {
+                            value: tagType === 'date' ? '2017-04-16' : '固定值'
+                        }
+                    },
+                    {
+                        name: 'clazz',
+                        head: 'clazz-自定义class',
+                        edit: {
+                            type: tagType
+                        },
+                        config: {
+                            defaultValue: 'class=bv-progress-line',
+                            clazz: 'bv-progress-line'
+                        }
+                    },
+                    {
+                        name: 'attr',
+                        head: 'attr-自定义属性',
+                        edit: {
+                            type: tagType
+                        },
+                        config: {
+                            defaultValue: '提示信息',
+                            attr: {
+                                title: '显示title提示（title、data-title属性都可以，会增加特殊样式）'
+                            }
+                        }
+                    }
+                ]
+            }
+        }
+    });
+});
+</script>

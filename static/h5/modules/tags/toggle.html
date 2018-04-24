@@ -1,0 +1,45 @@
+<div class="bs-docs-container" data-container="tagToggleDoc">
+    <div class="bs-docs-section">
+        <h4>概要说明</h4>
+        <p>toggle-开关</p>
+        <dl class="dl-horizontal">
+            <dt>标签资源</dt>
+            <dd>位于/mobile/tags/bv-toggle.js</dd>
+        </dl>
+        <h4>属性定义</h4>
+        <dl class="dl-horizontal">
+            <dt>entity</dt>
+            <dd v-html="pub.entity"></dd>
+            <dt>name</dt>
+            <dd v-html="pub.name"></dd>
+            <dt>clazz</dt>
+            <dd v-html="pub.clazz"></dd>
+            <dt>validate</dt>
+            <dd>
+                <p v-html="pub.validate"></p>
+            </dd>
+            <dt>defaultValue</dt>
+            <dd v-html="pub.defaultValue"></dd>
+            <dt>value</dt>
+            <dd v-html="pub.value"></dd>
+            <dt>choose</dt>
+            <dd>数组，[trueVal, falseVal]，比如['ON', 'OFF']</dd>
+            <dt>onChange</dt>
+            <dd v-html="pub.onChange"></dd>
+        </dl>
+        <h4>示例</h4>
+        <div class="bs-docs-iframe">
+            <iframe src="example/#!/toggle.html"></iframe>
+        </div>
+    </div>
+</div>
+<script type="text/javascript">
+require(['jquery', 'util', 'Const'], function($, util, Const) {
+    var vm = util.bind({
+        container: 'tagToggleDoc',
+        data: {
+            pub: __doc
+        }
+    });
+});
+</script>

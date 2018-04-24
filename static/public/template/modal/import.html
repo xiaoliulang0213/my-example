@@ -1,0 +1,19 @@
+<div data-container="commonImport">
+	<component is="bv-import" :key="tags.importId" v-bind="config"></component>
+</div>
+<script type="text/javascript">
+require(['jquery', 'util', 'Const'], function ($, util, Const) {
+	var vm = util.bind({
+        container: 'commonImport',
+		data: {
+            tags: {
+                importId: 'commonImportTag'
+            },
+            config: {
+                url: Const.global.modal.data.url,
+                template: Const.global.modal.data.template
+            }
+        }
+	});
+});
+</script>

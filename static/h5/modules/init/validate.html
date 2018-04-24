@@ -1,0 +1,26 @@
+<div class="bs-docs-container">
+    <h4>数据校验(validate属性)</h4>
+    <dl class="dl-horizontal">
+        <dt>必填</dt>
+        <dd>{required: true}</dd>
+        <dd>{required: 'xxx不能为空'}</dd>
+        <dt>限制为数值</dt>
+        <dd>{custom: 'number'}</dd>
+        <dd>{custom: {code: 'number', desc: '限制为数字'}}</dd>
+        <dt>大小限制</dt>
+        <dd>{min: 100, max: 200}</dd>
+        <dd>{min: {code: 100, desc: '值太小了'}}</dd>
+        <dt>长度限制（应使用maxlength代替）</dt>
+        <dd>{minSize: 4}</dd>
+        <dd>{minSize: {code: 4, desc: '太短了'}}</dd>
+        <dt>日期格式判断</dt>
+        <dd>{custom: 'date'}</dd>
+        <dd>{custom: {code: 'date', desc: '格式错了'}}</dd>
+        <dd>{custom: 'date', future: 'NOW'}</dd>
+        <dd>{custom: 'date', future: {code: 'NOW', desc: '日期应晚于今天'}}</dd>
+        <dd>{custom: 'date', past: '2016-12-01', future: '2016-08-10'}</dd>
+        <dt>邮箱格式</dt>
+        <dd>{custom: 'email'}</dd>
+        <dd>{custom: {code: 'email', desc: '邮箱格式错了'}}</dd>
+    </dl>
+</div>

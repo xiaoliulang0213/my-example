@@ -1,0 +1,201 @@
+<div data-container="simpleWizard">
+    <div class="col-md-6">
+        <component is="bv-wizard" v-bind="config1">
+            <form class="form-horizontal">
+                <component is="bv-wizard-content" :entity="entity1" :index="0">
+                    <component is="bv-form" container="div" :entity="entity1" v-bind="step1Config"></component>
+                </component>
+                <component is="bv-wizard-content" :entity="entity1" :index="1">
+                    <component is="bv-form" container="div" :entity="entity1" v-bind="step2Config"></component>
+                </component>
+                <component is="bv-wizard-content" :entity="entity1" :index="2">
+                    <component is="bv-form" container="div" :entity="entity1" v-bind="step3Config"></component>
+                </component>
+            </form>
+        </component>
+    </div>
+	<div class="col-md-6">
+        <component is="bv-wizard" v-bind="config2">
+            <component is="bv-wizard-content" :entity="entity2" :index="0">
+                <component is="bv-form" :entity="entity2" v-bind="step4Config"></component>
+            </component>
+            <component is="bv-wizard-content" :entity="entity2" :index="1">
+                <component is="bv-form" :entity="entity2" v-bind="step5Config"></component>
+            </component>
+            <component is="bv-wizard-content" :entity="entity2" :index="2">
+                <component is="bv-form" :entity="entity2" v-bind="step6Config"></component>
+            </component>
+        </component>
+    </div>
+</div>
+<script type="text/javascript">
+require(['jquery', 'util'], function($, util) {
+    var vm = util.bind({
+        container: 'simpleWizard',
+        data: {
+            entity1: {},
+			config1: {
+			    steps: [
+					{
+						text: 'step 1',
+                        title: 'step 1'
+					}, {
+						text: 'step 2',
+                        disabled: 'do step 1 first',
+                        title: 'step 2'
+					}, {
+						text: 'step 3',
+                        disabled: true,
+                        title: 'step 3'
+					}
+				],
+                operates: [
+                    {
+                        preset: 'prev',
+                        text: 'prev'
+                    }, {
+                        preset: 'next',
+                        clazz: 'btn-primary',
+                        text: 'next',
+                        validate: true,
+                        enable: true,
+                        click: function (entity, callback) {
+                            // console.log(entity);
+                            callback.call();
+                        }
+                    }, {
+                        preset: 'submit',
+                        clazz: 'btn-primary',
+                        text: 'submit',
+                        validate: true,
+                        enable: true,
+                        click: function (entity) {
+                            // console.log(entity);
+                        }
+                    }
+                ]
+			},
+            step1Config: {
+			    layoutCols: 2,
+			    columns: [
+                    {
+                        name: 'firstName',
+                        head: 'First Name',
+                        config: {
+                            validate: {
+                                required: true
+                            }
+                        }
+                    }, {
+			            name: 'lastName',
+                        head: 'Last Name'
+                    }, {
+			            name: 'address',
+                        head: 'Address'
+                    }
+                ]
+            },
+            entity2: {},
+            step2Config: {
+                layoutCols: 2,
+                columns: [
+                    {
+                        name: 'companyName',
+                        head: 'Company Name',
+                        config: {
+                            validate: {
+                                required: true
+                            }
+                        }
+                    }, {
+                        name: 'companyAddress',
+                        head: 'Company Address'
+                    }
+                ]
+            },
+            step3Config: {
+                layoutCols: 2,
+                columns: [
+                    {
+                        name: 'remark',
+                        head: 'remark'
+                    }
+                ]
+            },
+            config2: {
+                steps: [
+                    {
+                        text: '第一步'
+                    }, {
+                        text: '第二步'
+                    }, {
+                        text: '第三步'
+                    }
+                ],
+                operates: [
+                    {
+                        preset: 'prev',
+                        text: '上一步'
+                    }, {
+                        preset: 'next',
+                        clazz: 'btn-primary',
+                        text: '下一步',
+                        validate: true
+                    }, {
+                        preset: 'submit',
+                        clazz: 'btn-primary',
+                        text: '保存',
+                        validate: true
+                    }
+                ]
+            },
+            step4Config: {
+                layoutCols: 2,
+                columns: [
+                    {
+                        name: 'firstName',
+                        head: '姓',
+                        config: {
+                            validate: {
+                                required: true
+                            }
+                        }
+                    }, {
+                        name: 'lastName',
+                        head: '名'
+                    }, {
+                        name: 'address',
+                        head: 'Address'
+                    }
+                ]
+            },
+            step5Config: {
+                layoutCols: 2,
+                columns: [
+                    {
+                        name: 'companyName',
+                        head: '公司名称',
+                        config: {
+                            validate: {
+                                required: true
+                            }
+                        }
+                    }, {
+                        name: 'companyAddress',
+                        head: '公司地址'
+                    }
+                ]
+            },
+            step6Config: {
+                layoutCols: 2,
+                columns: [
+                    {
+                        name: 'remark',
+                        head: '备注'
+                    }
+                ]
+            }
+		}
+    });
+});
+</script>

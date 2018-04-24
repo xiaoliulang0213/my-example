@@ -1,0 +1,38 @@
+<div data-container="tagTableColumnAlignExample">
+	<component is="bv-table" :key="tags.tableId" v-bind="config"></component>
+</div>
+<script type="text/javascript">
+require(['jquery', 'util'], function($, util) {
+    var vm = util.bind({
+        container: 'tagTableColumnAlignExample',
+        data: {
+			tags: {
+				tableId: 'tagTableColumnAlignExampleTable'
+			},
+			config: {
+                limit: 50,
+				entityName: 'sysCity',
+				keys: 'cityCode',
+				columns: [
+					{
+						name: 'cityCode',
+						head: '城市代码(居中)',
+						align: 'center'
+					},
+					{
+						name: 'cityName',
+						head: '城市名称(居左)',
+						align: 'left'
+					},
+					{
+						name: 'parentCode',
+						head: '上级城市(居右)',
+						align: 'right'
+					}
+				],
+				orders: 'cityCode'
+			}
+		}
+    });
+});
+</script>

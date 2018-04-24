@@ -1,0 +1,39 @@
+<div data-container="redirectWizardInModal">
+    <component is="bv-modal" size="lg" title="分步操作-弹窗">
+        <component slot="body" is="bv-wizard" v-bind="config">
+            <component is="bv-wizard-content" class="active"></component>
+        </component>
+    </component>
+</div>
+<script type="text/javascript">
+require(['jquery', 'util'], function($, util) {
+    var vm = util.bind({
+        container: 'redirectWizardInModal',
+        data: {
+			config: {
+			    type: 'redirect',
+			    steps: [
+					{
+						text: 'step 1',
+                        title: 'step 1'
+					}, {
+						text: 'step 2',
+                        disabled: 'do step 1 first',
+                        title: 'step 2'
+					}, {
+						text: 'step 3',
+                        disabled: true,
+                        title: 'step 3'
+					}
+				]
+			}
+		},
+        mounted: function () {
+            util.cache({
+                wizardInModalVm: util.vm(this, 0, 0)
+            });
+            util.replace($('.bv-wizard-content', this.$el), 'modules/frontend/tag/example/wizard/content-modal-1.html');
+        }
+    });
+});
+</script>

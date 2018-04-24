@@ -1,0 +1,53 @@
+<div data-container="simpleFormInModal">
+	<component is="bv-form" v-bind="config"></component>
+</div>
+<script type="text/javascript">
+require(['jquery', 'util'], function($, util) {
+    var vm = util.bind({
+        container: 'simpleFormInModal',
+        data: {
+			config: {
+			    title: '测试表单',
+				entityName: 'sysCity',
+				keys: 'cityCode',
+				columns: [
+					{
+						name: 'cityCode',
+						head: '城市代码',
+						config: {
+						    validate: {
+						        required: true
+							}
+						}
+					}, {
+						name: 'cityName',
+						head: '城市名称',
+						edit: {
+						    width: 2
+						}
+					}, {
+                        name: 'parentCode',
+                        head: '上级城市'
+                    }, {
+				    	name: 'cityType',
+						head: '城市类型',
+                        edit: {
+                            type: 'select'
+                        },
+						config: {
+				    	    preset: 'json',
+				    	    choose: '#cityType'
+						}
+					}, {
+				    	name: 'remark',
+						head: '备注',
+						edit: {
+				    	    width: '100%'
+						}
+					}
+				]
+			}
+		}
+    });
+});
+</script>

@@ -1,0 +1,28 @@
+<div data-container="alertInner" v-cloak>
+	<div class="modal-dialog alert" :class="[alert.level, size]">
+		<div class="modal-content">
+			<div class="modal-header">
+				<button type="button" class="close" data-dismiss="modal">
+			          &times;
+			    </button>
+				<h4 id="alertTitle" class="modal-title"><i class="iconfont" :class="'icon-' + alert.level"></i><span v-text="alert.title"></span></h4>
+			</div>
+			<div id="alertBody" class="modal-body" v-html="alert.content">
+			</div>
+			<div class="modal-footer">
+				<button type="button" class="btn btn-default" data-dismiss="modal"><i class="iconfont icon-cancel"></i>关闭</button>
+			</div>
+		</div>
+	</div>
+</div>
+<script type="text/javascript">
+require(['jquery', 'util', 'Const'], function ($, util, Const) {
+    var vm = util.bind({
+        container: 'alertInner',
+        data: {
+            size: Const.global.alert.size  ? 'modal-' + Const.global.alert.size : 'modal-sm',
+            alert: Const.global.alert
+        }
+    });
+});
+</script>

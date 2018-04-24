@@ -1,0 +1,46 @@
+<div data-container="tagToggleCommonExample">
+    <component is="bv-form" v-bind="formConfig"></component>
+</div>
+<script type="text/javascript">
+require(['jquery', 'util', 'Const'], function($, util, Const) {
+    var vm = util.bind({
+        container: 'tagToggleCommonExample',
+        data: {
+            formConfig: {
+                title: 'toggle公共属性示例',
+                columns: [
+                    {
+                        name: 'default',
+                        head: '默认格式',
+                        edit: {
+                            type: 'toggle'
+                        },
+                        config: {
+                            choose: [
+                                {
+                                    code: 'ON',
+                                    desc: '开'
+                                },
+                                {
+                                    code: 'OFF',
+                                    desc: '关'
+                                }
+                            ]
+                        }
+                    },
+                    {
+                        name: 'simple1',
+                        head: '简单格式数据',
+                        edit: {
+                            type: 'toggle'
+                        },
+                        config: {
+                            choose: ['ON', 'OFF']
+                        }
+                    }
+                ]
+            }
+        }
+    });
+});
+</script>

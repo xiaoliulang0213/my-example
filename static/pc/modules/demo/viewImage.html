@@ -1,0 +1,42 @@
+<div data-container="viewForm">
+  <component is="bv-table" :key="tags.formId" v-bind="config1"></component>
+  <component is="bv-media" :key="tags.imageId" v-bind="config">
+    </component>
+</div>
+<script type="text/javascript">
+    require(['util', 'Const'], function (util, Const) {
+        var vm = util.bind({
+            container: 'viewForm',
+            data: {
+                tags: {
+                    imageId: 'viewFormsss'
+                },
+                config1:{
+                    columns: [
+                        {
+                            head:'1111',
+                            edit:{
+                                type:'media'
+                            },
+                            config:{
+                                ///size: 'md',
+                                title: '按钮定义示例1',
+                                image:{
+                                    url:'http://localhost:23456/api/file/9d377b10ce778c4938b3c7e2c63a229a'
+                                }
+                            }
+                        }
+                    ]
+
+                },
+                config: {
+                    ///size: 'md',
+                    title: '按钮定义示例',
+                    image:{
+                        url:'http://localhost:23456/api/file/9d377b10ce778c4938b3c7e2c63a229a'
+                    }
+                }
+            }
+        });
+    });
+</script>

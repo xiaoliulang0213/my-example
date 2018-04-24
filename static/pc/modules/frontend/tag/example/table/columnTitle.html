@@ -1,0 +1,38 @@
+<div data-container="tagTableColumnTitleExample">
+	<component is="bv-table" :key="tags.tableId" v-bind="config"></component>
+</div>
+<script type="text/javascript">
+require(['jquery', 'util'], function($, util) {
+    var vm = util.bind({
+        container: 'tagTableColumnTitleExample',
+        data: {
+			tags: {
+				tableId: 'tagTableColumnTitleExampleTable'
+			},
+			config: {
+				limit: 50,
+				entityName: 'sysCity',
+				keys: 'cityCode',
+				columns: [
+					{
+						name: 'cityCode',
+						head: '城市代码',
+						title: true
+					},
+					{
+						name: 'cityName',
+						head: '城市名称',
+						title: '#cityCode'
+					},
+					{
+						name: 'parentCode',
+						head: '上级城市',
+						title: '固定内容的提示信息'
+					}
+				],
+				orders: 'cityCode'
+			}
+		}
+    });
+});
+</script>

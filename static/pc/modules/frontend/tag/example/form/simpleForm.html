@@ -1,0 +1,120 @@
+<div data-container="simpleForm">
+	<component is="bv-form" :entity="entity" v-bind="config"></component>
+</div>
+<script type="text/javascript">
+require(['jquery', 'util'], function($, util) {
+    var vm = util.bind({
+        container: 'simpleForm',
+        data: {
+            entity: {},
+			config: {
+			    title: '测试表单',
+				entityName: 'sysCity',
+				keys: 'cityCode',
+				columns: [
+					{
+						name: 'cityCode',
+						head: '城市代码'
+					}, {
+						name: 'cityName',
+						head: '城市名称',
+						edit: {
+						    width: 2
+						}
+					}, {
+                        name: 'parentCode',
+                        head: '上级城市'
+                    }, {
+				    	name: 'cityType',
+						head: '城市类型',
+                        edit: {
+                            type: 'select'
+                        },
+						config: {
+				    	    preset: 'json',
+				    	    choose: '#cityType',
+							attr: {
+				    	        title: '选择城市类型'
+							},
+							onChange: function (entity, value, item) {
+								if (value === 'province') {
+								    util.call({
+										vm: util.vm(vm, 0, 'parentCode'),
+										// value: 11,
+										attr: {
+										    disabled: true
+										}
+									});
+								    util.tooltip(this.$el, 'update', 'aaaa');
+								    util.call({
+										vm: util.vm(vm, 0, 'remark'),
+										attr: {
+                                            title: 'aaaa',
+                                            placeholder: 'aaaa'
+										}
+									});
+								} else {
+                                    util.call({
+                                        vm: util.vm(vm, 0, 'parentCode'),
+                                        value: 22,
+                                        attr: {
+                                            disabled: false
+                                        }
+                                    });
+                                    util.tooltip(this.$el, 'update', 'bbbb');
+                                    util.call({
+                                        vm: util.vm(vm, 0, 'remark'),
+                                        attr: {
+                                            title: 'bbbb',
+                                            placeholder: 'bbbb'
+                                        }
+                                    });
+								}
+                            }
+						}
+					}, {
+				    	name: 'remark',
+						head: '备注',
+						edit: {
+				    	    width: '100%'
+						},
+						config: {
+				    	    attr: {
+				    	        placeholder: '默认',
+								title: '默认'
+							}
+						}
+					}, {
+			        	name: 'describe',
+						head: '说明',
+						edit: {
+			        	    type: 'static'
+						}
+					}
+				],
+				operates: [
+					{
+                        text: '弹窗查看',
+                        icon: 'icon-add',
+                        preset: 'modal',
+                        url: 'modules/frontend/tag/example/form/simpleFormInModal.html'
+					}
+				]
+			}
+		},
+		watch: {
+            'entity.cityCode': function (value, oldValue) {
+				this.initDescribe();
+            },
+            'entity.cityName': function (value, oldValue) {
+                this.initDescribe();
+            }
+		},
+		methods: {
+            initDescribe: function () {
+				this.entity.describe = (this.entity.cityCode || '') + (this.entity.cityName ? ('-' + this.entity.cityName) : '');
+            }
+		}
+    });
+});
+</script>

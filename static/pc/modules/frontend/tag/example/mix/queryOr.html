@@ -1,0 +1,48 @@
+<div data-container="queryOr">
+	<component is="bv-table" v-bind="config"></component>
+</div>
+<script type="text/javascript">
+require(['jquery', 'util', 'Const'], function ($, util, Const) {
+	var vm = util.bind({
+		container: 'queryOr',
+		data: {
+			config: {
+			    select: 'checkbox',
+                entityName: 'sysCity',
+                keys: 'cityCode',
+                orders: 'cityCode',
+				initParamList: [
+                    {
+                        ors: [
+                            {
+                                name: 'cityCode',
+                                value: '370100'
+                            }, {
+                                name: 'cityName',
+                                value: '青岛市'
+                            }
+                        ]
+                    }, {
+			        	name: 'parentCode',
+						operate: 'is not'
+					}
+				],
+                columns: [
+                    {
+                        name: 'cityCode',
+                        head: '城市代码'
+                    },
+                    {
+                        name: 'cityName',
+                        head: '城市名称'
+                    },
+                    {
+                        name: 'parentCode',
+                        head: '上级城市'
+                    }
+                ]
+			}
+		}
+	});
+});
+</script>

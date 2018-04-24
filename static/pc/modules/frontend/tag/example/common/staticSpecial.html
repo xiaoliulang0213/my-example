@@ -1,0 +1,140 @@
+<div data-container="tagStaticSpeicialExample">
+    <div>
+        <component is="bv-form" v-bind="formConfig"></component>
+    </div>
+</div>
+<script type="text/javascript">
+require(['jquery', 'util', 'Const'], function($, util, Const) {
+    var tagType = util.nvl(util.gup('tag'), 'static');
+    var vm = util.bind({
+        container: 'tagStaticSpeicialExample',
+        data: {
+            formConfig: {
+                title: 'static特殊属性示例',
+                columns: [
+                    {
+                        name: 'format',
+                        head: 'format-格式化显示',
+                        edit: {
+                            type: tagType
+                        },
+                        config: {
+                            defaultValue: '120000',
+                            format: 'currency'
+                        }
+                    }, {
+                        name: 'show',
+                        head: 'show-自定义显示',
+                        edit: {
+                            type: tagType
+                        },
+                        config: {
+                            value: 'yyyyy',
+                            show: function(entity, value) {
+                                return '自定义内容-' + value;
+                            }
+                        }
+                    }, {
+                        name: 'dictText1',
+                        head: 'dicts-字典项翻译1',
+                        edit: {
+                            type: tagType
+                        },
+                        config: {
+                            value: '2',
+                            format: 'dict',
+                            choose: [
+                                {
+                                    code: '1',
+                                    desc: '第一项'
+                                }, {
+                                    code: '2',
+                                    desc: '第二项'
+                                }
+                            ]
+                        }
+                    }, {
+                        name: 'dictText2',
+                        head: 'dicts-字典项翻译2',
+                        edit: {
+                            type: tagType
+                        },
+                        config: {
+                            value: '2',
+                            format: 'dict',
+                            code: 'code1',
+                            desc: 'desc1',
+                            choose: [
+                                {
+                                    code1: '1',
+                                    desc1: '第一项'
+                                }, {
+                                    code1: '2',
+                                    desc1: '第二项'
+                                }
+                            ]
+                        }
+                    }, {
+                        name: 'dictText3',
+                        head: 'dicts-字典项翻译3',
+                        edit: {
+                            type: tagType
+                        },
+                        config: {
+                            value: '2',
+                            format: 'dict',
+                            preset: 'json',
+                            choose: [
+                                {
+                                    '1': '第一项'
+                                }, {
+                                    '2': '第二项'
+                                }
+                            ]
+                        }
+                    }, {
+                        name: 'dictText4',
+                        head: 'dicts-字典项翻译4',
+                        edit: {
+                            type: tagType
+                        },
+                        config: {
+                            value: '2',
+                            format: 'dict',
+                            preset: 'dict',
+                            choose: [
+                                {
+                                    dictCode: '1',
+                                    dictShow: '第一项'
+                                }, {
+                                    dictCode: '2',
+                                    dictShow: '第二项'
+                                }
+                            ]
+                        }
+                    }, {
+                        name: 'dictText5',
+                        head: 'dicts-字典项翻译5',
+                        edit: {
+                            type: tagType
+                        },
+                        config: {
+                            value: '370100',
+                            format: 'dict',
+                            entityName: 'sysCity',
+                            code: 'cityCode',
+                            desc: 'cityName'
+                        }
+                    }
+                ],
+                operates: [
+                    {
+                        type: 'static',
+                        text: '静态文本'
+                    }
+                ]
+            }
+        }
+    });
+});
+</script>

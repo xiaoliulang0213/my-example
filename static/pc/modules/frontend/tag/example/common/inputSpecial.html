@@ -1,0 +1,44 @@
+<div data-container="tagInputSpecialExample">
+    <div>
+        <component is="bv-form" v-bind="formConfig"></component>
+    </div>
+</div>
+<script type="text/javascript">
+require(['jquery', 'util', 'Const'], function($, util, Const) {
+    var tagType = util.nvl(util.gup('tag'), 'static');
+    var vm = util.bind({
+        container: 'tagInputSpecialExample',
+        data: {
+            formConfig: {
+                title: '文本域特殊属性示例',
+                columns: [
+                    {
+                        name: 'placeholder',
+                        head: 'placeholder-输入提示',
+                        edit: {
+                            type: tagType
+                        },
+                        config: {
+                            attr: {
+                                placeholder: '这里描述填写说明'
+                            }
+                        }
+                    },
+                    {
+                        name: 'required',
+                        head: 'required-必填',
+                        edit: {
+                            type: tagType
+                        },
+                        config: {
+                            validate: {
+                                required: '此处不能为空'
+                            }
+                        }
+                    }
+                ]
+            }
+        }
+    });
+});
+</script>

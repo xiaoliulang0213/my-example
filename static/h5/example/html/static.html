@@ -1,0 +1,88 @@
+<component is="bv-layout" data-container="example-static">
+    <component is="bv-form" slot="content" :key="tags.formKey" v-bind="formConfig"></component>
+</component>
+<script type="text/javascript">
+    require(['jquery', 'util', 'Const', 'bvForm'], function($, util, Const) {
+        util.title('example-static');
+        var vm = util.bind({
+            container: 'example-static',
+            data: {
+                tags: {
+                    formKey: 'staticForm'
+                },
+                formConfig: {
+                    columns: [
+                        {
+                            name: 'static1',
+                            head: '默认静态文本',
+                            edit: {
+                                type: 'static'
+                            },
+                            config: {
+                                value: '固定值'
+                            }
+                        }, {
+                            name: 'static2',
+                            head: '通过text设置内容',
+                            edit: {
+                                type: 'static'
+                            },
+                            config: {
+                                value: '固定值',
+                                text: 'text设置的值'
+                            }
+                        }, {
+                            name: 'static3',
+                            head: '格式化显示-1',
+                            edit: {
+                                type: 'static'
+                            },
+                            config: {
+                                value: '1000',
+                                format: 'currency'
+                            }
+                        }, {
+                            name: 'static4',
+                            head: '格式化显示-2',
+                            edit: {
+                                type: 'static'
+                            },
+                            config: {
+                                value: '1000',
+                                // format: 'currency',
+                                show: function (value) {
+                                    return util.format(value, 'currency(false, 3)');
+                                }
+                            }
+                        }, {
+                            name: 'textfield1',
+                            head: '默认输入框',
+                            edit: {
+                                type: 'textfield'
+                            }
+                        }, {
+                            name: 'textfield2',
+                            head: '必填',
+                            edit: {
+                                type: 'textfield'
+                            },
+                            config: {
+                                validate: {
+                                    required: '必填项不能空'
+                                }
+                            }
+                        }
+                    ],
+                    operates: [
+                        {
+                            text: '保存',
+                            click: function (event, editType, entity) {
+                                console.log(entity);
+                            }
+                        }
+                    ]
+                }
+            }
+        });
+    });
+</script>

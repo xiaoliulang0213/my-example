@@ -1,0 +1,72 @@
+<div data-container="bridge">
+    <component is="example-api" class="bv-fill" :key="tags.apiKey" try-it="false" :functions="functions"></component>
+</div>
+<script type="text/javascript">
+    require(['jquery', 'util'], function($, util) {
+        var functions = [];
+        util.bind({
+            container: 'bridge',
+            data: {
+                tags: {
+                    apiKey: 'bridgeApi'
+                },
+                functions: [
+                    {
+                        name: 'callApp',
+                        parentName: '',
+                        describe: '调用app提供的接口',
+                        params: [
+                            {
+                                name: 'obj',
+                                type: 'string',
+                                describe: '固定为bk_bridge'
+                            }, {
+                                name: 'method',
+                                type: 'string',
+                                describe: '调用的方法名'
+                            }, {
+                                name: 'params',
+                                type: 'Object',
+                                optional: true,
+                                describe: '参数'
+                            }, {
+                                name: 'callback',
+                                type: 'Function',
+                                optional: true,
+                                describe: '回调函数'
+                            }
+                        ],
+                        example: util.heredoc(function () {
+                            /*!
+bridge.callApp('bk_bridge', 'cashBus');
+                            */
+                        })
+                    }, {
+                        name: 'registerJs',
+                        parentName: '',
+                        describe: '注册js方法，供app调用',
+                        params: [
+                            {
+                                name: 'method',
+                                type: 'string',
+                                describe: 'js方法名'
+                            }, {
+                                name: 'callback',
+                                type: 'Function',
+                                optional: true,
+                                describe: 'js方法的实现'
+                            }
+                        ],
+                        example: util.heredoc(function () {
+                            /*!
+bridge.registerJs('getUserId', function(res){
+  alert(res.userId);
+});
+                            */
+                        })
+                    }
+                ]
+            }
+        });
+    });
+</script>

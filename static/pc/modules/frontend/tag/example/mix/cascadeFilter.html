@@ -1,0 +1,68 @@
+<div data-container="cascadeFilter">
+	<component is="bv-table" v-bind="config"></component>
+</div>
+<script type="text/javascript">
+require(['jquery', 'util', 'Const'], function ($, util, Const) {
+	var vm = util.bind({
+		container: 'cascadeFilter',
+		data: {
+			config: {
+                filterLayout: 'filterMore',
+                entityName: 'sysCity',
+                keys: 'cityCode',
+                columns: [
+                    {
+                        name: 'cityCode',
+                        head: '城市代码',
+                        filter: {
+                            operate: '=',
+                            type: 'select'
+                        },
+                        config: {
+                            entityName: 'sysCity',
+                            code: 'cityCode',
+                            desc: 'cityName',
+                            initParamList: [
+                                {
+                                    name: 'parentCode',
+                                    operate: 'is'
+                                }
+                            ]
+                        }
+                    },
+                    {
+                        name: 'cityName',
+                        head: '城市名称',
+						filter: {
+                            operate: '=',
+							type: 'auto'
+						},
+						config: {
+                            entityName: 'sysCity',
+							code: 'cityCode',
+							desc: 'cityName',
+							load: 'cityCode',
+							initParamList: [
+								{
+								    name: 'parentCode',
+									operate: '=',
+									from: 'cityCode'
+								}
+							]
+						}
+                    },
+                    {
+                        name: 'parentCode',
+                        head: '上级城市'
+                    },
+                    {
+                        name: 'remark',
+                        head: '备注'
+                    }
+                ],
+                orders: 'cityCode'
+			}
+		}
+	});
+});
+</script>

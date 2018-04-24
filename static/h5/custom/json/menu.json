@@ -1,0 +1,82 @@
+[
+  {
+    "menuId": "01",
+    "menuName": "系统环境"
+  },
+
+  {
+    "menuId": "0101",
+    "menuName": "相关框架",
+    "menuAddress": "modules/init/introduce.html",
+    "parentMenu": "01"
+  }, {
+    "menuId": "0102",
+    "menuName": "页面布局",
+    "menuAddress": "modules/init/layout.html",
+    "parentMenu": "01"
+  }, {
+    "menuId": "0103",
+    "menuName": "数据校验",
+    "menuAddress": "modules/init/validate.html",
+    "parentMenu": "01"
+  },
+
+  {
+    "menuId": "02",
+    "menuName": "API"
+  },
+
+  {
+    "menuId": "0201",
+    "menuName": "util",
+    "menuAddress": "modules/api/util.html",
+    "parentMenu": "02"
+  }, {
+    "menuId": "0202",
+    "menuName": "loader",
+    "menuAddress": "modules/api/loader.html",
+    "parentMenu": "02"
+  }, {
+    "menuId": "0203",
+    "menuName": "bridge",
+    "menuAddress": "modules/api/bridge.html",
+    "parentMenu": "02"
+  },
+
+  {
+    "menuId": "03",
+    "menuName": "组件"
+  },
+
+  {
+    "menuId": "0301",
+    "menuName": "static&textfield",
+    "menuAddress": "modules/tags/static.html",
+    "parentMenu": "03"
+  }, {
+    "menuId": "0302",
+    "menuName": "select&radio&checkbox",
+    "menuAddress": "modules/tags/select.html",
+    "parentMenu": "03"
+  }, {
+    "menuId": "0303",
+    "menuName": "toggle",
+    "menuAddress": "modules/tags/toggle.html",
+    "parentMenu": "03"
+  }, {
+    "menuId": "0304",
+    "menuName": "date",
+    "menuAddress": "modules/tags/date.html",
+    "parentMenu": "03"
+  }, {
+    "menuId": "0305",
+    "menuName": "picker",
+    "menuAddress": "modules/tags/picker.html",
+    "parentMenu": "03"
+  }, {
+    "menuId": "0306",
+    "menuName": "upload",
+    "menuAddress": "modules/tags/upload.html",
+    "parentMenu": "03"
+  }
+]

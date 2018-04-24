@@ -1,0 +1,113 @@
+<div data-container="try">
+    <component is="bv-modal" :key="tags.modalKey" v-bind="modalConfig">
+        <div slot="body">
+            <component is="bv-form" :key="tags.formKey" :entity="entity" v-bind="config"></component>
+            <component is="bv-form" :key="tags.retFormKey" :entity="entity" v-bind="retConfig"></component>
+        </div>
+    </component>
+</div>
+<script type="text/javascript">
+    require(['jquery', 'util'], function($, util) {
+        var entity = {};
+        var columns = [];
+        var param = util.cache();
+        if (param.params && param.params.length > 0) {
+            for (var i=0; i<param.params.length; i++) {
+                columns.push({
+                    head: param.params[i].describe,
+                    name: param.params[i].name
+                });
+                entity[param.params[i].name] = null;
+            }
+        }
+        var retColumns = [];
+        if (param.ret) {
+            retColumns.push({
+                head: param.ret.describe,
+                name: 'ret',
+                edit: {
+                    type: 'static'
+                }
+            });
+            entity['ret'] = null;
+        }
+        util.bind({
+            container: 'try',
+            data: {
+                tags: {
+                    modalKey: 'tryModal',
+                    formKey: 'tryForm',
+                    retFormKey: 'tryRetForm'
+                },
+                entity: entity,
+                modalConfig: {
+                    title: param.describe,
+                    size: 'lg'
+                },
+                config: {
+                    title: '参数',
+                    layout: 'body',
+                    columns: columns
+                },
+                retConfig: {
+                    title: '返回值',
+                    layout: 'body',
+                    columns: retColumns,
+                    operates: [
+                        {
+                            text: '查看结果',
+                            clazz: 'btn-primary',
+                            click: function (event, editType, entity) {
+                                var params = [];
+                                if (param.params) {
+                                    for (var i=0; i<param.params.length; i++) {
+                                        var type = param.params[i].type;
+                                        var v = entity[param.params[i].name];
+                                        if (type === 'number') {
+                                            v = util.toNumber(v);
+                                        } else if (type === 'boolean') {
+                                            v = util.getBoolean(v);
+                                        } else if (type === 'Array') {
+                                            v = eval('(' + v + ')');
+                                        } else if (type === 'Object') {
+                                            v = eval('(' + v + ')');
+                                        }
+                                        params[i] = v;
+                                    }
+                                }
+                                var ret = util[param.name].apply(util, params);
+                                if (param.ret) {
+                                    entity['ret'] = ret;
+                                }
+                            }
+                        }
+                    ]
+                }
+            },
+            watch: {
+                /*entity: {
+                    handler: function (val, oldVal) {
+                        var params = [];
+                        for (var i=0; i<param.params.length; i++) {
+                            var type = param.params[i].type;
+                            var v = val[param.params[i].name];
+                            if (type === 'number') {
+                                v = util.toNumber(v);
+                            } else if (type === 'boolean') {
+                                v = util.getBoolean(v);
+                            } else if (type === 'Array') {
+                                v = eval('(' + v + ')');
+                            }
+                            params[i] = v;
+                        }
+                        var ret = util[param.name].apply(util, params);
+                        if (param.ret) {
+                            val['ret'] = ret;
+                        }
+                    },
+                    deep: true
+                }*/
+            }
+        });
+    });
+</script>

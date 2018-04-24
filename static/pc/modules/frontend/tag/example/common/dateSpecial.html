@@ -1,0 +1,101 @@
+<div data-container="tagDateSpecialExample">
+    <div>
+        <component is="bv-form" v-bind="formConfig"></component>
+    </div>
+</div>
+<script type="text/javascript">
+require(['jquery', 'util', 'Const'], function($, util, Const) {
+    var vm = util.bind({
+        container: 'tagDateSpecialExample',
+        data: {
+            formConfig: {
+                title: '日期选择特殊属性示例',
+                columns: [
+                    {
+                        name: 'startDate',
+                        head: '设置最小日期(2017-05-08)',
+                        edit: {
+                            type: 'date'
+                        },
+                        config: {
+                            startDate: '2017-05-08'
+                        }
+                    },
+                    {
+                        name: 'endDate',
+                        head: '设置最大日期(2017-05-15)',
+                        edit: {
+                            type: 'date'
+                        },
+                        config: {
+                            endDate: '2017-05-15'
+                        }
+                    },
+                    {
+                        name: 'triggerStart',
+                        head: '设置最小日期(#startDate)',
+                        edit: {
+                            type: 'date'
+                        },
+                        config: {
+                            triggerStart: 'startDate'
+                            // $duplexStart: 'startDate'
+                        }
+                    },
+                    {
+                        name: 'triggerEnd',
+                        head: '设置最大日期(#endDate)',
+                        edit: {
+                            type: 'date'
+                        },
+                        config: {
+                            triggerEnd: 'endDate'
+                            // $duplexEnd: 'endDate'
+                        }
+                    },
+                    {
+                        name: 'format1',
+                        head: '设置日期格式(datetime)',
+                        edit: {
+                            type: 'date'
+                        },
+                        config: {
+                            format: 'datetime'
+                        }
+                    },
+                    {
+                        name: 'format2',
+                        head: '设置日期格式(time)',
+                        edit: {
+                            type: 'date'
+                        },
+                        config: {
+                            format: 'time'
+                        }
+                    },
+                    {
+                        name: 'format3',
+                        head: '设置日期格式(yyyy-MM)',
+                        edit: {
+                            type: 'date'
+                        },
+                        config: {
+                            format: 'yyyy-MM'
+                        }
+                    },
+                    {
+                        name: 'format4',
+                        head: '设置日期格式(yyyy)',
+                        edit: {
+                            type: 'date'
+                        },
+                        config: {
+                            format: 'yyyy'
+                        }
+                    }
+                ]
+            }
+        }
+    });
+});
+</script>

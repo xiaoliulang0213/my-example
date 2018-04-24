@@ -1,0 +1,56 @@
+<div data-container="tagTableColumnFormatExample">
+	<component is="bv-table" :key="tags.tableId" v-bind="config"></component>
+</div>
+<script type="text/javascript">
+require(['jquery', 'util'], function($, util) {
+    var vm = util.bind({
+        container: 'tagTableColumnFormatExample',
+        data: {
+			tags: {
+				tableId: 'tagTableColumnFormatExampleTable'
+			},
+			config: {
+				entityName: 'sysCity',
+				keys: 'cityCode',
+				columns: [
+					{
+						name: 'cityCode',
+						head: '代码',
+						title: true,
+						config: {
+                            format: 'percent'
+						}
+					},
+					{
+						name: 'parentCode',
+						head: '上级',
+						// format: 'number(1)'
+                        config: {
+                            // format: 'percent'
+							format: 'dict',
+							entityName: 'sysCity',
+							code: 'cityCode',
+							desc: 'cityName'
+						}
+					},
+					{
+						name: 'cityName',
+						head: '名称',
+						config: {
+                            format: 'truncate(2)'
+						}
+					},
+					{
+						name: 'remark',
+						head: '备注',
+						config: {
+                            format: 'datetime'
+						}
+					}
+				],
+				orders: 'cityCode'
+			}
+		}
+    });
+});
+</script>

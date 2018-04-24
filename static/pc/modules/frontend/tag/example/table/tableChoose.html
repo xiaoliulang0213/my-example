@@ -1,0 +1,50 @@
+<div data-container="tagTableChooseExample">
+	<component is="bv-table" :key="tags.tableId" @on-choose="event.choose" v-bind="config"></component>
+</div>
+<script type="text/javascript">
+require(['jquery', 'util'], function($, util) {
+	var param = util.cache();
+	if (!param) {
+	    param = {};
+	}
+	console.log(param);
+    var vm = util.bind({
+        container: 'tagTableChooseExample',
+        data: {
+			tags: {
+				tableId: 'tagTableTypeExampleTable'
+			},
+			config: {
+                type: 'choose',
+				entityName: 'sysCity',
+				keys: 'cityCode',
+				columns: [
+					{
+						name: 'cityCode',
+						head: '城市代码'
+					},
+					{
+						name: 'cityName',
+						head: '城市名称'
+					}
+				],
+				select: 'checkbox',
+				orders: 'cityCode',
+				chooseDesc: 'cityName',
+				chooseShow: function (row) {
+					return row.cityCode + '-' + row.cityName;
+				},
+				chooseResult: param.tableChoose
+			},
+			event: {
+				choose: function (tableId, tableChooseResult) {
+					util.refresh({
+						vm: param.vm,
+						value: tableChooseResult.codes
+					});
+				}
+			}
+		}
+    });
+});
+</script>
